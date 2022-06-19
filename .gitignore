@@ -1,0 +1,9 @@
+.DS_Store
+.vscode/
+*.o
+*.d
+*.a
+en.subject.pdf
+README.md
+workspace.code-workspace
+minishell
