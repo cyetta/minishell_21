@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/19 18:03:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:28:55 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	parse_cmd(t_mshell *data, char *cmd)
 
 	err = lexer(&data->tkn_lst, cmd);
 	if (err)
-		return (ft_error(err));
+		return (is_syntax_err(ft_error(err)));
 	ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+	ft_lstclear(&data->tkn_lst, del_tkn_elmnt);
 	return (0);
 }
 
@@ -73,6 +74,7 @@ int	main(int argc, char **argv, char **argp)
 {
 	t_mshell	shell_prm;
 	char	*s;
+	int		err;
 
 	pr_argvp(argc, argv, argp); // test print argv, argp
 	if (argc > 1)
@@ -88,8 +90,10 @@ int	main(int argc, char **argv, char **argp)
 		else if (*s)
 			add_history(s);
 		printf("%s\n", s);
-		parse_cmd(&shell_prm, s);
+		err = parse_cmd(&shell_prm, s);
 		free(s);
+		if (err != ERR_SYNTAX && err != ERR_OK)
+			break ;
 	}
 	rl_clear_history();
 	ft_lstclear(&shell_prm.env, ktblitm_del);

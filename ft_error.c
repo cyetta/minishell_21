@@ -6,22 +6,45 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/18 14:25:37 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/21 14:57:43 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+//#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "ft_error.h"
+#include "ft_lib/libft.h"
 
-static int	usage(int err)
+static int	err_prnt(const char *msg, int err)
 {
-	printf("Usage: ./minishell \n No argument needed.\n");
+	write(2, msg, ft_strlen(msg));
 	return (err);
 }
 
+//	printf("%s %d\n", msg, err);
 int	err_msg(const char *msg, int err)
 {
-	printf("%s %d\n", msg, err);
+	char	*num;
+
+	err_prnt(msg, err);
+	num = ft_itoa(err);
+	if (num)
+	{
+		write(2, num, ft_strlen(num));
+		free(num);
+	}
+	write(2, "\n", 1);
+	return (err);
+}
+
+/*
+returns ERR_SYNTAX if the error is in a set of syntax errors
+*/
+int	is_syntax_err(int err)
+{
+	if (err == ERR_SYNTAX || err == ERR_OPNQUOTES)
+		return (ERR_SYNTAX);
 	return (err);
 }
 
@@ -33,7 +56,7 @@ int	ft_error(int errnum)
 	"Open quotes error "};
 
 	if (errnum == ERR_USAGE)
-		return (usage(ERR_USAGE));
+		return (err_prnt(msg[errnum], errnum));
 	else if (errnum > ERR_USAGE && errnum <= ERR_OPNQUOTES)
 		return (err_msg(msg[errnum], errnum));
 	else

@@ -6,13 +6,13 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:27:25 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/19 16:20:13 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:04:55 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "minishell.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include "minishell.h"
 #include "lexer.h"
 #include "ft_error.h"
 
@@ -91,6 +91,7 @@ int	add_tkn_str(t_list **tkn_lst, char *str, int *pos)
 	((t_token *)tkn->content)->value = get_subs(str, pos);
 	if (!((t_token *)tkn->content)->value)
 		return (ERR_MALLOC);
+	(*pos)--;
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);
 }
