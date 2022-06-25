@@ -11,7 +11,7 @@ NAME	= minishell
 BNS_N	=
 
 SRC_N 	= minishell.c builtins1.c builtins2.c ft_error.c ld_env2lst.c lexer.c lexer_dp.c \
-			lexer_q.c lexer_rdr.c lexer_util.c parser.c parser_util.c
+			lexer_qsp.c lexer_rdr.c lexer_util.c parser_expstr.c parser_util.c parser.c
 
 SRC_B 	=
 

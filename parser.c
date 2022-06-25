@@ -6,23 +6,35 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/22 20:15:03 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/25 21:18:31 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
-#include "minishell.h"
+#include "ft_error.h"
 
-int	expander(t_list **tkn_lst)
+int	tknlst_expander(t_mshell *data)
 {
 	t_list	*tknlst_hd;
+	t_token	*tkn;
+	char	*str;
 
-	tknlst_hd = *tkn_lst;
+	tknlst_hd = data->tkn_lst;
 	while (tknlst_hd)
 	{
+		tkn = ((t_token *)tknlst_hd->content);
+		if (tkn->e_lxm == DQUOTES)
+		{
+			str = expnd_str(tkn->value, data);
+			free (tkn->value);
+			tkn->e_lxm = STRINGLN;
+			tkn->value = str;
+		}
 		tknlst_hd = tknlst_hd->next;
 	}
+	return (ERR_OK);
 }
 
 /*
@@ -53,26 +65,12 @@ NULL - if malloc error
 char	*get_envvalue(char *str, t_list *env)
 {
 	t_ktable	*env_v;
-	char		*str;
+	char		*subs;
 
 	env_v = (t_ktable *)ft_lstsearch(env, str, env_cmp);
 	if (env_v)
-		str = ft_strdup(env_v->value);
+		subs = ft_strdup(env_v->value);
 	else
-		str = ft_strdup("");
-	return (str);
-}
-
-/*
-creates and returns a string in which the environment variable is expanded to
-its value
-str - pointer to environment variable string
-env - list of environment variable
-return
-NULL - if malloc error
-"\0" - if no value
-"value" - sz of value
-*/
-char	*expnd_dllr(char *str, t_list *env)
-{
+		subs = ft_strdup("");
+	return (subs);
 }

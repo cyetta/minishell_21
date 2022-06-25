@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/22 20:15:03 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/25 20:18:03 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ typedef struct s_mshell
 {
 	t_list	*env;
 	t_list	*tkn_lst;
-	int		msh_pid;
-	int		last_errlvl;
+	int		errlvl;
 	char	*msh_name;
 }	t_mshell;
 

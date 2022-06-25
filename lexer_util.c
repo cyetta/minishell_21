@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:52:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/19 15:13:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/25 20:15:20 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	is_reserved(char ch)
 /*
 Returns substring from position pos, limited by reserved
 character or \0,see also is_reserved().
+if malloc() error, return NULL.
 Position pos increment by length of substring
 */
 char	*get_subs(char *str, int *pos)

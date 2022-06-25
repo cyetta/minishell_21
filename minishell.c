@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/21 15:28:55 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/25 22:16:36 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ft_error.h"
 #include "minishell.h"
 #include "lexer.h"
+#include "parser.h"
 
 void	print(void)
 {
@@ -29,6 +30,8 @@ int	parse_cmd(t_mshell *data, char *cmd)
 	err = lexer(&data->tkn_lst, cmd);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
+	ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+	tknlst_expander(data);
 	ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	ft_lstclear(&data->tkn_lst, del_tkn_elmnt);
 	return (0);
@@ -64,6 +67,7 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	if (ld_env2lst(&shell_prm->env, argp))
 		return (ERR_INIT_4);
 	shell_prm->tkn_lst = NULL;
+	shell_prm->errlvl = 0;
 	return (0);
 }
 
