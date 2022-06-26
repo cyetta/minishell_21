@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:23 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/21 14:25:54 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/26 21:18:17 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define ERR_MALLOC 6
 # define ERR_SYNTAX 7
 # define ERR_OPNQUOTES 8
+# define ERR_EMPTYCMD 9
+# define ERR_LASTERR ERR_EMPTYCMD
 
 int	ft_error(int errnum);
 int	is_syntax_err(int err);

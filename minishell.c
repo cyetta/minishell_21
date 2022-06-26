@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 22:16:36 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/26 21:44:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,28 @@
 #include "lexer.h"
 #include "parser.h"
 
-void	print(void)
-{
-}
-
+//	t_list	*tmp;
 int	parse_cmd(t_mshell *data, char *cmd)
 {
-	int		err;
+	int	err;
 
+	if (!*cmd)
+		return (ERR_EMPTYCMD);
 	err = lexer(&data->tkn_lst, cmd);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
-	ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+	if (((t_token *)data->tkn_lst->content)->e_lxm == SPACESTR)
+		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, del_tkn_elmnt);
+	else
+		add_history(cmd);
+ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+	if (ft_lstsize(data->tkn_lst) == 0)
+		return (ERR_EMPTYCMD);
 	tknlst_expander(data);
-	ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	ft_lstclear(&data->tkn_lst, del_tkn_elmnt);
-	return (0);
+	return (ERR_OK);
 }
 
 void	pr_argvp(int argc, char **argv, char **argp)
@@ -74,13 +80,14 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	// (void) argc;
 	// (void) argv;
 	// (void) argp;
+//	pr_argvp(argc, argv, argp); // test print argv, argp
 int	main(int argc, char **argv, char **argp)
 {
 	t_mshell	shell_prm;
-	char	*s;
-	int		err;
+	char		*s;
+	int			err;
 
-	pr_argvp(argc, argv, argp); // test print argv, argp
+	(void) argv;
 	if (argc > 1)
 		return (ft_error(ERR_USAGE));
 	else if (init_data(&shell_prm, argp))
@@ -91,12 +98,10 @@ int	main(int argc, char **argv, char **argp)
 		s = readline("minishell$ ");
 		if (!s)
 			break ;
-		else if (*s)
-			add_history(s);
 		printf("%s\n", s);
 		err = parse_cmd(&shell_prm, s);
 		free(s);
-		if (err != ERR_SYNTAX && err != ERR_OK)
+		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
 	}
 	rl_clear_history();

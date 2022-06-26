@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/21 14:57:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/26 21:18:43 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int	ft_error(int errnum)
 {
 	const char	*msg[] = {"", "Usage: ./minishell \n No argument needed.\n", \
 	"Not value. Error ", "Value overflow. Error ", "Initialization error ", \
-	"Initialization error ", "Memory allocation error ", "Error syntax error",\
-	"Open quotes error "};
+	"Initialization error ", "Memory allocation error ", "Error syntax error", \
+	"Open quotes error ", "No commands. Empty line "};
 
 	if (errnum == ERR_USAGE)
 		return (err_prnt(msg[errnum], errnum));
-	else if (errnum > ERR_USAGE && errnum <= ERR_OPNQUOTES)
+	else if (errnum > ERR_USAGE && errnum <= ERR_LASTERR)
 		return (err_msg(msg[errnum], errnum));
 	else
 		return (err_msg("Unknown error ", errnum));

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:06:52 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 22:11:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/26 20:50:29 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*get_envvar(char *str, t_mshell *data, int *pos)
 	if (get_envquest(str, pos, &subs, data))
 		return (subs);
 	subs = get_subs(str, pos);
-	// ++(*pos);
 	if (!subs)
 		return (NULL);
 	ret = get_envvalue(subs, data->env);
