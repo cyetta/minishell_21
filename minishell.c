@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/26 21:44:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/29 23:26:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, del_tkn_elmnt);
 	else
 		add_history(cmd);
+printf("----\n");
 ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	tknlst_expander(data);
+printf("----\n");
 ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+printf("----\n");
 	ft_lstclear(&data->tkn_lst, del_tkn_elmnt);
 	return (ERR_OK);
 }
@@ -68,6 +71,11 @@ void	pr_argvp(int argc, char **argv, char **argp)
 		ft_lstadd_back(shell_p
 rm->env, lst);
 	} */
+
+/*
+Initialize main data structure,
+load enviroment variable in list
+*/
 int	init_data(t_mshell *shell_prm, char **argp)
 {
 	if (ld_env2lst(&shell_prm->env, argp))
@@ -92,7 +100,7 @@ int	main(int argc, char **argv, char **argp)
 		return (ft_error(ERR_USAGE));
 	else if (init_data(&shell_prm, argp))
 		return (ft_error(ERR_INIT_4));
-	ft_lstiter(shell_prm.env, ktblitm_prn); // test print env variable list
+ft_lstiter(shell_prm.env, ktblitm_prn); // test print env variable list
 	while (1)
 	{
 		s = readline("minishell$ ");
