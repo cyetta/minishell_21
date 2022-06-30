@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/29 23:34:03 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/30 22:19:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,45 @@ int	f_tkn_str(t_list **tknlst_hd, t_mshell *data)
 {
 	(void)data;
 	(void)tknlst_hd;
-//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 	return (ERR_OK);
 }
+//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 
 typedef int	(*t_tkn_func)(t_list **, t_mshell *);
 
+/*
+Expands token via a_tkn_f and collect STRINGLN to one string
+if sequence of token converts to sequence STRINGLN
+*/
+int	tkn_collect_str(t_list **tknlst_hd, t_mshell *data, const t_tkn_func *a_tkn_f)
+{
+	t_list		*t;
+	int			err;
+	char		*str;
+
+	t = *tknlst_hd;
+	err = a_tkn_f[((t_token *)t->content)->e_lxm](&t, data);
+	while (t && t->next && !err && ((t_token *)t->content)->e_lxm == STRINGLN)
+	{
+		err = a_tkn_f[((t_token *)t->next->content)->e_lxm](&t->next, data);
+		if (!t->next || ((t_token *)t->next->content)->e_lxm != STRINGLN)
+			break ;
+		str = ft_strjoin(((t_token *)t->content)->value, ((t_token *)t->next-> \
+content)->value);
+		if (!str)
+			return (ERR_MALLOC);
+		free(((t_token *)t->content)->value);
+		((t_token *)t->content)->value = str;
+		ft_lstdelnode(&t, t->next, del_tkn_elmnt);
+	}
+	if (t->next && ((t_token *)t->next->content)->e_lxm == SPACESTR)
+		ft_lstdelnode(&t, t->next, del_tkn_elmnt);
+	return (err);
+}
+
+/*
+converts token list to string list
+*/
 int	tknlst_expander(t_mshell *data)
 {
 	t_list				*tknlst_hd;
@@ -93,11 +126,9 @@ int	tknlst_expander(t_mshell *data)
 	while (tknlst_hd)
 	{
 		if (prev)
-			err = a_tkn_f[((t_token *)tknlst_hd->content)->e_lxm] \
-	(&prev->next, data);
+			err = tkn_collect_str(&(prev->next), data, a_tkn_f);
 		else
-			err = a_tkn_f[((t_token *)tknlst_hd->content)->e_lxm] \
-	(&data->tkn_lst, data);
+			err = tkn_collect_str(&(data->tkn_lst), data, a_tkn_f);
 		if (err)
 			return (err);
 		prev = tknlst_hd;

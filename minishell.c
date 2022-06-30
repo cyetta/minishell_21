@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/29 23:26:58 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/30 21:50:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	parse_cmd(t_mshell *data, char *cmd)
 	err = lexer(&data->tkn_lst, cmd);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
-ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	if (((t_token *)data->tkn_lst->content)->e_lxm == SPACESTR)
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, del_tkn_elmnt);
 	else
@@ -106,7 +105,7 @@ ft_lstiter(shell_prm.env, ktblitm_prn); // test print env variable list
 		s = readline("minishell$ ");
 		if (!s)
 			break ;
-		printf("%s\n", s);
+// printf("%s\n", s);
 		err = parse_cmd(&shell_prm, s);
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
