@@ -1,3 +1,4 @@
+#For MAC
 #Need to install readline 8.1 -> brew install readline
 #uninstall -> brew cleanup readline
 #readline is keg-only, which means it was not symlinked into /.brew,
@@ -6,6 +7,10 @@
 #For compilers to find readline you may need to set:
 #  export LDFLAGS="-L$HOME/.brew/opt/readline/lib"
 #  export CPPFLAGS="-I$HOME/.brew/opt/readline/include"
+#
+#to install readline in Linux do
+#sudo apt update
+#sudo apt install libreadline-dev
 
 NAME	= minishell
 BNS_N	=
@@ -21,12 +26,19 @@ DIR_SRC	= ./
 DIR_BON	= ./
 DIR_LIBFT = ./ft_lib/
 DIR_RDLINE = ${HOME}/.brew/opt/readline
-#INCPATH	= ${DIR_SRC} ${DIR_LIBFT} ${DIR_RDLINE}/include
+INCPATH	= ${DIR_SRC} ${DIR_LIBFT}
 
 CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
+ifdef DESKTOP_SESSION
+INCRDLN =
+LIBRDLN = -lreadline
+else
+INCRDLN = -I${DIR_RDLINE}/include
+LIBRDLN = -L ${DIR_RDLINE}/lib -lhistory -lreadline
+endif
 
 SRCS_P	= ${addprefix ${DIR_SRC}, ${SRC_N}}
 SRCS_B	= ${addprefix ${DIR_BON}, ${SRC_B}}
@@ -39,15 +51,16 @@ DPDS	= ${SRCS_P:.c=.d} ${SRCS_B:.c=.d}
 all:	${NAME}
 
 %.o : %.c
-	${CC} ${CFLAGS} -MMD -c $< -o $@ -I${DIR_SRC} -I${DIR_LIBFT} -I${DIR_RDLINE}/include
+	${CC} ${CFLAGS} -MMD -c $< -o $@ -I${DIR_SRC} -I${DIR_LIBFT} ${INCRDLN}
 
 include ${wildcard ${DPDS}}
 
 ${DIR_LIBFT}libft.a:
+#	${MAKE} CFLAG="${CFLAGS} -g3" -C ${DIR_LIBFT}
 	${MAKE} -C ${DIR_LIBFT}
 
 ${NAME}: ${DIR_LIBFT}libft.a ${OBJ_P}
-	${CC} ${CFLAGS} -o $@ ${OBJ_P} -L ${DIR_LIBFT} -lft -L ${DIR_RDLINE}/lib -lreadline
+	${CC} ${CFLAGS} -o $@ ${OBJ_P} -L ${DIR_LIBFT} -lft ${LIBRDLN}
 
 debug: ${DIR_LIBFT}libft.a
 #	${MAKE} CFLAGS="${CFLAGS} -g3" libft.a

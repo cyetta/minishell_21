@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/30 21:50:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/07/18 00:29:10 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ load enviroment variable in list
 */
 int	init_data(t_mshell *shell_prm, char **argp)
 {
+	shell_prm->env = NULL;
 	if (ld_env2lst(&shell_prm->env, argp))
 		return (ERR_INIT_4);
 	shell_prm->tkn_lst = NULL;
