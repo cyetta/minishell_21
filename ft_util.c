@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 18:58:24 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/26 21:26:33 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/06/27 01:57:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,10 @@ void	ft_lstinsbeforenode(t_list **root, t_list *node, t_list *new)
 void	ft_lstinsafternode(t_list **root, t_list *node, t_list *new)
 {
 	t_list	*t;
-	t_list	*prev;
 
 	t = *root;
 	if (t && node)
 	{
-		prev = NULL;
 		while (t)
 		{
 			if (node == t)
@@ -136,7 +134,6 @@ void	ft_lstinsafternode(t_list **root, t_list *node, t_list *new)
 				t->next = new;
 				return ;
 			}
-			prev = t;
 			t = t->next;
 		}
 	}
