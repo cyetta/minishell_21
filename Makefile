@@ -1,4 +1,5 @@
 #For MAC
+#
 #Need to install readline 8.1 -> brew install readline
 #uninstall -> brew cleanup readline
 #readline is keg-only, which means it was not symlinked into /.brew,
@@ -7,6 +8,8 @@
 #For compilers to find readline you may need to set:
 #  export LDFLAGS="-L$HOME/.brew/opt/readline/lib"
 #  export CPPFLAGS="-I$HOME/.brew/opt/readline/include"
+#
+#To install Homebrew on Mac - https://github.com/kube/42homebrew
 #
 #to install readline in Linux do
 #sudo apt update
