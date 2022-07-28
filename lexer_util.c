@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:52:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/30 22:00:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/07/28 23:12:16 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Returns true if ch in reserved character list
 */
 int	is_reserved(char ch)
 {
-	const char	reserved[] = "\'\"$|<>/";
+	const char	reserved[] = "\'\"$|<>/=";
 
 	if (ft_isspace(ch))
 		return (1);
