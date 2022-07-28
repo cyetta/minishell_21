@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/30 22:19:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/07/28 14:07:36 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ int	f_tkn_dquotes(t_list **tknlst_hd, t_mshell *data)
 
 int	f_tkn_dollar(t_list **tknlst_hd, t_mshell *data)
 {
+	int	i;
+
+	i = -1;
 	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
 	== STRINGLN)
-		((t_token *)(*tknlst_hd)->content)->value = get_envvalue(((t_token *) \
-	(*tknlst_hd)->next->content)->value, data->env);
+		((t_token *)(*tknlst_hd)->content)->value = get_envvar(((t_token *)(*tknlst_hd)->next->content)->value, data, &i);
 	else
 		((t_token *)(*tknlst_hd)->content)->value = ft_strdup("$");
 	if (!((t_token *)(*tknlst_hd)->content)->value)
@@ -68,6 +70,8 @@ int	f_tkn_dollar(t_list **tknlst_hd, t_mshell *data)
 	((t_token *)(*tknlst_hd)->content)->e_lxm = STRINGLN;
 	return (ERR_OK);
 }
+	// if(*((t_token *)(*tknlst_hd)->content)->value == '\0')
+	// 	ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
 
 int	f_tkn_str(t_list **tknlst_hd, t_mshell *data)
 {
@@ -133,6 +137,9 @@ int	tknlst_expander(t_mshell *data)
 			return (err);
 		prev = tknlst_hd;
 		tknlst_hd = tknlst_hd->next;
+		if (((t_token*)prev->content)->e_lxm == STRINGLN && \
+			*((t_token *)prev->content)->value == '\0')
+			ft_lstdelnode(&data->tkn_lst, prev, del_tkn_elmnt);
 	}
 	return (ERR_OK);
 }

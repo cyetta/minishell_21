@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:06:52 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/29 22:43:16 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/07/28 12:02:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,20 @@ pos change to point next substring after variable.
 char	*get_envvar(char *str, t_mshell *data, int *pos)
 {
 	char	*subs;
+	char	*envq;
 	char	*ret;
 
 	++(*pos);
-	if (get_envquest(str, pos, &subs, data))
-		return (subs);
+	if (get_envquest(str, pos, &envq, data))
+	{
+		subs = get_subs(str, pos);
+		if (!subs)
+			return (NULL);
+		ret = ft_strjoin(envq, subs);
+		free(envq);
+		free(subs);
+		return (ret);
+	}
 	subs = get_subs(str, pos);
 	if (!subs)
 		return (NULL);

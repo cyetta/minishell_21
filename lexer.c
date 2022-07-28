@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:04:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 15:48:45 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/07/28 00:19:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ callback function for ft_lstiter()
 */
 void	prn_tkn_elmnt(void *elm)
 {
-	t_token	*itm;
+	t_token		*itm;
 	static char	*tkn[] = {"SPACESTR", "QUOTES", "DQUOTES", "DOLLAR", "PIPE", \
 	"REDIR_IN", "REDIR_OUT", "DREDIR_OUT", "HERE_DOC", "STRINGLN"};
 
