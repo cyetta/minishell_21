@@ -14,6 +14,7 @@
 #to install readline in Linux do
 #sudo apt update
 #sudo apt install libreadline-dev
+#sudo apt install libreadline8
 
 NAME	= minishell
 BNS_N	=
