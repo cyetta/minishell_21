@@ -37,11 +37,13 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
 ifdef DESKTOP_SESSION
+# for Linux
 INCRDLN =
 LIBRDLN = -lreadline
 else
+# for Mac
 INCRDLN = -I${DIR_RDLINE}/include
-LIBRDLN = -L ${DIR_RDLINE}/lib -lhistory -lreadline
+LIBRDLN = -L ${DIR_RDLINE}/lib -lreadline -lhistory
 endif
 
 SRCS_P	= ${addprefix ${DIR_SRC}, ${SRC_N}}

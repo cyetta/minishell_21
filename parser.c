@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/07/28 14:07:36 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/04 18:32:49 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ int	f_tkn_space(t_list **tknlst_hd, t_mshell *data)
 //	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 	return (ERR_OK);
 }
+
+int	f_tkn_pipe(t_list **tknlst_hd, t_mshell *data)
+{
+	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
+	== PIPE)
+		return (ERR_SYNTAX);
+	return (ERR_OK);
+}
+//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 
 int	f_tkn_quotes(t_list **tknlst_hd, t_mshell *data)
 {
@@ -122,7 +131,7 @@ int	tknlst_expander(t_mshell *data)
 	t_list				*prev;
 	int					err;
 	const t_tkn_func	a_tkn_f[] = {f_tkn_space, f_tkn_quotes, \
-	f_tkn_dquotes, f_tkn_dollar, f_tkn_space, f_tkn_space, f_tkn_space, \
+	f_tkn_dquotes, f_tkn_dollar, f_tkn_pipe, f_tkn_space, f_tkn_space, \
 	f_tkn_space, f_tkn_str, f_tkn_str};
 
 	tknlst_hd = data->tkn_lst;
