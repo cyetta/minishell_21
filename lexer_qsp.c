@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_q.c                                          :+:      :+:    :+:   */
+/*   lexer_qsp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:27:25 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 15:48:47 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:52:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	add_tkn_quotes(t_list **tkn_lst, char *str, int *pos)
 	(*pos)++;
 	nextq = ft_strchr(&str[*pos], '\'');
 	if (!nextq)
-		return (ERR_OPNQUOTES);
+		return (ERR_SYNTAX_OPNQUOTES);
 	subslen = nextq - &str[*pos];
 	((t_token *)tkn->content)->value = ft_substr(str, *pos, subslen);
 	*pos += subslen;
@@ -84,7 +84,7 @@ int	add_tkn_dquotes(t_list **tkn_lst, char *str, int *pos)
 	(*pos)++;
 	nextq = ft_strchr(&str[*pos], '\"');
 	if (!nextq)
-		return (ERR_OPNQUOTES);
+		return (ERR_SYNTAX_OPNQUOTES);
 	subslen = nextq - &str[*pos];
 	((t_token *)tkn->content)->value = ft_substr(str, *pos, subslen);
 	*pos += subslen;

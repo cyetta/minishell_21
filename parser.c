@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/04 18:32:49 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/05 19:14:11 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@ int	f_tkn_space(t_list **tknlst_hd, t_mshell *data)
 
 int	f_tkn_pipe(t_list **tknlst_hd, t_mshell *data)
 {
-	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
-	== PIPE)
-		return (ERR_SYNTAX);
+	if (!(*tknlst_hd)->next)
+		return (ERR_SYNTAX_PIPE);
+	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == PIPE)
+		return (ERR_SYNTAX_PIPE);
+	else if (*tknlst_hd == data->tkn_lst)
+		return (ERR_SYNTAX_PIPE);
+	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == SPACESTR)
+	 	ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
+	if (!(*tknlst_hd)->next)
+		return (ERR_SYNTAX_PIPE);
 	return (ERR_OK);
 }
-//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 
 int	f_tkn_quotes(t_list **tknlst_hd, t_mshell *data)
 {

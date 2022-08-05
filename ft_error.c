@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/26 21:18:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:52:22 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ returns ERR_SYNTAX if the error is in a set of syntax errors
 */
 int	is_syntax_err(int err)
 {
-	if (err == ERR_SYNTAX || err == ERR_OPNQUOTES)
+	if (err >= ERR_SYNTAX && err < ERR_EMPTYCMD)
 		return (ERR_SYNTAX);
 	return (err);
 }
@@ -53,7 +53,8 @@ int	ft_error(int errnum)
 	const char	*msg[] = {"", "Usage: ./minishell \n No argument needed.\n", \
 	"Not value. Error ", "Value overflow. Error ", "Initialization error ", \
 	"Initialization error ", "Memory allocation error ", "Error syntax error", \
-	"Open quotes error ", "No commands. Empty line "};
+	"Open quotes error ", "Syntax error, unexpected token \'|\'. Error ", \
+	"No commands. Empty line "};
 
 	if (errnum == ERR_USAGE)
 		return (err_prnt(msg[errnum], errnum));

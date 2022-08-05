@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/07/18 00:29:10 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/05 19:17:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ printf("----\n");
 ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
-	tknlst_expander(data);
-printf("----\n");
-ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
-printf("----\n");
-	ft_lstclear(&data->tkn_lst, del_tkn_elmnt);
+	err = tknlst_expander(data);
+	if (err)
+		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
 }
 
@@ -108,9 +106,13 @@ ft_lstiter(shell_prm.env, ktblitm_prn); // test print env variable list
 			break ;
 // printf("%s\n", s);
 		err = parse_cmd(&shell_prm, s);
+printf("----\n");
+ft_lstiter(shell_prm.tkn_lst, prn_tkn_elmnt);
+printf("----\n");
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
+		ft_lstclear(&shell_prm.tkn_lst, del_tkn_elmnt);
 	}
 	rl_clear_history();
 	ft_lstclear(&shell_prm.env, ktblitm_del);
