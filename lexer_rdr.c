@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_rdr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:44:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/21 16:05:29 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/08 19:25:20 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ int	add_tkn_rdrin(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	(void)str;
-	(void)pos;
 	if (new_tkn_elmnt(&tkn))
 		return (ERR_MALLOC);
 	((t_token *)tkn->content)->e_lxm = REDIR_IN;
+	if (str[*pos + 1] == '<')
+	{
+		((t_token *)tkn->content)->e_lxm = HERE_DOC;
+		(*pos)++;
+	}
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);
 }
@@ -47,11 +50,14 @@ int	add_tkn_rdrout(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	(void)str;
-	(void)pos;
 	if (new_tkn_elmnt(&tkn))
 		return (ERR_MALLOC);
 	((t_token *)tkn->content)->e_lxm = REDIR_OUT;
+	if (str[*pos + 1] == '>')
+	{
+		((t_token *)tkn->content)->e_lxm = DREDIR_OUT;
+		(*pos)++;
+	}
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);
 }
