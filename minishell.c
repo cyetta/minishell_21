@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/05 19:17:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/08 21:08:24 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "lexer.h"
 #include "parser.h"
 
-//	t_list	*tmp;
 int	parse_cmd(t_mshell *data, char *cmd)
 {
 	int	err;
