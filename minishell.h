@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 20:18:03 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/11 02:01:28 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 # define MINISHELL_H
 # include "ft_lib/libft.h"
 
-typedef struct s_prgexec
-{
-	char	*pathname;
-	char	**argv;
-	char	**envp;
-}	t_prgexec;
-
+/*
 typedef struct s_toexeclst{
 	t_prgexec			*prgm;
 	struct s_toexeclst	*next;
@@ -34,6 +28,16 @@ typedef struct s_lst
 	int				str_position;
 	struct s_lst	*next;
 }					t_lst;
+*/
+#define	cmd argv[0]
+
+typedef struct s_prgexec
+{
+	char	**argv;
+	char	**envp;
+	int		f_stdin;
+	int		f_stout;
+}	t_prgexec;
 
 typedef struct s_ktable
 {

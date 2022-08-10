@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/08 21:05:53 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/11 00:44:17 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ content)->value);
 }
 
 /*
-converts token list to string list
+converts token list to string list, expand enviroment variable to string, check
+some syntax
 */
 int	tknlst_expander(t_mshell *data)
 {

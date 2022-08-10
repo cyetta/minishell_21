@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/08 21:08:24 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/11 00:36:49 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	err = tknlst_expander(data);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
+
 	return (ERR_OK);
 }
 
