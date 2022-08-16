@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/11 00:36:49 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/17 00:01:25 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
 	err = tknlst_expander(data);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
-
+	err = ld_exec_lst(data);
+	if (err)
+		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
 }
 
@@ -80,6 +82,7 @@ int	init_data(t_mshell *shell_prm, char **argp)
 		return (ERR_INIT_4);
 	shell_prm->tkn_lst = NULL;
 	shell_prm->errlvl = 0;
+	shell_prm->a_env = NULL;
 	return (0);
 }
 

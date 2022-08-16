@@ -11,7 +11,7 @@
 #
 #To install Homebrew on Mac - https://github.com/kube/42homebrew
 #
-#to install readline in Linux do
+#To install readline in Linux do
 #sudo apt update
 #sudo apt install libreadline-dev
 #sudo apt install libreadline8
@@ -21,7 +21,8 @@ BNS_N	=
 
 SRC_N 	= ft_util.c minishell.c builtins1.c builtins2.c ft_error.c ld_env2lst.c \
 		lexer.c lexer_dp.c lexer_qsp.c lexer_rdr.c lexer_util.c \
-		parser_expstr.c parser_util.c parser.c parser_tkn1.c parser_tkn2.c
+		parser_expstr.c parser_util.c parser.c parser_tkn1.c parser_tkn2.c \
+		ld_exec_lst.c
 
 SRC_B 	=
 

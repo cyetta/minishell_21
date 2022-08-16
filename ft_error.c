@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/05 18:52:22 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/17 01:30:56 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	ft_error(int errnum)
 	"Not value. Error ", "Value overflow. Error ", "Initialization error ", \
 	"Initialization error ", "Memory allocation error ", "Error syntax error", \
 	"Open quotes error ", "Syntax error, unexpected token \'|\'. Error ", \
+	"Syntax error, unexpected token \'newline\'. Error ", \
+	"Syntax error, unexpected token \'<\'. Error ", \
+	"Syntax error, unexpected token \'>\'. Error ", \
+	"Syntax error, unexpected token \'>>\'. Error ", \
+	"Syntax error, unexpected token \'<<\'. Error ", \
 	"No commands. Empty line "};
 
 	if (errnum == ERR_USAGE)

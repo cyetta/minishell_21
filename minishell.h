@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/11 02:01:28 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/16 23:37:57 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_lst
 	struct s_lst	*next;
 }					t_lst;
 */
-#define	cmd argv[0]
 
 typedef struct s_prgexec
 {
@@ -45,10 +44,23 @@ typedef struct s_ktable
 	char			*value;
 }	t_ktable;
 
+/*
+Основная структура минишелл
+	*env		-операционный список переменных среды, загружается при запуске
+	*tkn_lst	-список токенов при раборе команды
+	*exec_lst	-список запускаемых команд
+	**a_env		-массив переменных среды, инициализируется при создании списка
+запускаемых команд. ссылка на этот массив в каждой команде.
+конец массива строка из \0
+	errlvl		-errorlvl последней команды
+	*msh_name	-хз, что это и зачем.
+*/
 typedef struct s_mshell
 {
 	t_list	*env;
 	t_list	*tkn_lst;
+	t_list	*exec_lst;
+	char	**a_env;
 	int		errlvl;
 	char	*msh_name;
 }	t_mshell;

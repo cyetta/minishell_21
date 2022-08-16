@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/11 00:44:17 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/17 01:31:55 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	tknlst_expander(t_mshell *data)
 	t_list				*prev;
 	int					err;
 	const t_tkn_func	a_tkn_f[] = {f_tkn_space, f_tkn_quotes, \
-	f_tkn_dquotes, f_tkn_dollar, f_tkn_pipe, f_tkn_space, f_tkn_space, \
-	f_tkn_space, f_tkn_space, f_tkn_str};
+	f_tkn_dquotes, f_tkn_dollar, f_tkn_pipe, f_tkn_redir, f_tkn_redir, \
+	f_tkn_redir, f_tkn_redir, f_tkn_str};
 
 	tknlst_hd = data->tkn_lst;
 	prev = NULL;

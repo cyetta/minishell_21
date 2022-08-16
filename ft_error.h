@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:23 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/05 18:58:49 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/17 01:31:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@
 # define ERR_SYNTAX 7
 # define ERR_SYNTAX_OPNQUOTES 8
 # define ERR_SYNTAX_PIPE 9
-# define ERR_EMPTYCMD 10
+# define ERR_SYNTAX_RDR 10
+# define ERR_SYNTAX_RDR_IN 11
+# define ERR_SYNTAX_RDR_OUT 12
+# define ERR_SYNTAX_RDR_DOUT 13
+# define ERR_SYNTAX_RDR_HDOC 14
+# define ERR_EMPTYCMD 15
 # define ERR_LASTERR ERR_EMPTYCMD
 
 int	ft_error(int errnum);
