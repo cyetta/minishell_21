@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/17 00:01:25 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/18 13:13:24 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ load enviroment variable in list
 */
 int	init_data(t_mshell *shell_prm, char **argp)
 {
-	shell_prm->env = NULL;
-	if (ld_env2lst(&shell_prm->env, argp))
+	shell_prm->env_lst = NULL;
+	if (ld_env2lst(&shell_prm->env_lst, argp))
 		return (ERR_INIT_4);
 	shell_prm->tkn_lst = NULL;
 	shell_prm->errlvl = 0;
@@ -101,7 +101,7 @@ int	main(int argc, char **argv, char **argp)
 		return (ft_error(ERR_USAGE));
 	else if (init_data(&shell_prm, argp))
 		return (ft_error(ERR_INIT_4));
-ft_lstiter(shell_prm.env, ktblitm_prn); // test print env variable list
+ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 	while (1)
 	{
 		s = readline("minishell$ ");
@@ -118,6 +118,6 @@ printf("----\n");
 		ft_lstclear(&shell_prm.tkn_lst, del_tkn_elmnt);
 	}
 	rl_clear_history();
-	ft_lstclear(&shell_prm.env, ktblitm_del);
+	ft_lstclear(&shell_prm.env_lst, ktblitm_del);
 	return (0);
 }
