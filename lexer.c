@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:04:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/07/28 00:19:58 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 20:12:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	new_tkn_elmnt(t_list **new_tkn)
 Print token
 callback function for ft_lstiter()
 */
-void	prn_tkn_elmnt(void *elm)
+void	tkn_elmnt_prn(void *elm)
 {
 	t_token		*itm;
 	static char	*tkn[] = {"SPACESTR", "QUOTES", "DQUOTES", "DOLLAR", "PIPE", \

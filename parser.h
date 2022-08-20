@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:06 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/18 20:03:09 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 19:18:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ int		ld_exec_lst(t_mshell *data);
 int		a_env_init(t_mshell *data);
 void	a_env_free(t_mshell *data);
 char	*ktable2str(t_ktable *itm);
+void	exc_elmt_prn(void *elm);
+void	exc_elmt_del(void *elm);
 #endif

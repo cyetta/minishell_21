@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/18 13:13:24 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 21:09:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,23 @@ int	parse_cmd(t_mshell *data, char *cmd)
 	else
 		add_history(cmd);
 printf("----\n");
-ft_lstiter(data->tkn_lst, prn_tkn_elmnt);
+ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
+printf("----\n");
+ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
+printf("----\n");
+ft_lstiter(data->exec_lst, exc_elmt_prn);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
 }
+
+
 
 void	pr_argvp(int argc, char **argv, char **argp)
 {
@@ -107,15 +113,13 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		s = readline("minishell$ ");
 		if (!s)
 			break ;
-// printf("%s\n", s);
 		err = parse_cmd(&shell_prm, s);
-printf("----\n");
-ft_lstiter(shell_prm.tkn_lst, prn_tkn_elmnt);
-printf("----\n");
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
+		ft_lstclear(&shell_prm.exec_lst, exc_elmt_del);
 		ft_lstclear(&shell_prm.tkn_lst, del_tkn_elmnt);
+		a_env_free(&shell_prm);
 	}
 	rl_clear_history();
 	ft_lstclear(&shell_prm.env_lst, ktblitm_del);

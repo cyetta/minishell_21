@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ld_exec_lst.c                                      :+:      :+:    :+:   */
+/*   exec_lst_ld.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 14:39:54 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 21:13:06 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "lexer.h"
 #include "parser.h"
 #include "ft_error.h"
-#include <sys/stat.h>
-#include <fcntl.h>
 
 /*
 clean enviroment variable array
@@ -76,6 +77,26 @@ void	exc_elmt_del(void *elm)
 	free(i);
 }
 
+/*
+Print exec element, callback function for ft_lstiter
+*/
+void	exc_elmt_prn(void *elm)
+{
+	t_prgexec	*p;
+	int			i;
+
+	p = (t_prgexec *)elm;
+	i = 0;
+	printf("----\n");
+	while (p->argv[i])
+		printf("%s\n", p->argv[i++]);
+	printf("---\nstdin - %d\nstout - %d\nenv - %p\n---\n", p->f_stdin, \
+	p->f_stout, p->mdata->a_env);
+}
+
+/*
+count string for one exec module
+*/
 int	count_tkn_str(t_list *t)
 {
 	int		cnt;
@@ -83,13 +104,14 @@ int	count_tkn_str(t_list *t)
 	cnt = 0;
 	while (t && ((t_token *)t->content)->e_lxm != PIPE)
 	{
-		if (((t_token *)t->content)->e_lxm != STRINGLN)
+		if (((t_token *)t->content)->e_lxm == STRINGLN)
 			cnt++;
 		else if (((t_token *)(t)->content)->e_lxm >= PIPE && \
 	((t_token *)(t)->content)->e_lxm <= HERE_DOC)
 			t = t->next;
 		t = t->next;
 	}
+	return (cnt);
 }
 
 /*
@@ -98,11 +120,13 @@ return ERR_OK if no error open files
  */
 int	open_rdr(t_list **t, t_prgexec *p, t_mshell *data)
 {
+	(void)p;
+	(void)data;
 	*t = (*t)->next;
 	return (ERR_OK);
 }
 
-t_prgexec	*crt_exc_elmt(t_list *t)
+static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 {
 	int			cnt;
 	int			i;
@@ -131,18 +155,18 @@ return err or ERR_OK
 int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
 {
 	int			cnt;
-	int			i;
 	int			err;
 
+	(*ret) = crt_exc_elmt(*t, data);
 	err = ERR_OK;
 	cnt = 0;
 	while (*t && ((t_token *)(*t)->content)->e_lxm != PIPE)
 	{
-		if (((t_token *)(*t)->content)->e_lxm != STRINGLN)
+		if (((t_token *)(*t)->content)->e_lxm == STRINGLN)
 			(*ret)->argv[cnt++] = ((t_token *)(*t)->content)->value;
 		else if (((t_token *)(*t)->content)->e_lxm >= PIPE && \
 	((t_token *)(*t)->content)->e_lxm <= HERE_DOC)
-			err = open_rdr(t, ret, data);
+			err = open_rdr(t, *ret, data);
 		if (err)
 			return (err);
 		*t = (*t)->next;
@@ -167,13 +191,14 @@ int	ld_exec_lst(t_mshell *data)
 	while (t)
 	{
 		err = new_exc_elmt(&exec_i, &t, data);
-		if (!err)
+		if (err)
 			break ;
 		lst_i = ft_lstnew(exec_i);
 		if (!lst_i)
 			exit(ft_error(ERR_MALLOC));
 		ft_lstadd_back(&data->exec_lst, lst_i);
-		t = t->next;
+		if (t)
+			t = t->next;
 	}
 	if (err == ERR_OK)
 		return (err);

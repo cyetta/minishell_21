@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:02:10 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/25 15:48:41 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 20:11:50 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		lexer(t_list **tkn_lst, char *str);
 int		new_tkn_elmnt(t_list **new_tkn);
 void	del_tkn_elmnt(void *elm);
 int		is_reserved(char ch);
-void	prn_tkn_elmnt(void *elm);
+void	tkn_elmnt_prn(void *elm);
 char	*get_subs(char *str, int *pos);
 int		add_tkn_sp(t_list **tkn_lst, char *str, int *pos);
 int		add_tkn_quotes(t_list **tkn_lst, char *str, int *pos);
