@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/18 14:38:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 14:39:54 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,8 @@
 #include "lexer.h"
 #include "parser.h"
 #include "ft_error.h"
-
-/*
-converts struct t_ktabe to allocated string
-key=value
-*/
-char	*ktable2str(t_ktable *itm)
-{
-	char	*str;
-	char	*tmp;
-
-	str = ft_strdup(itm->key);
-	if (!str)
-		exit(ft_error(ERR_MALLOC));
-	tmp = ft_strjoin(str, "=");
-	free(str);
-	if (!tmp)
-		exit(ft_error(ERR_MALLOC));
-	str = ft_strjoin(tmp, itm->value);
-	free(tmp);
-	if (!str)
-		exit(ft_error(ERR_MALLOC));
-	return (str);
-}
+#include <sys/stat.h>
+#include <fcntl.h>
 
 /*
 clean enviroment variable array
@@ -57,7 +36,7 @@ void	a_env_free(t_mshell *data)
 }
 
 /*
-load enviroment variable array for command with actual value from list
+load in enviroment variable array an actuals values for execution command
 */
 int	a_env_init(t_mshell *data)
 {
@@ -81,11 +60,127 @@ int	a_env_init(t_mshell *data)
 	return (ERR_OK);
 }
 
+/*
+Clear exec element, callback function for ft_lstclear
+*/
+void	exc_elmt_del(void *elm)
+{
+	t_prgexec	*i;
+
+	i = (t_prgexec *)elm;
+	free(i->argv);
+	if (i->f_stdin != 0)
+		close(i->f_stdin);
+	if (i->f_stout != 1)
+		close(i->f_stout);
+	free(i);
+}
+
+int	count_tkn_str(t_list *t)
+{
+	int		cnt;
+
+	cnt = 0;
+	while (t && ((t_token *)t->content)->e_lxm != PIPE)
+	{
+		if (((t_token *)t->content)->e_lxm != STRINGLN)
+			cnt++;
+		else if (((t_token *)(t)->content)->e_lxm >= PIPE && \
+	((t_token *)(t)->content)->e_lxm <= HERE_DOC)
+			t = t->next;
+		t = t->next;
+	}
+}
+
+/*
+Open\close redirection files for exec element.
+return ERR_OK if no error open files
+ */
+int	open_rdr(t_list **t, t_prgexec *p, t_mshell *data)
+{
+	*t = (*t)->next;
+	return (ERR_OK);
+}
+
+t_prgexec	*crt_exc_elmt(t_list *t)
+{
+	int			cnt;
+	int			i;
+	t_prgexec	*ret;
+
+	ret = malloc(sizeof(t_prgexec));
+	if (!ret)
+		exit(ft_error(ERR_MALLOC));
+	cnt = count_tkn_str(t);
+	ret->argv = malloc(sizeof(char *) * (++cnt));
+	if (!ret->argv)
+		exit(ft_error(ERR_MALLOC));
+	i = -1;
+	while (++i < cnt)
+		ret->argv[i] = NULL;
+	ret->mdata = data;
+	ret->f_stdin = 0;
+	ret->f_stout = 1;
+	return (ret);
+}
+
+/*
+Create new exec element from token list, open\close files for redirection
+return err or ERR_OK
+ */
+int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
+{
+	int			cnt;
+	int			i;
+	int			err;
+
+	err = ERR_OK;
+	cnt = 0;
+	while (*t && ((t_token *)(*t)->content)->e_lxm != PIPE)
+	{
+		if (((t_token *)(*t)->content)->e_lxm != STRINGLN)
+			(*ret)->argv[cnt++] = ((t_token *)(*t)->content)->value;
+		else if (((t_token *)(*t)->content)->e_lxm >= PIPE && \
+	((t_token *)(*t)->content)->e_lxm <= HERE_DOC)
+			err = open_rdr(t, ret, data);
+		if (err)
+			return (err);
+		*t = (*t)->next;
+	}
+	return (err);
+}
+
+/*
+Create command list for execution
+return error or ERR_OK
+*/
 int	ld_exec_lst(t_mshell *data)
 {
+	t_list		*t;
+	t_list		*lst_i;
+	t_prgexec	*exec_i;
+	int			err;
+
 	data->exec_lst = NULL;
 	a_env_init(data);
-	return (ERR_OK);
+	t = data->tkn_lst;
+	while (t)
+	{
+		err = new_exc_elmt(&exec_i, &t, data);
+		if (!err)
+			break ;
+		lst_i = ft_lstnew(exec_i);
+		if (!lst_i)
+			exit(ft_error(ERR_MALLOC));
+		ft_lstadd_back(&data->exec_lst, lst_i);
+		t = t->next;
+	}
+	if (err == ERR_OK)
+		return (err);
+	ft_lstclear(&data->exec_lst, exc_elmt_del);
+	if (exec_i)
+		exc_elmt_del((void *) exec_i);
+	return (err);
 }
 /* 	int	i = -1;
 	while ((data->a_env)[++i])

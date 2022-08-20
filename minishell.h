@@ -6,37 +6,13 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/18 13:10:44 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/19 00:35:24 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "ft_lib/libft.h"
-
-/*
-typedef struct s_toexeclst{
-	t_prgexec			*prgm;
-	struct s_toexeclst	*next;
-}	t_toexeclst;
-
-typedef struct s_lst
-{
-	int				type;
-	char			*value;
-	char			**cmd;
-	int				str_position;
-	struct s_lst	*next;
-}					t_lst;
-*/
-
-typedef struct s_prgexec
-{
-	char	**argv;
-	char	**envp;
-	int		f_stdin;
-	int		f_stout;
-}	t_prgexec;
 
 typedef struct s_ktable
 {
@@ -65,7 +41,16 @@ typedef struct s_mshell
 	char	*msh_name;
 }	t_mshell;
 
+typedef struct s_prgexec
+{
+	char		**argv;
+	t_mshell	*mdata;
+	int			f_stdin;
+	int			f_stout;
+}	t_prgexec;
+
 t_ktable	*get_envitm(char *str);
+char		*ktable2str(t_ktable *itm);
 void		ktblitm_del(void *elm);
 void		ktblitm_prn(void *elm);
 int			ld_env2lst(t_list **lst, char **argp);

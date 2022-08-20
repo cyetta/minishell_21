@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 20:53:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/19 16:20:13 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/18 20:11:26 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,29 @@ t_ktable	*get_envitm(char *str)
 		return (NULL);
 	}
 	return (envitm);
+}
+
+/*
+converts struct t_ktabe to allocated string
+key=value
+*/
+char	*ktable2str(t_ktable *itm)
+{
+	char	*str;
+	char	*tmp;
+
+	str = ft_strdup(itm->key);
+	if (!str)
+		exit(ft_error(ERR_MALLOC));
+	tmp = ft_strjoin(str, "=");
+	free(str);
+	if (!tmp)
+		exit(ft_error(ERR_MALLOC));
+	str = ft_strjoin(tmp, itm->value);
+	free(tmp);
+	if (!str)
+		exit(ft_error(ERR_MALLOC));
+	return (str);
 }
 
 int	ld_env2lst(t_list **lst, char **argp)

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/17 01:30:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/20 00:36:52 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_error(int errnum)
 	"Syntax error, unexpected token \'>\'. Error ", \
 	"Syntax error, unexpected token \'>>\'. Error ", \
 	"Syntax error, unexpected token \'<<\'. Error ", \
-	"No commands. Empty line "};
+	"No file or directory found. Error", "No commands. Empty line "};
 
 	if (errnum == ERR_USAGE)
 		return (err_prnt(msg[errnum], errnum));
