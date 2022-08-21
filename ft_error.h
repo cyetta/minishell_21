@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:23 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 00:36:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/21 20:32:41 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@
 # define ERR_SYNTAX_RDR_DOUT 13
 # define ERR_SYNTAX_RDR_HDOC 14
 # define ERR_NOFILESFOUND 15
-# define ERR_EMPTYCMD 16
+# define ERR_FILEACCCESERR 16
+# define ERR_SYNTAX_ERRNO 17
+# define ERR_EMPTYCMD 18
 # define ERR_LASTERR ERR_EMPTYCMD
 
+int	err_prnt3n(const char *msg1, const char *msg2, const char *msg3, int err);
+int	err_msg(const char *msg, int err);
 int	ft_error(int errnum);
 int	is_syntax_err(int err);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:06 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 19:18:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/21 18:41:32 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,9 @@ void	a_env_free(t_mshell *data);
 char	*ktable2str(t_ktable *itm);
 void	exc_elmt_prn(void *elm);
 void	exc_elmt_del(void *elm);
+int		open_rdr(t_list **t, t_prgexec *p, t_mshell *data);
+int		f_rdrin(t_list **t, t_prgexec *p, t_mshell *data);
+int		f_rdrout(t_list **t, t_prgexec *p, t_mshell *data);
+int		f_rdr2out(t_list **t, t_prgexec *p, t_mshell *data);
+int		f_rdrhere(t_list **t, t_prgexec *p, t_mshell *data);
 #endif

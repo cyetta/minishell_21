@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 21:09:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/21 21:26:47 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,22 @@ int	parse_cmd(t_mshell *data, char *cmd)
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, del_tkn_elmnt);
 	else
 		add_history(cmd);
-printf("----\n");
 ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+printf("----\n");
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
-printf("----\n");
 ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+printf("----\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
-printf("----\n");
 ft_lstiter(data->exec_lst, exc_elmt_prn);
+printf("----\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
 }
-
-
 
 void	pr_argvp(int argc, char **argv, char **argp)
 {
@@ -89,6 +87,7 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	shell_prm->tkn_lst = NULL;
 	shell_prm->errlvl = 0;
 	shell_prm->a_env = NULL;
+	shell_prm->hdoc_cnt = 0;
 	return (0);
 }
 

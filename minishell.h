@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 18:39:06 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/21 21:28:59 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_ktable
 запускаемых команд. ссылка на этот массив в каждой команде s_prgexec через mdata
 конец массива строка из \0
 	errlvl		-errorlvl последней команды
+	hdoc_cnt	счетчик heredoc
 	*msh_name	-хз, что это и зачем.
 */
 typedef struct s_mshell
@@ -38,6 +39,7 @@ typedef struct s_mshell
 	t_list	*exec_lst;
 	char	**a_env;
 	int		errlvl;
+	int		hdoc_cnt;
 	char	*msh_name;
 }	t_mshell;
 
@@ -47,6 +49,7 @@ typedef struct s_prgexec
 	t_mshell	*mdata;
 	int			f_stdin;
 	int			f_stout;
+	int			pipe;
 }	t_prgexec;
 
 t_ktable	*get_envitm(char *str);

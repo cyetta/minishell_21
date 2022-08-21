@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 21:13:06 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/21 21:11:37 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	exc_elmt_prn(void *elm)
 
 	p = (t_prgexec *)elm;
 	i = 0;
-	printf("----\n");
+	printf("--- exec %p ---\n", p);
 	while (p->argv[i])
 		printf("%s\n", p->argv[i++]);
-	printf("---\nstdin - %d\nstout - %d\nenv - %p\n---\n", p->f_stdin, \
-	p->f_stout, p->mdata->a_env);
+	printf("--- redir ---\nstdin - %d\nstout - %d\npipe - %d\nenv - \
+	%p\n---\n", p->f_stdin, p->f_stout, p->pipe, p->mdata->a_env);
 }
 
 /*
@@ -114,18 +114,6 @@ int	count_tkn_str(t_list *t)
 	return (cnt);
 }
 
-/*
-Open\close redirection files for exec element.
-return ERR_OK if no error open files
- */
-int	open_rdr(t_list **t, t_prgexec *p, t_mshell *data)
-{
-	(void)p;
-	(void)data;
-	*t = (*t)->next;
-	return (ERR_OK);
-}
-
 static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 {
 	int			cnt;
@@ -145,6 +133,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 	ret->mdata = data;
 	ret->f_stdin = 0;
 	ret->f_stout = 1;
+	ret->pipe = 0;
 	return (ret);
 }
 
@@ -171,6 +160,8 @@ int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
 			return (err);
 		*t = (*t)->next;
 	}
+	if (*t && ((t_token *)(*t)->content)->e_lxm == PIPE)
+		(*ret)->pipe = 1;
 	return (err);
 }
 
