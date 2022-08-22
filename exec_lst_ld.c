@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_ld.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/21 21:11:37 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/22 01:31:55 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	exc_elmt_del(void *elm)
 
 	i = (t_prgexec *)elm;
 	free(i->argv);
-	if (i->f_stdin != 0)
+	if (i->f_stdin > 0)
 		close(i->f_stdin);
-	if (i->f_stout != 1)
+	if (i->f_stout > 1)
 		close(i->f_stout);
 	free(i);
 }
