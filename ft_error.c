@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/21 20:44:08 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/24 20:26:30 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 #include "ft_error.h"
 #include "ft_lib/libft.h"
 
+/*
+writes error messages 1, 2, 3 to stderr with ':' 
+writes EOL if 3 messages are printed
+*/
 int	err_prnt3n(const char *msg1, const char *msg2, const char *msg3, int err)
 {
 	if (!msg1)
@@ -74,7 +78,7 @@ int	ft_error(int errnum)
 	"Syntax error, unexpected token \'>\'.", \
 	"Syntax error, unexpected token \'>>\'.", \
 	"Syntax error, unexpected token \'<<\'.", \
-	"No file or directory found.", "File or directory access error.", \
+	"No file or directory found.", "Temporary file access error.", \
 	"", "No commands. Empty line."};
 
 	if (errnum == ERR_USAGE)

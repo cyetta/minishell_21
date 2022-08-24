@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_rdr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/22 02:58:10 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/24 16:28:46 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,6 @@ int	f_rdr2out(t_list **t, t_prgexec *p, t_mshell *data)
 	if (p->f_stout == -1)
 		return (err_prnt3n("minishell", ((t_token *) \
 	(*t)->next->content)->value, strerror(errno), ERR_SYNTAX_ERRNO));
-	*t = (*t)->next;
-	return (ERR_OK);
-}
-
-int	f_rdrhere(t_list **t, t_prgexec *p, t_mshell *data)
-{
-	(void)p;
-	(void)data;
 	*t = (*t)->next;
 	return (ERR_OK);
 }
