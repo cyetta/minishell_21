@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/24 22:06:17 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/25 22:03:06 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*append_tmpfname(char *src_path, t_mshell *data)
 
 /*
 Creates (malloc) path to a temporary file by environment variable
+if tmpenv == "" create tmpfile in currentdir
 returns path to tmp file or null string if TMP variable is not found
 */
 char	*get_tmpfname(const char *tmpenv, t_mshell *data)
@@ -77,11 +78,16 @@ char	*get_tmpfname(const char *tmpenv, t_mshell *data)
 	char	*path;
 	char	*t;
 
-	path = get_envvalue(tmpenv, data->env_lst);
-	if (!path)
-		exit(ft_error(ERR_MALLOC));
-	if (!*path)
-		return (path);
+	if (*tmpenv != '\0')
+	{
+		path = get_envvalue(tmpenv, data->env_lst);
+		if (!path)
+			exit(ft_error(ERR_MALLOC));
+		if (!*path)
+			return (path);
+	}
+	else
+		path = ft_strdup("");
 	t = path;
 	path = append_tmpfname(t, data);
 	free (t);

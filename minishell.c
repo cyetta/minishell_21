@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/21 21:26:47 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/25 20:40:56 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	return (0);
 }
 
+void	clear_data(t_mshell *shell_prm)
+{
+	ft_lstclear(&shell_prm->exec_lst, exc_elmt_del);
+	ft_lstclear(&shell_prm->tkn_lst, del_tkn_elmnt);
+	a_env_free(shell_prm);
+	unlink_hdoc(shell_prm);
+}
+
 	// (void) argc;
 	// (void) argv;
 	// (void) argp;
@@ -116,11 +124,9 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
-		ft_lstclear(&shell_prm.exec_lst, exc_elmt_del);
-		ft_lstclear(&shell_prm.tkn_lst, del_tkn_elmnt);
-		a_env_free(&shell_prm);
+		clear_data(&shell_prm);
 	}
 	rl_clear_history();
-	ft_lstclear(&shell_prm.env_lst, ktblitm_del);
+	clear_data(&shell_prm);
 	return (0);
 }

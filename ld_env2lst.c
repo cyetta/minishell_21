@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_env2lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 20:53:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/18 20:11:26 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/25 16:37:11 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ktblitm_prn(void *elm)
 
 /*
 Create new element of environment list
-return pointer to struct t_ktable
+return pointer to struct t_ktable (key, value)
 */
 t_ktable	*get_envitm(char *str)
 {
@@ -75,7 +75,7 @@ t_ktable	*get_envitm(char *str)
 }
 
 /*
-converts struct t_ktabe to allocated string
+converts struct t_ktabe to string(malloc)
 key=value
 */
 char	*ktable2str(t_ktable *itm)
@@ -97,6 +97,9 @@ char	*ktable2str(t_ktable *itm)
 	return (str);
 }
 
+/*
+loads environment variable array to list t_ktable(key, value)
+*/
 int	ld_env2lst(t_list **lst, char **argp)
 {
 	t_list		*t;

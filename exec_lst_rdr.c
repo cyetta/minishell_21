@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/24 16:28:46 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/25 17:18:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ return ERR_OK if no error open files
 int	open_rdr(t_list **t, t_prgexec *p, t_mshell *data)
 {
 	int					err;
-	const t_rdr_func	a_tkn_f[] = {f_rdrin, f_rdrout, f_rdr2out, f_rdrhere};
+	const t_rdr_func	a_tkn_f[] = {f_rdrin, f_rdrout, f_rdr2out, f_rdrhdoc};
 
 	if (!(*t)->next || ((t_token *)(*t)->next->content)->e_lxm != STRINGLN)
 		return (ERR_NOFILESFOUND);
