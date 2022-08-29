@@ -6,13 +6,14 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 16:23:00 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:04:52 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "ft_lib/libft.h"
+# include <pthread.h>
 
 typedef struct s_ktable
 {
@@ -52,6 +53,7 @@ typedef struct s_prgexec
 	t_mshell	*mdata;
 	int			f_stdin;
 	int			f_stout;
+	pid_t		cmd_pid;
 	int			pipe;
 }	t_prgexec;
 
