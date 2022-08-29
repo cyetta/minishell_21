@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 21:09:42 by cyetta           ###   ########.fr       */
+/*   Created: 2022/08/29 20:17:44 by cyetta            #+#    #+#             */
+/*   Updated: 2022/08/29 20:22:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-int		is_builtin(char *cmd);
-void	buitin_echo(void);
-void	buitin_cd(void);
-void	buitin_pwd(void);
-void	buitin_export(void);
-void	buitin_unset(void);
-void	buitin_env(void);
-void	buitin_exit(void);
+int	exec_cmd(t_mshell *data);
+int	exec_checkcmd(t_mshell *data);
 #endif

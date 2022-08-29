@@ -3,12 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/09 21:59:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/29 21:09:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_util.h"
+/*
+if command is builtin execute and
+return execute status
+*/
+int	is_builtin(char *cmd)
+{
+	static char	*bltin = "echo cd pwd export unset env exit";
+	char		subs;
+
+	subs = ft_strnstr(bltin, cmd, ft_strlen(cmd));
+	if (subs)
+		return (1);
+	return (0);
+}
 
 /*
 echo with option -n
@@ -29,13 +45,4 @@ pwd with no options
  */
 void	buitin_pwd(void)
 {
-}
-
-/*
-if command is builtin execute and
-return execute status
-*/
-int	is_builtin(void)
-{
-	return (0);
 }

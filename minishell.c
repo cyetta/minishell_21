@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 20:40:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:20:01 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "minishell.h"
 #include "lexer.h"
 #include "parser.h"
+#include "executor.h"
 
 int	parse_cmd(t_mshell *data, char *cmd)
 {
@@ -49,6 +50,17 @@ printf("----\n");
 	return (ERR_OK);
 }
 
+int	exec_cmd(t_mshell *data)
+{
+	int	err;
+
+	err = exec_checkcmd(data);
+	if (err)
+		return (is_syntax_err(ft_error(err)));
+	return (ERR_OK);
+}
+
+/*
 void	pr_argvp(int argc, char **argv, char **argp)
 {
 	int		i;
@@ -61,7 +73,7 @@ void	pr_argvp(int argc, char **argv, char **argp)
 		printf("%s\n", argp[i]);
 }
 
-/* 	t_list		*lst;
+ 	t_list		*lst;
 	t_ktable	*itm;
 	int			i;
 
@@ -124,6 +136,7 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
+		err = exec_cmd(&shell_prm);
 		clear_data(&shell_prm);
 	}
 	rl_clear_history();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 18:58:24 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/27 01:57:48 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:43:12 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ Apply the cmp(key, lst->content) function to the contents of the list
 until it returns true
 returns a pointer to the content on the first equality
 or NULL, if nothing finded
+int(*cmp)(void *key, void *content)
 */
 void	*ft_lstsearch(t_list *lst, void *key, int (*cmp)(void *, void *))
 {
