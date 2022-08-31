@@ -6,93 +6,80 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/30 03:21:08 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 02:26:12 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 #include "ft_error.h"
 #include "ft_util.h"
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
 
-char	*get_path(char **env)
+/*
+инит для обхода 25 строк
+*/
+static char	*findexecbypathinit(char *cmd, char	**a_path, char *vpath)
 {
-	int		i;
-	char	*path;
-	char	*p;
-
-	i=-1;
-	while(env[++i])
-		if(!ft_strncmp(env[i], "PATH", 4))
-			break ;
-	if(!env[i])
-		path = ft_strdup(".:/usr/bin:/bin");
-	else
-	{
-		p = ft_strchr(env[i], '=');
-		if (!p || !*(p + 1))
-			path = ft_strdup(".:/usr/bin:/bin");
-		else
-			path = ft_strdup(++p);
-	}
-	if(!path)
-		exit(ft_error(ERR_MALLOC));
-	return (path);
-}
-
-char	*findexecbypath(cmd, path)
-{
-	char	**a_path;
 	char	*t;
-	char	*ret;
-	int		i;
 
-	a_path = ft_split(path, ':');
+	a_path = ft_split(vpath, ':');
 	if (!a_path)
 		exit(ft_error(ERR_MALLOC));
 	t = ft_strjoin("/", cmd);
 	if (!t)
 		exit(ft_error(ERR_MALLOC));
-	i = -1;
-	while(a_path[++i])
-	{
-		ret = ft_strjoin(a_path[i], t);
-		if (!t)
-			exit(ft_error(ERR_MALLOC));
-		if (!access(ret, X_OK))
-			break;
-		else if(errno == )
-	}
-	free(t);
-
+	return (t);
 }
 
 /*
-create(malloc) lunch string for execve
-not checks for bultin
+return для обхода 25 строк
 */
-char	*getexecpath(char *cmd, char **env)
+static char	*findexecbypathret(int err, char *cmd, char *ret)
 {
-	char	*ret;
-	char	*path;
+	if (err == ERR_NOFILESFOUND)
+		err_prnt3n("minishell", cmd, " command not found", ERR_NOFILESFOUND);
+	else if (err == ERR_OK)
+		return (ret);
+	else if (err == ERR_SYNTAX_ERRNO)
+		free(ret);
+	return (NULL);
+}
 
-	if (ft_strrchr(cmd, '/'))
+/*
+ищет команду в переменной окружения $PATH,
+команда не должна быть по абсолютному или относительному пути
+возвращает абсолютный путь к команде, если он существует
+или NULL если команда не найдена.
+если ошибка или команда не найдена выводит сообщение
+*/
+char	*findexecbypath(char *cmd, char *vpath)
+{
+	char	**a_path;
+	char	*t;
+	char	*ret;
+	int		i;
+	int		err;
+
+	t = findexecbypathinit(cmd, a_path, vpath);
+	i = -1;
+	while (a_path[++i])
 	{
-		ret = ft_strdup(cmd);
+		ret = ft_strjoin(a_path[i], t);
 		if (!ret)
 			exit(ft_error(ERR_MALLOC));
+		err = is_cmd_exist(ret);
+		if (err != ERR_NOFILESFOUND)
+			break ;
+		free(ret);
+		free(a_path[i]);
 	}
-	else
-	{
-		path = get_path(env);
-		ret = findexecbypath(cmd, path);
-		free(path);
-	}
-
-	return(ret);
+	free(t);
+	free(a_path);
+	return (findexecbypathret(err, cmd, ret));
 }
 
 /*
@@ -119,5 +106,5 @@ int	exec_checkcmd(t_mshell *data)
 	t_prgexec	*err_cmd;
 
 	err_cmd = ft_lstsearch(data->exec_lst, data, checkpath);
-
+	return (ERR_OK);
 }
