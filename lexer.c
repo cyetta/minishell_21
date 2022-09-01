@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:04:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/20 20:12:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:51:24 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	tkn_elmnt_prn(void *elm)
 Frees tokens content and itself
 Callback function for ft_lstclear()
 */
-void	del_tkn_elmnt(void *elm)
+void	tkn_elmnt_del(void *elm)
 {
 	t_token	*tkn;
 
@@ -100,7 +100,7 @@ int	lexer(t_list **tkn_lst, char *str)
 		err = add_tkn(tkn_lst, str, &i);
 		if (err)
 		{
-			ft_lstclear(tkn_lst, del_tkn_elmnt);
+			ft_lstclear(tkn_lst, tkn_elmnt_del);
 			return (err);
 		}
 	}

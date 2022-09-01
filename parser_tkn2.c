@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tkn2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/17 01:36:36 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:56:59 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	f_tkn_dollar(t_list **tknlst_hd, t_mshell *data)
 		return (ERR_MALLOC);
 	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
 	== STRINGLN)
-		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
+		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, tkn_elmnt_del);
 	((t_token *)(*tknlst_hd)->content)->e_lxm = STRINGLN;
 	return (ERR_OK);
 }
@@ -44,7 +44,7 @@ int	f_tkn_redir(t_list **tknlst_hd, t_mshell *data)
 	if (!(*tknlst_hd)->next)
 		return (ERR_SYNTAX_RDR);
 	if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == SPACESTR)
-		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
+		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, tkn_elmnt_del);
 	if (!(*tknlst_hd)->next)
 		return (ERR_SYNTAX_RDR);
 	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == PIPE)

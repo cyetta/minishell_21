@@ -3,22 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check_u.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 02:24:55 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:11:15 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
 #include "ft_error.h"
 #include "ft_util.h"
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
 
+/*
+Возвращает(malloc) значение $PATH или значение по умолчанию если 
+переменная не найдена или пустая
+*/
 char	*get_path(char **env)
 {
 	int		i;
@@ -45,7 +50,7 @@ char	*get_path(char **env)
 }
 
 /*
-проверяет запускается ли команда по заданному пути
+проверяет существует ли команда по заданному пути
 возвращает
 ERR_OK - команда существует и запускается
 ERR_NOFILESFOUND - команда не найдена, сообщений нет
@@ -62,26 +67,67 @@ int	is_cmd_exist(char *cmd)
 }
 
 /*
-create(malloc) lunch string for execve
-not checks for bultin
-return absolut or relative path
+инит для обхода 25 строк
 */
-char	*getexecpath(char *cmd, char **env)
+static char	*findexecbypathinit(char *cmd, char	***a_path, char *vpath)
 {
-	char	*ret;
-	char	*path;
+	char	*t;
 
-	if (ft_strrchr(cmd, '/'))
+	*a_path = ft_split(vpath, ':');
+	if (!*a_path)
+		exit(ft_error(ERR_MALLOC));
+	t = ft_strjoin("/", cmd);
+	if (!t)
+		exit(ft_error(ERR_MALLOC));
+	return (t);
+}
+
+/*
+return для обхода 25 строк
+проверка ошибок существования команды
+*/
+char	*findexecbypathret(int err, char *cmd, char *ret)
+{
+	if (err == ERR_NOFILESFOUND)
+		err_prnt3n("minishell", cmd, " command not found", ERR_NOFILESFOUND);
+	else if (err == ERR_OK)
+		return (ret);
+	else if (err == ERR_SYNTAX_ERRNO)
+		free(ret);
+	return (NULL);
+}
+
+/*
+ищет команду в переменной окружения $PATH,
+команда не должна быть по абсолютному или относительному пути
+возвращает абсолютный путь к команде, если он существует
+или NULL если команда не найдена.
+если ошибка или команда не найдена выводит сообщение
+*/
+char	*findexecbypath(char *cmd, char *vpath)
+{
+	char	**a_path;
+	char	*t;
+	char	*ret;
+	int		i;
+	int		err;
+
+	t = findexecbypathinit(cmd, &a_path, vpath);
+	i = -1;
+	while (a_path[++i])
 	{
-		ret = ft_strdup(cmd);
+		ret = ft_strjoin(a_path[i], t);
 		if (!ret)
 			exit(ft_error(ERR_MALLOC));
+		err = is_cmd_exist(ret);
+		if (err != ERR_NOFILESFOUND)
+			break ;
+		free(ret);
 	}
-	else
-	{
-		path = get_path(env);
-		ret = findexecbypath(cmd, path);
-		free(path);
-	}
-	return (ret);
+	free(t);
+	i = -1;
+	while (a_path[++i])
+		free(a_path[i]);
+	free(a_path);
+	return (findexecbypathret(err, cmd, ret));
 }

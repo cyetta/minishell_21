@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 21:09:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 18:40:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ return execute status
 int	is_builtin(char *cmd)
 {
 	static char	*bltin = "echo cd pwd export unset env exit";
-	char		subs;
+	char		*subs;
 
 	subs = ft_strnstr(bltin, cmd, ft_strlen(cmd));
 	if (subs)

@@ -64,13 +64,13 @@ all:	${NAME}
 include ${wildcard ${DPDS}}
 
 ${DIR_LIBFT}libft.a:
-#	${MAKE} CFLAG="${CFLAGS} -g3" -C ${DIR_LIBFT}
-	${MAKE} -C ${DIR_LIBFT}
+	${MAKE} CFLAG="${CFLAGS} -g3" -C ${DIR_LIBFT}
+#	${MAKE} -C ${DIR_LIBFT}
 
 ${NAME}: ${DIR_LIBFT}libft.a ${OBJ_P}
 	${CC} ${CFLAGS} -o $@ ${OBJ_P} -L ${DIR_LIBFT} -lft ${LIBRDLN}
 
-debug: ${DIR_LIBFT}libft.a
+debug:
 #	${MAKE} CFLAGS="${CFLAGS} -g3" libft.a
 	${MAKE} CFLAGS="${CFLAGS} -g3" ${NAME}
 

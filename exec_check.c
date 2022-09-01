@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 02:26:12 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 21:25:25 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,91 +20,61 @@
 #include "builtins.h"
 
 /*
-инит для обхода 25 строк
+Create (malloc) command execution string for execve. Not checked for bultin.
+Returns absolute or relative path or NULL in case of error.
+if there is an error, prints an error message
 */
-static char	*findexecbypathinit(char *cmd, char	**a_path, char *vpath)
+char	*getexecpath(char *cmd, char **env)
 {
-	char	*t;
-
-	a_path = ft_split(vpath, ':');
-	if (!a_path)
-		exit(ft_error(ERR_MALLOC));
-	t = ft_strjoin("/", cmd);
-	if (!t)
-		exit(ft_error(ERR_MALLOC));
-	return (t);
-}
-
-/*
-return для обхода 25 строк
-*/
-static char	*findexecbypathret(int err, char *cmd, char *ret)
-{
-	if (err == ERR_NOFILESFOUND)
-		err_prnt3n("minishell", cmd, " command not found", ERR_NOFILESFOUND);
-	else if (err == ERR_OK)
-		return (ret);
-	else if (err == ERR_SYNTAX_ERRNO)
-		free(ret);
-	return (NULL);
-}
-
-/*
-ищет команду в переменной окружения $PATH,
-команда не должна быть по абсолютному или относительному пути
-возвращает абсолютный путь к команде, если он существует
-или NULL если команда не найдена.
-если ошибка или команда не найдена выводит сообщение
-*/
-char	*findexecbypath(char *cmd, char *vpath)
-{
-	char	**a_path;
-	char	*t;
 	char	*ret;
-	int		i;
+	char	*path;
 	int		err;
 
-	t = findexecbypathinit(cmd, a_path, vpath);
-	i = -1;
-	while (a_path[++i])
+	if (ft_strrchr(cmd, '/'))
 	{
-		ret = ft_strjoin(a_path[i], t);
+		ret = ft_strdup(cmd);
 		if (!ret)
 			exit(ft_error(ERR_MALLOC));
 		err = is_cmd_exist(ret);
-		if (err != ERR_NOFILESFOUND)
-			break ;
-		free(ret);
-		free(a_path[i]);
+		ret = findexecbypathret(err, cmd, ret);
 	}
-	free(t);
-	free(a_path);
-	return (findexecbypathret(err, cmd, ret));
+	else
+	{
+		path = get_path(env);
+		ret = findexecbypath(cmd, path);
+		free(path);
+	}
+	return (ret);
 }
 
 /*
-check for exist command in content
-return 0 if command exit
-return 1 if command not exist
+Колбэк функция итератора обхода списка, формирует путь/команда для работы 
+execve в t_prgexec.execmd
 */
-int	checkpath(void *key, void *content)
+void	exec_createpath(void *content)
 {
-	t_mshell	*data;
 	t_prgexec	*cmd;
 
-	data = (t_mshell *)key;
 	cmd = (t_prgexec *)content;
 	if (is_builtin(cmd->argv[0]))
-		return (0);
-	if (!ft_strrchr(cmd->argv[0], '/'))
-		return (findbypath(cmd->argv[0], data->a_env));
-	return (1);
+	{
+		cmd->execmd = ft_strdup(cmd->argv[0]);
+		if (!cmd->execmd)
+			exit(ft_error(ERR_MALLOC));
+	}
+	else
+		cmd->execmd = getexecpath(cmd->argv[0], cmd->mdata->a_env);
 }
 
+/*
+Проверяет доступность команд в списке к запуску, если команда не доступна
+в t_prgexec.execmd записывается NULL и выводится сообщение об ошибке 
+или путь для запуска, абсолютный или относительный
+при запуске NULL команды игнорируются
+билдины записываются без пути
+*/
 int	exec_checkcmd(t_mshell *data)
 {
-	t_prgexec	*err_cmd;
-
-	err_cmd = ft_lstsearch(data->exec_lst, data, checkpath);
+	ft_lstiter(data->exec_lst, exec_createpath);
 	return (ERR_OK);
 }

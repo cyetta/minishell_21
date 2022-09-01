@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 20:45:12 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:57:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,22 @@ int	a_env_init(t_mshell *data)
 
 /*
 Clear exec element, callback function for ft_lstclear
+element argv[] is pointer to string in tkn_lst thats will be cleared
+by del_tkn_elmnt
 */
 void	exc_elmt_del(void *elm)
 {
-	t_prgexec	*i;
+	t_prgexec	*cmd;
 
-	i = (t_prgexec *)elm;
-	free(i->argv);
-	if (i->f_stdin > 0)
-		close(i->f_stdin);
-	if (i->f_stout > 1)
-		close(i->f_stout);
-	free(i);
+	cmd = (t_prgexec *)elm;
+	if (cmd->f_stdin > 0)
+		close(cmd->f_stdin);
+	if (cmd->f_stout > 1)
+		close(cmd->f_stout);
+	if (cmd->execmd)
+		free(cmd->execmd);
+	free(cmd->argv);
+	free(cmd);
 }
 
 /*
@@ -87,7 +91,7 @@ void	exc_elmt_prn(void *elm)
 
 	p = (t_prgexec *)elm;
 	i = 0;
-	printf("--- exec %p ---\n", p);
+	printf("--- %s in exec %p ---\n", p->execmd, p);
 	while (p->argv[i])
 		printf("%s\n", p->argv[i++]);
 	printf("--- redir ---\nstdin - %d\nstout - %d\npipe - %d\nenv - \

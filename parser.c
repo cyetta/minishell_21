@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/17 01:31:55 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:57:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ content)->value);
 			return (ERR_MALLOC);
 		free(((t_token *)t->content)->value);
 		((t_token *)t->content)->value = str;
-		ft_lstdelnode(&t, t->next, del_tkn_elmnt);
+		ft_lstdelnode(&t, t->next, tkn_elmnt_del);
 	}
 	if (t->next && ((t_token *)t->next->content)->e_lxm == SPACESTR)
-		ft_lstdelnode(&t, t->next, del_tkn_elmnt);
+		ft_lstdelnode(&t, t->next, tkn_elmnt_del);
 	return (err);
 }
 
@@ -75,7 +75,7 @@ int	tknlst_expander(t_mshell *data)
 		tknlst_hd = tknlst_hd->next;
 		if (((t_token *)prev->content)->e_lxm == STRINGLN && \
 			*((t_token *)prev->content)->value == '\0')
-			ft_lstdelnode(&data->tkn_lst, prev, del_tkn_elmnt);
+			ft_lstdelnode(&data->tkn_lst, prev, tkn_elmnt_del);
 	}
 	return (ERR_OK);
 }

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/08 20:57:46 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 20:57:01 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	f_tkn_pipe(t_list **tknlst_hd, t_mshell *data)
 	else if (*tknlst_hd == data->tkn_lst)
 		return (ERR_SYNTAX_PIPE);
 	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == SPACESTR)
-		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
+		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, tkn_elmnt_del);
 	if (!(*tknlst_hd)->next)
 		return (ERR_SYNTAX_PIPE);
 	return (ERR_OK);
