@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 20:04:52 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 23:31:30 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 # define MINISHELL_H
 # include "ft_lib/libft.h"
 # include <pthread.h>
+# include <stdio.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <dirent.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
 
 typedef struct s_ktable
 {
