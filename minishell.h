@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 20:04:52 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 15:43:18 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_mshell
 
 typedef struct s_prgexec
 {
+	char		*exec_cmd;
 	char		**argv;
 	t_mshell	*mdata;
 	int			f_stdin;
