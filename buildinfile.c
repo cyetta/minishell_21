@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 00:09:10 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/01 23:52:18 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/01 23:53:57 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute(t_mshell *data)
 	{
 		paths = get_paths(line.envp);
 		if (!paths)
-			errmsg("minishell:command not found", 3);
+			err_msg("minishell:command not found", 3);
 		name = find_data(paths, data->args);
 		ft_free(paths);
 		if (execve(name, data->args, line.envp) == -1)
