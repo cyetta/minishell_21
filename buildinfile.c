@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 00:09:10 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/01 23:31:48 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/01 23:52:18 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,8 +488,7 @@ char	**ft_export(char **args)
 		while (args[i][++j])
 		{
 			if (!ft_isalpha(args[i][0]) || args[i][0] == '=')
-				errmsg("minishell: export: `", args[i],
-					"': not a valid identifier", -1);
+				err_msg("minishell: export: not a valid identifier", 3);
 			else
 				change_envp(new, args, i);
 			break ;
