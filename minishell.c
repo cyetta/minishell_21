@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 20:40:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 21:12:29 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "minishell.h"
 #include "lexer.h"
 #include "parser.h"
+#include "executor.h"
 
 int	parse_cmd(t_mshell *data, char *cmd)
 {
@@ -29,7 +30,7 @@ int	parse_cmd(t_mshell *data, char *cmd)
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	if (((t_token *)data->tkn_lst->content)->e_lxm == SPACESTR)
-		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, del_tkn_elmnt);
+		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, tkn_elmnt_del);
 	else
 		add_history(cmd);
 ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
@@ -38,42 +39,27 @@ printf("----\n");
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
 ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-printf("----\n");
+printf("\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
 ft_lstiter(data->exec_lst, exc_elmt_prn);
-printf("----\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
 }
 
-void	pr_argvp(int argc, char **argv, char **argp)
+int	exec_cmd(t_mshell *data)
 {
-	int		i;
+	int	err;
 
-	i = -1;
-	while (argv[++i])
-		printf("%d [%d]%s\n", argc, i, argv[i]);
-	i = -1;
-	while (argp[++i])
-		printf("%s\n", argp[i]);
+	err = exec_checkcmd(data);
+	if (err)
+		return (is_syntax_err(ft_error(err)));
+ft_lstiter(data->exec_lst, exc_elmt_prn);
+printf("----\n");
+	return (ERR_OK);
 }
-
-/* 	t_list		*lst;
-	t_ktable	*itm;
-	int			i;
-
-	i = -1;
-	lst = NULL;
-	while (argp[++i])
-	{
-		itm = get_envitm(argp[i]);
-		lst = ft_lstnew(itm);
-		ft_lstadd_back(shell_p
-rm->env, lst);
-	} */
 
 /*
 Initialize main data structure,
@@ -94,15 +80,11 @@ int	init_data(t_mshell *shell_prm, char **argp)
 void	clear_data(t_mshell *shell_prm)
 {
 	ft_lstclear(&shell_prm->exec_lst, exc_elmt_del);
-	ft_lstclear(&shell_prm->tkn_lst, del_tkn_elmnt);
+	ft_lstclear(&shell_prm->tkn_lst, tkn_elmnt_del);
 	a_env_free(shell_prm);
 	unlink_hdoc(shell_prm);
 }
 
-	// (void) argc;
-	// (void) argv;
-	// (void) argp;
-//	pr_argvp(argc, argv, argp); // test print argv, argp
 int	main(int argc, char **argv, char **argp)
 {
 	t_mshell	shell_prm;
@@ -124,9 +106,38 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
+		err = exec_cmd(&shell_prm);
 		clear_data(&shell_prm);
 	}
-	rl_clear_history();
 	clear_data(&shell_prm);
+	ft_lstclear(&shell_prm.env_lst, ktblitm_del);
+	rl_clear_history();
 	return (0);
 }
+
+/*
+void	pr_argvp(int argc, char **argv, char **argp)
+{
+	int		i;
+
+	i = -1;
+	while (argv[++i])
+		printf("%d [%d]%s\n", argc, i, argv[i]);
+	i = -1;
+	while (argp[++i])
+		printf("%s\n", argp[i]);
+}
+
+ 	t_list		*lst;
+	t_ktable	*itm;
+	int			i;
+
+	i = -1;
+	lst = NULL;
+	while (argp[++i])
+	{
+		itm = get_envitm(argp[i]);
+		lst = ft_lstnew(itm);
+		ft_lstadd_back(shell_p
+rm->env, lst);
+	} */

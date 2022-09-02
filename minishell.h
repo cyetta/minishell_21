@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 23:31:30 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/02 18:23:18 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "ft_lib/libft.h"
 # include <pthread.h>
 # include <stdio.h>
 # include <errno.h>
@@ -58,8 +57,21 @@ typedef struct s_mshell
 	char	*msh_name;
 }	t_mshell;
 
+/*
+execmd	- команда с относительным или абсолютным путем запуска для execve
+argv	- массив параметров запуска для argve, строки хранятся tkn_lst, 
+в массиве указатели на эти строки, очищать только массив, строки не нужно.
+mdata	- указатель к основной структуре данных,там лежит массив переменных 
+окружения mdata->a_env
+f_stdin	- дескриптор ввода, приоритет над пайпом
+f_stout	- дескриптор вывода, приоритет над пайпом
+cmd_pid	- PID запускаемого процесса
+pipe	- признак вывода в пайп, ввод из пайпа смотри признак в предыдущей 
+команде
+*/
 typedef struct s_prgexec
 {
+	char		*execmd;
 	char		**argv;
 	t_mshell	*mdata;
 	int			f_stdin;

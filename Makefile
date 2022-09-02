@@ -23,7 +23,7 @@ SRC_N 	= ft_util.c minishell.c builtins1.c builtins2.c ft_error.c ld_env2lst.c \
 		lexer.c lexer_dp.c lexer_qsp.c lexer_rdr.c lexer_util.c \
 		parser_expstr.c parser_util.c parser.c parser_tkn1.c parser_tkn2.c \
 		exec_lst_ld.c exec_lst_ld_u.c exec_lst_rdr.c exec_lst_rdhdoc.c \
-		exec_lst_rdhdoc_u.c
+		exec_lst_rdhdoc_u.c exec_check.c exec_check_u.c
 
 SRC_B 	=
 
@@ -64,13 +64,13 @@ all:	${NAME}
 include ${wildcard ${DPDS}}
 
 ${DIR_LIBFT}libft.a:
-#	${MAKE} CFLAG="${CFLAGS} -g3" -C ${DIR_LIBFT}
-	${MAKE} -C ${DIR_LIBFT}
+	${MAKE} CFLAG="${CFLAGS} -g3" -C ${DIR_LIBFT}
+#	${MAKE} -C ${DIR_LIBFT}
 
 ${NAME}: ${DIR_LIBFT}libft.a ${OBJ_P}
 	${CC} ${CFLAGS} -o $@ ${OBJ_P} -L ${DIR_LIBFT} -lft ${LIBRDLN}
 
-debug: ${DIR_LIBFT}libft.a
+debug:
 #	${MAKE} CFLAGS="${CFLAGS} -g3" libft.a
 	${MAKE} CFLAGS="${CFLAGS} -g3" ${NAME}
 

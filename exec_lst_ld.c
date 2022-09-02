@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 16:54:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/01 18:26:18 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 	i = -1;
 	while (++i < cnt)
 		ret->argv[i] = NULL;
+	ret->execmd = NULL;
 	ret->mdata = data;
 	ret->f_stdin = 0;
 	ret->f_stout = 1;
