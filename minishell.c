@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 21:12:29 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/06 18:14:09 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	shell_prm->errlvl = 0;
 	shell_prm->a_env = NULL;
 	shell_prm->hdoc_cnt = 0;
+	shell_prm->exec_lst = NULL;
 	return (0);
 }
 
@@ -106,7 +107,8 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		free(s);
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
-		err = exec_cmd(&shell_prm);
+		else if (err == ERR_OK)
+			err = exec_cmd(&shell_prm);
 		clear_data(&shell_prm);
 	}
 	clear_data(&shell_prm);

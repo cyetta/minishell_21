@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/02 18:23:18 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/06 17:55:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
+# include "ft_lib/libft.h"
 
 typedef struct s_ktable
 {
