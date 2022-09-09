@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/02 18:23:18 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/08 19:47:58 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
+# include "ft_lib/libft.h"
 
 typedef struct s_ktable
 {
@@ -71,14 +72,22 @@ pipe	- признак вывода в пайп, ввод из пайпа смо�
 */
 typedef struct s_prgexec
 {
-	char		*execmd;
-	char		**argv;
-	t_mshell	*mdata;
-	int			f_stdin;
-	int			f_stout;
-	pid_t		cmd_pid;
-	int			pipe;
+	char				*execmd;
+	char				**argv;
+	t_mshell			*mdata;
+	int					f_stdin;
+	int					f_stout;
+	struct s_prgexec	*next;
 }	t_prgexec;
+
+typedef struct s_child
+{
+	int		current;
+	pid_t	pid;
+	int		pipe[2][2];
+	int		i;
+	int		len;
+}	t_child;
 
 t_ktable	*get_envitm(char *str);
 char		*ktable2str(t_ktable *itm);

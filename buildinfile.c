@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 00:09:10 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/01 23:53:57 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:21:34 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -660,4 +660,98 @@ void	change_envp(char *new, char **args, int i)
 		line.envp = replace_envp_el(line.envp, args[i], new);
 	else if (!new)
 		line.envp = export_envp(line.envp, args[i], 1);
+}
+
+void	get_variables(void)
+{
+	int	i;
+	int	j;
+
+	read(line.fd[1][0], &i, sizeof(int));
+	ft_free(line.envp);
+	line.envp = malloc(sizeof(char *) * (i + 1));
+	j = 0;
+	while (j < i)
+	{
+		line.envp[j] = get_next_line(line.fd[0][0]);
+		line.envp[j][ft_strlen(line.envp[j]) - 1] = '\0';
+		j++;
+	}
+	line.envp[j] = NULL;
+	read(line.fd[2][0], &line.status, sizeof(int));
+}
+
+void	pipex(t_prgexec *prgexec)
+{
+	t_child	child;
+
+	init_child(&child, prgexec);
+	while (++child.i < child.len)
+	{
+		check_cd_exit(prgexec, child.i);
+		if (pipe(child.pipe[child.current]) == -1)
+			error_process();
+		child.pid = fork();
+		if (child.pid)
+			sig_sig_signal();
+		if (child.pid < 0)
+			error_process();
+		if (!child.pid)
+			work_child(&child, prgexec, child.len);
+		close(child.pipe[1 - child.current][0]);
+		close(child.pipe[child.current][1]);
+		if (!child.pid)
+			exit(0);
+		child.current = 1 - child.current;
+		prgexec = prgexec->next;
+		get_variables();
+	}
+	close(child.pipe[1 - child.current][0]);
+	wait_child(child.len);
+}
+
+void	error_process(void)
+{
+	perror("\033[31mError:\e[0m ");
+	exit(EXIT_FAILURE);
+}
+
+void	sig_sig_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	work_child(t_child *child, t_prgexec *prgexec, int len)
+{
+	if (!prgexec->infd && child->i > 0)
+	{
+		dup2(child->pipe[1 - child->current][0], STDIN_FILENO);
+		close (child->pipe[1 - child->current][0]);
+	}
+	if (!prgexec->outfd && child->i < len - 1)
+	{
+		dup2(child->pipe[child->current][1], STDOUT_FILENO);
+		close (child->pipe[child->current][0]);
+		close (child->pipe[child->current][1]);
+	}
+	read_in(prgexec);//Obrabotka vxoda '<</<'
+	read_out(prgexec);//Obrabotka vixoda '>>/>'
+	if (prgexec->args[0])
+		execute(prgexec);
+	collect_variables();
+	if (prgexec->tmpfile)
+		unlink(prgexec->name);
+}
+
+void	wait_child(int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		waitpid(-1, 0, 0);
+		i++;
+	}
 }
