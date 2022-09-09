@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 21:25:25 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/09 20:12:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,37 @@ void	exec_createpath(void *content)
 }
 
 /*
+проверяет равенство пути в content->execcmd и key в том числе и NULL
+нужен для проверки есть ли неисполнимые команды
+если путь в команде равен ke 
+*/
+int	is_execmd(void *key, void *content)
+{
+	t_prgexec	*cmd;
+	char		*cmdname;
+
+	cmd = (t_prgexec *)content;
+	cmdname = (char *)key;
+	if (cmd && cmdname && cmd->execmd && !ft_strcmp(cmdname, cmd->execmd))
+		return (1);
+	else if (!cmd)
+		return (0);
+	else if (!cmdname && !cmd->execmd)
+		return (1);
+	return (0);
+}
+
+/*
 Проверяет доступность команд в списке к запуску, если команда не доступна
 в t_prgexec.execmd записывается NULL и выводится сообщение об ошибке 
 или путь для запуска, абсолютный или относительный
-при запуске NULL команды игнорируются
+если найден хоть один NULL, возвращается ошибка ERR_SYNTAX_ERRNO
 билдины записываются без пути
 */
 int	exec_checkcmd(t_mshell *data)
 {
 	ft_lstiter(data->exec_lst, exec_createpath);
+	if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
+		return (ERR_SYNTAX_ERRNO);
 	return (ERR_OK);
 }

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:57:48 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/09 17:19:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ void	exc_elmt_prn(void *elm)
 	while (p->argv[i])
 		printf("%s\n", p->argv[i++]);
 	printf("--- redir ---\nstdin - %d\nstout - %d\npipe - %d\nenv - \
-	%p\n---\n", p->f_stdin, p->f_stout, p->pipe, p->mdata->a_env);
+	%p\n---\n", p->f_stdin, p->f_stout, p->is_pipe, p->mdata->a_env);
 }

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/06 18:14:09 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/09 19:21:17 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ int	exec_cmd(t_mshell *data)
 	int	err;
 
 	err = exec_checkcmd(data);
-	if (err)
-		return (is_syntax_err(ft_error(err)));
 ft_lstiter(data->exec_lst, exc_elmt_prn);
 printf("----\n");
+	if (err)
+		return (is_syntax_err(ft_error(err)));
+	err = exec_start(data);
 	return (ERR_OK);
 }
 

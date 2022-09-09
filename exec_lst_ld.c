@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 18:26:18 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/09 17:19:30 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 	ret->mdata = data;
 	ret->f_stdin = 0;
 	ret->f_stout = 1;
-	ret->pipe = 0;
+	ret->is_pipe = 0;
 	data->hdoc_isnewcmd = 1;
 	return (ret);
 }
@@ -92,7 +92,7 @@ int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
 		*t = (*t)->next;
 	}
 	if (*t && ((t_token *)(*t)->content)->e_lxm == PIPE)
-		(*ret)->pipe = 1;
+		(*ret)->is_pipe = 1;
 	return (err);
 }
 
