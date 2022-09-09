@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 20:12:39 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 00:57:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*getexecpath(char *cmd, char **env)
 }
 
 /*
-Колбэк функция итератора обхода списка, формирует путь/команда для работы 
+Колбэк функция итератора обхода списка, формирует путь/команда для работы
 execve в t_prgexec.execmd
 */
 void	exec_createpath(void *content)
@@ -56,7 +56,7 @@ void	exec_createpath(void *content)
 	t_prgexec	*cmd;
 
 	cmd = (t_prgexec *)content;
-	if (is_builtin(cmd->argv[0]))
+	if (is_builtin(cmd))
 	{
 		cmd->execmd = ft_strdup(cmd->argv[0]);
 		if (!cmd->execmd)
@@ -69,7 +69,7 @@ void	exec_createpath(void *content)
 /*
 проверяет равенство пути в content->execcmd и key в том числе и NULL
 нужен для проверки есть ли неисполнимые команды
-если путь в команде равен ke 
+если путь в команде равен ke
 */
 int	is_execmd(void *key, void *content)
 {
@@ -89,7 +89,7 @@ int	is_execmd(void *key, void *content)
 
 /*
 Проверяет доступность команд в списке к запуску, если команда не доступна
-в t_prgexec.execmd записывается NULL и выводится сообщение об ошибке 
+в t_prgexec.execmd записывается NULL и выводится сообщение об ошибке
 или путь для запуска, абсолютный или относительный
 если найден хоть один NULL, возвращается ошибка ERR_SYNTAX_ERRNO
 билдины записываются без пути

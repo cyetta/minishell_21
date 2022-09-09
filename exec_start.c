@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 20:05:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 01:36:52 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,84 @@
 #include "executor.h"
 #include "builtins.h"
 
+/*
+настриваем пайпы и редиректы для текущей и предыдущей команды
+если предыдущая NULL, значит команда первая.
+редиректы в приорете над пайпом.
+*/
+void	setredir(t_prgexec *prevcmd, t_prgexec *cmd)
+{
+	if (cmd->is_pipe && !prevcmd)
+		return ;
+	else if (cmd->is_pipe && prevcmd)
+		return ;
+}
+
+/*
+обраная функция. разбирает пайп
+*/
+void	unsetredir(t_prgexec *prevcmd, t_prgexec *cmd)
+{
+	(void)prevcmd;
+	if (cmd->is_pipe)
+		return ;
+}
+
+/*
+запускает билдин,
+возвращает 0 если это не билдин
+*/
+int	runbuildin(t_prgexec *cmd)
+{
+	int	bnum;
+
+	bnum = is_builtin(cmd);
+	if (bnum)
+		printf("Execute builtin number %d\n", bnum);
+	return (bnum);
+}
+
+/*
+запускает внешнюю команду в новом процессе
+*/
+int	runexternal(t_prgexec *cmd)
+{
+	printf("Execute: %s\n", cmd->execmd);
+	return (ERR_OK);
+}
+
+/*
+Собирает выполненные дочки, устанавливает errorlevel по факту выполения
+разбирает пайпы.
+*/
+void	collect_cmd(t_mshell *data)
+{
+	(void)data;
+}
+
+/*
+Основной цикл запуска команд
+*/
 int	exec_start(t_mshell *data)
 {
 	t_list	*cmd;
 	t_list	*prevcmd;
+	int		err;
 
 	cmd = data->exec_lst;
 	prevcmd = NULL;
 	while (cmd)
 	{
-		if (((t_prgexec *)cmd->content)->is_pipe)
-			setpipe(prevcmd->content, cmd->content);
-// in progress
+		if (!prevcmd)
+			setredir(NULL, (t_prgexec *)cmd->content);
+		else
+			setredir((t_prgexec *)prevcmd->content, (t_prgexec *)cmd->content);
+		if (!runbuildin((t_prgexec *)cmd->content))
+			err = runexternal((t_prgexec *)cmd->content);
 		prevcmd = cmd;
 		cmd = cmd->next;
 	}
+	err++;
+	collect_cmd(data);
+	return (ERR_OK);
 }
