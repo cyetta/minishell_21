@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 23:05:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 23:32:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "builtins.h"
 
 /*
-if command is builtin execute and
-return execute status
+Check command for builtin
+return builtin number or 0
 */
 int	is_builtin(t_prgexec *cmd)
 {

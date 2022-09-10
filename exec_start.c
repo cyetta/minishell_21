@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 23:26:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/11 01:19:35 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef int	(*t_bldin_func)(t_prgexec *);
 запускает билдин,
 возвращает 0 если это не билдин
 */
-int	runbuildin(t_prgexec *cmd)
+int	runbuildin(t_prgexec *prevcmd, t_prgexec *cmd)
 {
 	int					bnum;
 	const t_bldin_func	a_bldin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
@@ -63,8 +63,16 @@ int	runbuildin(t_prgexec *cmd)
 	bnum = is_builtin(cmd);
 	if (!bnum)
 		return (bnum);
-	printf("Execute builtin number %d\n", bnum);
-	a_bldin_f[bnum - 1](cmd);
+	if (cmd->is_pipe || (prevcmd && prevcmd->pipe))
+	{
+		printf("Execute builtin number %d in pipe\n", bnum);
+		a_bldin_f[bnum - 1](cmd);
+	}
+	else
+	{
+		printf("Execute builtin number %d standalone\n ", bnum);
+		a_bldin_f[bnum - 1](cmd);
+	}
 	return (bnum);
 }
 
@@ -86,6 +94,13 @@ void	collect_cmd(t_mshell *data)
 	(void)data;
 }
 
+t_prgexec	*get_execmd(t_list *cmd)
+{
+	if (!cmd)
+		return (NULL);
+	return ((t_prgexec *)cmd->content);
+}
+
 /*
 Основной цикл запуска команд
 */
@@ -99,11 +114,8 @@ int	exec_start(t_mshell *data)
 	prevcmd = NULL;
 	while (cmd)
 	{
-		if (!prevcmd)
-			setredir(NULL, (t_prgexec *)cmd->content);
-		else
-			setredir((t_prgexec *)prevcmd->content, (t_prgexec *)cmd->content);
-		if (!runbuildin((t_prgexec *)cmd->content))
+		setredir(get_execmd(prevcmd), get_execmd(cmd));
+		if (!runbuildin(get_execmd(prevcmd), get_execmd(cmd)))
 			err = runexternal((t_prgexec *)cmd->content);
 		prevcmd = cmd;
 		cmd = cmd->next;
