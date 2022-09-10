@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 01:57:55 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 23:05:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,26 @@ int	is_builtin(t_prgexec *cmd)
 /*
 echo with option -n
 */
-void	buitin_echo(void)
+int	builtin_echo(t_prgexec *cmd)
 {
+	printf("this is %s\n", cmd->execmd);
+	return (0);
 }
 
 /*
 cd with only a relative or absolute path
  */
-void	buitin_cd(void)
+int	builtin_cd(t_prgexec *cmd)
 {
+	printf("this is %s\n", cmd->execmd);
+	return (0);
 }
 
 /*
 pwd with no options
  */
-void	buitin_pwd(void)
+int	builtin_pwd(t_prgexec *cmd)
 {
+	printf("this is %s\n", cmd->execmd);
+	return (0);
 }

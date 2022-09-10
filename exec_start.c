@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 19:37:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 23:26:59 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,23 @@ void	unsetredir(t_prgexec *prevcmd, t_prgexec *cmd)
 		return ;
 }
 
+typedef int	(*t_bldin_func)(t_prgexec *);
+
 /*
 запускает билдин,
 возвращает 0 если это не билдин
 */
 int	runbuildin(t_prgexec *cmd)
 {
-	int	bnum;
+	int					bnum;
+	const t_bldin_func	a_bldin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
+	builtin_export, builtin_unset, builtin_env, builtin_exit};
 
 	bnum = is_builtin(cmd);
-	if (bnum)
-		printf("Execute builtin number %d\n", bnum);
+	if (!bnum)
+		return (bnum);
+	printf("Execute builtin number %d\n", bnum);
+	a_bldin_f[bnum - 1](cmd);
 	return (bnum);
 }
 

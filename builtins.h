@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 18:48:54 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/10 23:02:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 # define BLT_ENV 6
 # define BLT_EXIT 7
 
-int		is_builtin(t_prgexec *cmd);
-void	buitin_echo(void);
-void	buitin_cd(void);
-void	buitin_pwd(void);
-void	buitin_export(void);
-void	buitin_unset(void);
-void	buitin_env(void);
-void	buitin_exit(void);
+int	is_builtin(t_prgexec *cmd);
+int	builtin_echo(t_prgexec *cmd);
+int	builtin_cd(t_prgexec *cmd);
+int	builtin_pwd(t_prgexec *cmd);
+int	builtin_export(t_prgexec *cmd);
+int	builtin_unset(t_prgexec *cmd);
+int	builtin_env(t_prgexec *cmd);
+int	builtin_exit(t_prgexec *cmd);
 #endif
