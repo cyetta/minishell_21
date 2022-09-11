@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/11 01:19:35 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/11 01:32:26 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ void	collect_cmd(t_mshell *data)
 	(void)data;
 }
 
+/*
+Обертка, возвращает из листа списка контент, структуру prgexec.
+или NULL если указатель листа NULL
+*/
 t_prgexec	*get_execmd(t_list *cmd)
 {
 	if (!cmd)
