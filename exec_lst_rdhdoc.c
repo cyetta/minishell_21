@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_rdhdoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/13 21:02:49 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 02:37:28 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 #include "parser.h"
 #include "ft_error.h"
 
-int	unlink_hdoc(t_mshell *data)
+// анлинк надо переделать под список
+
+/* int	unlink_hdoc(t_mshell *data)
 {
 	const char	*tmp[] = {"", "TMP", "TEMP", "TMPDIR"};
 	int			i;
@@ -45,7 +47,7 @@ int	unlink_hdoc(t_mshell *data)
 	}
 	return (ERR_OK);
 }
-
+ */
 static char	*findtmpath(int *i, const char **tmp, t_mshell *data)
 {
 	char	*path;
@@ -125,17 +127,13 @@ int	write_hdoc(int fd, char *hdoc)
 
 /*
 create heredoc redirection for execution element
+надо переделать под список
 */
 int	f_rdrhdoc(t_list **t, t_prgexec *p, t_mshell *data)
 {
 	char	*hdocfname;
 	int		err;
 
-	if (data->hdoc_isnewcmd)
-	{
-		data->hdoc_cnt++;
-		data->hdoc_isnewcmd = 0;
-	}
 	if (p->f_stdin > 2)
 		close(p->f_stdin);
 	p->f_stdin = create_hdocfname(&hdocfname, data);

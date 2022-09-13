@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_ld.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 17:19:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 00:57:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 	while (++i < cnt)
 		ret->argv[i] = NULL;
 	ret->execmd = NULL;
+	ret->rdr_lst = NULL;
 	ret->mdata = data;
 	ret->f_stdin = 0;
 	ret->f_stout = 1;
@@ -69,7 +70,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 
 /*
 Creates new exec element by token list from current position, open\close files \
-for redirection, change position in list for create next exec element. 
+for redirection, change position in list for create next exec element.
 returns ERR_OK or ERR_ on error
 */
 int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
