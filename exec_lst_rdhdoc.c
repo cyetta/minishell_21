@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 21:40:31 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/13 21:02:49 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ int	unlink_hdoc(t_mshell *data)
 	return (ERR_OK);
 }
 
+static char	*findtmpath(int *i, const char **tmp, t_mshell *data)
+{
+	char	*path;
+
+	*i = 4;
+	while (--(*i) >= 0)
+	{
+		path = get_tmpfname(tmp[*i], data);
+		if (*path != '\0')
+			break ;
+		free(path);
+	}
+	return (path);
+}
+
 /*
 creates temporary file fd for write heredoc in temporary directory $TMPDIR or \
 in current directory, if $TMPDIR not find
@@ -59,29 +74,26 @@ int	create_hdocfname(char **path, t_mshell *data)
 	int			i;
 	int			fd;
 
-	i = 4;
-	while (--i >= 0)
+	*path = findtmpath(&i, tmp, data);
+	while (access(*path, F_OK | W_OK) == 0)
 	{
+		data->hdoc_cnt++;
+		free(*path);
 		*path = get_tmpfname(tmp[i], data);
-		if (**path == '\0')
-			continue ;
-		if (access(*path, F_OK | W_OK) == -1 && errno == EACCES)
-		{
-			data->hdoc_cnt++;
-			i++;
-			free(*path);
-			continue ;
-		}
+	}
+	if (errno == ENOENT)
+	{
 		fd = open(*path, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 		if (fd > 2)
 			return (fd);
-		free(*path);
 	}
 	err_prnt3n("minishell", *path, strerror(errno), ERR_SYNTAX_ERRNO);
-	return (fd);
+	free(*path);
+	return (-1);
 }
 
 /*
+printf ("hdocfname err - %d errno - %d\n", err, errno);
 Write string to temporary file fd, stop by heredoc or ctrl+d
 Not implemented!
 on ctrl+c the process must return to the mshell without executing
@@ -133,7 +145,7 @@ int	f_rdrhdoc(t_list **t, t_prgexec *p, t_mshell *data)
 	if (err)
 		return (ERR_SYNTAX_ERRNO);
 	close(p->f_stdin);
-	p->f_stdin = open(hdocfname, O_RDONLY);
+	p->f_stdin = open(hdocfname, O_RDWR);
 	if (p->f_stdin == -1)
 		return (err_prnt3n("minishell", ((t_token *) \
 	(*t)->next->content)->value, strerror(errno), ERR_SYNTAX_ERRNO));

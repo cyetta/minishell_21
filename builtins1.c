@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 23:32:40 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/13 19:19:07 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_builtin(t_prgexec *cmd)
 	static char	*bltin = "echo    cd      pwd     export  unset   env     exit";
 	char		*subs;
 
+	if (!cmd->argv[0])
+		return (0);
 	subs = ft_strnstr(bltin, cmd->argv[0], ft_strlen(bltin));
 	if (subs)
 		return (((subs - bltin) >> 3) + 1);

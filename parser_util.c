@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:30:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/24 22:05:11 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/13 19:04:47 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ expanded to its value
 str - environment variable string, env - list of environment variable
 return:
 NULL - if malloc error
-"\0" - if no value
+"\0" - if no variable or variable not set
 "value" - string value of environment variable
 */
 char	*get_envvalue(const char *str, t_list *env)
