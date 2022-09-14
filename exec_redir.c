@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 01:34:21 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 01:35:11 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 00:45:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@
 int	setredir(t_prgexec *prevcmd, t_prgexec *cmd)
 {
 	if (cmd->is_pipe && !prevcmd)
-		return ;
+		return (ERR_OK);
 	else if (cmd->is_pipe && prevcmd)
 		return (ERR_OK);
+	return (ERR_OK);
 }
 
 /*

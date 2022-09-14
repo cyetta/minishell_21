@@ -22,8 +22,8 @@ BNS_N	=
 SRC_N 	= ft_util.c minishell.c builtins1.c builtins2.c ft_error.c ld_env2lst.c \
 		lexer.c lexer_dp.c lexer_qsp.c lexer_rdr.c lexer_util.c \
 		parser_expstr.c parser_util.c parser.c parser_tkn1.c parser_tkn2.c \
-		exec_lst_ld.c exec_lst_ld_u.c exec_lst_rdr.c exec_lst_rdhdoc.c \
-		exec_lst_rdhdoc_u.c exec_check.c exec_check_u.c exec_start.c
+		exec_lst_ld.c exec_lst_ld_u.c exec_lst_rdhdoc.c \
+		exec_lst_rdhdoc_u.c exec_check.c exec_check_u.c exec_start.c exec_redir.c
 
 SRC_B 	=
 

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 21:56:21 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:25:56 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,22 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 строки фришить не надо, только элементы списка.
 для here_doc анлинкается файл и фришется строка пути.
 */
-int	exec_frdr_add(t_list **t, t_prgexec *p, t_mshell *data)
+int	exec_frdr_add(t_list **t, t_prgexec *p)
 {
-	t_token	*rd_tkn;
-	t_list	*t;
+	t_list	*rd_tkn_le;
+	int		err;
 
 	if (((t_token *)(*t)->content)->e_lxm == HERE_DOC)
-		return (f_rdrhdoc(t, p, data));
-	rd_tkn = malloc(sizeof(t_token));
-	if (!rd_tkn)
-		exit(ft_error(ERR_MALLOC));
-	rd_tkn->e_lxm = ((t_token *)(*t)->content)->e_lxm;
+		return (exec_hdoc_add(t, p));
 	if (!(*t)->next || ((t_token *)(*t)->next->content)->e_lxm != STRINGLN)
-		rd_tkn->value = NULL;
+		err = new_tkn_elmnt(&rd_tkn_le, ((t_token *)(*t)->content)->e_lxm, \
+		NULL);
 	else
-		rd_tkn->value = ((t_token *)(*t)->next->content)->value;
-	t = ft_lstnew(rd_tkn);
-	if (!t)
+		err = new_tkn_elmnt(&rd_tkn_le, ((t_token *)(*t)->content)->e_lxm, \
+		((t_token *)(*t)->next->content)->value);
+	if (err)
 		exit(ft_error(ERR_MALLOC));
-	ft_lstadd_back(&p->rdr_lst, t);
+	ft_lstadd_back(&p->rdr_lst, rd_tkn_le);
 	*t = (*t)->next;
 	return (ERR_OK);
 }
@@ -117,7 +114,7 @@ int	new_exc_elmt(t_prgexec	**ret, t_list **t, t_mshell *data)
 			(*ret)->argv[cnt++] = ((t_token *)(*t)->content)->value;
 		else if (((t_token *)(*t)->content)->e_lxm >= REDIR_IN && \
 	((t_token *)(*t)->content)->e_lxm <= HERE_DOC)
-			err = exec_frdr_add(t, *ret, data);
+			err = exec_frdr_add(t, *ret);
 		if (err)
 			return (err);
 		*t = (*t)->next;

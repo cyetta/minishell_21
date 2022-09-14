@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_rdhdoc_u.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/13 18:59:45 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 00:12:02 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*append_tmpfname(char *src_path, t_mshell *data)
 
 /*
 Creates (malloc) path to a temporary file by environment variable
-if tmpenv == "" create tmpfile in currentdir
+if tmpenv == "" create tmpfile in current directory
 returns path to tmp file or "" string if TMP variable is not found
 */
 char	*get_tmpfname(const char *tmpenv, t_mshell *data)

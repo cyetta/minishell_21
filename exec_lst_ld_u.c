@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_ld_u.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 17:19:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 00:59:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ int	a_env_init(t_mshell *data)
 }
 
 /*
+Frees tokens content and itself
+Callback function for ft_lstclear()
+*/
+void	exec_rdrle_del(void *elm)
+{
+	t_token	*tkn;
+
+	tkn = (t_token *)elm;
+	if (tkn->e_lxm == HERE_DOC && tkn->value)
+	{
+		if (access(tkn->value, F_OK) == 0)
+			unlink(tkn->value);
+		free(tkn->value);
+	}
+	free(tkn);
+}
+
+/*
 Clear exec element, callback function for ft_lstclear
 element argv[] is pointer to string in tkn_lst thats will be cleared
 by del_tkn_elmnt
@@ -71,13 +89,14 @@ void	exc_elmt_del(void *elm)
 	t_prgexec	*cmd;
 
 	cmd = (t_prgexec *)elm;
-	if (cmd->f_stdin > 0)
+	if (cmd->f_stdin > 2)
 		close(cmd->f_stdin);
-	if (cmd->f_stout > 1)
+	if (cmd->f_stout > 2)
 		close(cmd->f_stout);
 	if (cmd->execmd)
 		free(cmd->execmd);
 	free(cmd->argv);
+	ft_lstclear(&cmd->rdr_lst, exec_rdrle_del);
 	free(cmd);
 }
 
@@ -94,6 +113,8 @@ void	exc_elmt_prn(void *elm)
 	printf("--- %s in exec %p ---\n", p->execmd, p);
 	while (p->argv[i])
 		printf("%s\n", p->argv[i++]);
+	printf("--- redirect ---\n");
+	ft_lstiter(p->rdr_lst, tkn_elmnt_prn);
 	printf("--- redir ---\nstdin - %d\nstout - %d\npipe - %d\nenv - \
-	%p\n---\n", p->f_stdin, p->f_stout, p->is_pipe, p->mdata->a_env);
+	%p\n\n", p->f_stdin, p->f_stout, p->is_pipe, p->mdata->a_env);
 }

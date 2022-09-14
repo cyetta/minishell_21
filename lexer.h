@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:02:10 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:51:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:02:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_token
 }	t_token;
 
 int		lexer(t_list **tkn_lst, char *str);
-int		new_tkn_elmnt(t_list **new_tkn);
+int		new_tkn_elmnt(t_list **new_tkn, t_lexeme lxm, char *value);
 void	tkn_elmnt_del(void *elm);
 int		is_reserved(char ch);
 void	tkn_elmnt_prn(void *elm);

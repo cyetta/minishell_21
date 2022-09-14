@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 02:37:28 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 00:33:21 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ creates temporary file fd for write heredoc in temporary directory $TMPDIR or \
 in current directory, if $TMPDIR not find
 returns:
 fd - temporary file descriptor
-path - temporary file path zstring(malloc)
+path - temporary file path zstring(malloc), if fd is actual or NULL if fd = -1
 */
 int	create_hdocfname(char **path, t_mshell *data)
 {
-	const char	*tmp[] = {"", "TMP", "TEMP", "TMPDIR"};
+	const char	*tmp[] = {"", "TMP", "HOME", "TMPDIR"};
 	int			i;
 	int			fd;
 
@@ -91,11 +91,11 @@ int	create_hdocfname(char **path, t_mshell *data)
 	}
 	err_prnt3n("minishell", *path, strerror(errno), ERR_SYNTAX_ERRNO);
 	free(*path);
+	*path = NULL;
 	return (-1);
 }
 
 /*
-printf ("hdocfname err - %d errno - %d\n", err, errno);
 Write string to temporary file fd, stop by heredoc or ctrl+d
 Not implemented!
 on ctrl+c the process must return to the mshell without executing
@@ -106,6 +106,7 @@ int	write_hdoc(int fd, char *hdoc)
 	char	*s;
 	int		cnt;
 
+	cnt = 0;
 	s = readline(">");
 	while (s && ft_strcmp(s, hdoc))
 	{
@@ -128,25 +129,50 @@ int	write_hdoc(int fd, char *hdoc)
 /*
 create heredoc redirection for execution element
 надо переделать под список
-*/
+
 int	f_rdrhdoc(t_list **t, t_prgexec *p, t_mshell *data)
 {
 	char	*hdocfname;
 	int		err;
+	int		fd;
 
-	if (p->f_stdin > 2)
-		close(p->f_stdin);
-	p->f_stdin = create_hdocfname(&hdocfname, data);
-	if (p->f_stdin < 0)
+	fd = create_hdocfname(&hdocfname, data);
+	if (fd < 0)
 		return (ERR_SYNTAX_ERRNO);
-	err = write_hdoc(p->f_stdin, ((t_token *)(*t)->next->content)->value);
+	err = write_hdoc(fd, ((t_token *)(*t)->next->content)->value);
 	if (err)
 		return (ERR_SYNTAX_ERRNO);
-	close(p->f_stdin);
+	close(fd);
 	p->f_stdin = open(hdocfname, O_RDWR);
 	if (p->f_stdin == -1)
 		return (err_prnt3n("minishell", ((t_token *) \
 	(*t)->next->content)->value, strerror(errno), ERR_SYNTAX_ERRNO));
+	*t = (*t)->next;
+	return (ERR_OK);
+}
+*/
+
+/*
+create heredoc redirection for execution element
+*/
+int	exec_hdoc_add(t_list **t, t_prgexec *p)
+{
+	char	*hdocfname;
+	t_list	*rd_tkn_le;
+	int		err;
+	int		fd;
+
+	fd = create_hdocfname(&hdocfname, p->mdata);
+	if (fd < 0)
+		return (ERR_SYNTAX_ERRNO);
+	err = new_tkn_elmnt(&rd_tkn_le, HERE_DOC, hdocfname);
+	if (err)
+		exit(ft_error(ERR_MALLOC));
+	ft_lstadd_back(&p->rdr_lst, rd_tkn_le);
+	err = write_hdoc(fd, ((t_token *)(*t)->next->content)->value);
+	if (err)
+		return (ERR_SYNTAX_ERRNO);
+	close(fd);
 	*t = (*t)->next;
 	return (ERR_OK);
 }

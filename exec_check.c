@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 00:57:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 02:03:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*getexecpath(char *cmd, char **env)
 	char	*path;
 	int		err;
 
+	if (!cmd)
+		return (NULL);
 	if (ft_strrchr(cmd, '/'))
 	{
 		ret = ft_strdup(cmd);

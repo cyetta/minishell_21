@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 11:04:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:51:24 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:14:09 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 Creates new list element with token
 if memory allocation error return ERR_MALLOC(6)
 */
-int	new_tkn_elmnt(t_list **new_tkn)
+int	new_tkn_elmnt(t_list **new_tkn, t_lexeme lxm, char *value)
 {
 	t_token	*tkn;
 
 	tkn = malloc(sizeof(t_token));
 	if (!tkn)
 		return (ERR_MALLOC);
-	tkn->value = NULL;
-	tkn->e_lxm = SPACESTR;
+	tkn->e_lxm = lxm;
+	tkn->value = value;
 	*new_tkn = ft_lstnew(tkn);
 	if (*new_tkn)
 		return (ERR_OK);

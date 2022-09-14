@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:06 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 20:30:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 22:24:30 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		f_rdrin(t_list **t, t_prgexec *p, t_mshell *data);
 int		f_rdrout(t_list **t, t_prgexec *p, t_mshell *data);
 int		f_rdr2out(t_list **t, t_prgexec *p, t_mshell *data);
 int		f_rdrhdoc(t_list **t, t_prgexec *p, t_mshell *data);
+int		exec_hdoc_add(t_list **t, t_prgexec *p);
 int		unlink_hdoc(t_mshell *data);
 char	*get_tmpfname(const char *tmpenv, t_mshell *data);
 char	*append_tmpfname(char *src_path, t_mshell *data);

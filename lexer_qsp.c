@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_qsp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:27:25 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/05 18:52:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:11:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	add_tkn_sp(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, SPACESTR, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = SPACESTR;
 	while (ft_isspace(str[*pos + 1]))
 		(*pos)++;
 	ft_lstadd_back(tkn_lst, tkn);
@@ -49,9 +48,8 @@ int	add_tkn_quotes(t_list **tkn_lst, char *str, int *pos)
 	char	*nextq;
 	int		subslen;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, QUOTES, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = QUOTES;
 	(*pos)++;
 	nextq = ft_strchr(&str[*pos], '\'');
 	if (!nextq)
@@ -78,9 +76,8 @@ int	add_tkn_dquotes(t_list **tkn_lst, char *str, int *pos)
 	char	*nextq;
 	int		subslen;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, DQUOTES, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = DQUOTES;
 	(*pos)++;
 	nextq = ft_strchr(&str[*pos], '\"');
 	if (!nextq)
@@ -105,9 +102,8 @@ int	add_tkn_str(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, STRINGLN, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = STRINGLN;
 	((t_token *)tkn->content)->value = get_subs(str, pos);
 	if (!((t_token *)tkn->content)->value)
 		return (ERR_MALLOC);

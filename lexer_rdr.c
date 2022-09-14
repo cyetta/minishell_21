@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_rdr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:44:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/08 19:25:20 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:13:04 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	add_tkn_rdrin(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, REDIR_IN, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = REDIR_IN;
 	if (str[*pos + 1] == '<')
 	{
 		((t_token *)tkn->content)->e_lxm = HERE_DOC;
@@ -50,9 +49,8 @@ int	add_tkn_rdrout(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
 
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, REDIR_OUT, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = REDIR_OUT;
 	if (str[*pos + 1] == '>')
 	{
 		((t_token *)tkn->content)->e_lxm = DREDIR_OUT;

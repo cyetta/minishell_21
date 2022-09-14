@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:39:59 by cyetta            #+#    #+#             */
-/*   Updated: 2022/06/21 17:44:39 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/14 23:04:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	add_tkn_dollar(t_list **tkn_lst, char *str, int *pos)
 
 	(void)str;
 	(void)pos;
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, DOLLAR, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = DOLLAR;
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);
 }
@@ -49,9 +48,8 @@ int	add_tkn_pipe(t_list **tkn_lst, char *str, int *pos)
 
 	(void)str;
 	(void)pos;
-	if (new_tkn_elmnt(&tkn))
+	if (new_tkn_elmnt(&tkn, PIPE, NULL))
 		return (ERR_MALLOC);
-	((t_token *)tkn->content)->e_lxm = PIPE;
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);
 }

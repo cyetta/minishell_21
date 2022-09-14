@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/09 19:21:17 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/15 00:36:53 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	clear_data(t_mshell *shell_prm)
 	ft_lstclear(&shell_prm->exec_lst, exc_elmt_del);
 	ft_lstclear(&shell_prm->tkn_lst, tkn_elmnt_del);
 	a_env_free(shell_prm);
-	unlink_hdoc(shell_prm);
+//	unlink_hdoc(shell_prm);
 }
 
 int	main(int argc, char **argv, char **argp)
