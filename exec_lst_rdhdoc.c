@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/15 00:33:21 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/16 02:58:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,9 @@
 #include "parser.h"
 #include "ft_error.h"
 
-// анлинк надо переделать под список
-
-/* int	unlink_hdoc(t_mshell *data)
-{
-	const char	*tmp[] = {"", "TMP", "TEMP", "TMPDIR"};
-	int			i;
-	char		*path;
-
-	while (data->hdoc_cnt)
-	{
-		i = 4;
-		while (--i >= 0)
-		{
-			path = get_tmpfname(tmp[i], data);
-			if (*path == '\0')
-				continue ;
-			if (access(path, F_OK) == 0)
-				unlink(path);
-			free(path);
-		}
-		data->hdoc_cnt--;
-	}
-	return (ERR_OK);
-}
- */
+/*
+function to bypass the 25 line limit
+*/
 static char	*findtmpath(int *i, const char **tmp, t_mshell *data)
 {
 	char	*path;
@@ -97,8 +75,7 @@ int	create_hdocfname(char **path, t_mshell *data)
 
 /*
 Write string to temporary file fd, stop by heredoc or ctrl+d
-Not implemented!
-on ctrl+c the process must return to the mshell without executing
+On ctrl+c the process must return to the mshell without executing
 and the errorlevel should be set to 1
 */
 int	write_hdoc(int fd, char *hdoc)

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:17:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 01:37:20 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/16 03:32:26 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,9 @@ char	*findexecbypathret(int err, char *cmd, char *ret);
 int		exec_start(t_mshell *data);
 int		setredir(t_prgexec *prevcmd, t_prgexec *cmd);
 void	unsetredir(t_prgexec *prevcmd, t_prgexec *cmd);
+int		open_rdr(t_prgexec *cmd);
+int		f_rdrin(char *fname, t_prgexec *p);
+int		f_rdrout(char *fname, t_prgexec *p);
+int		f_rdr2out(char *fname, t_prgexec *p);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 01:36:15 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/16 03:46:43 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	runbuildin(t_prgexec *prevcmd, t_prgexec *cmd)
 /*
 запускает внешнюю команду в новом процессе
 */
-int	runexternal(t_prgexec *cmd)
+int	runexternal(t_prgexec *prevcmd, t_prgexec *cmd)
 {
+	(void)prevcmd;
 	printf("Execute: %s\n", cmd->execmd);
 	return (ERR_OK);
 }
@@ -91,7 +92,7 @@ int	exec_start(t_mshell *data)
 	{
 		setredir(get_execmd(prevcmd), get_execmd(cmd));
 		if (!runbuildin(get_execmd(prevcmd), get_execmd(cmd)))
-			err = runexternal((t_prgexec *)cmd->content);
+			err = runexternal(get_execmd(prevcmd), get_execmd(cmd));
 		prevcmd = cmd;
 		cmd = cmd->next;
 	}
