@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 04:18:22 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 15:31:16 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ char	*getexecpath(char *cmd, char **env)
 		ret = ft_strdup(cmd);
 		if (!ret)
 			exit(ft_error(ERR_MALLOC));
-		err = is_cmd_exist(ret);
-		ret = findexecbypathret(err, cmd, ret);
+		return (ret);
 	}
 	else
 	{

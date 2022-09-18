@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:11:15 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 15:31:14 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,20 @@ char	*get_path(char **env)
 /*
 проверяет существует ли команда по заданному пути
 возвращает
-ERR_OK - команда существует и запускается
+ERR_OK - команда существует
+ENOENT - команда не существует 
+или другие ошибки если команда сущетсввует
+
 ERR_NOFILESFOUND - команда не найдена, сообщений нет
 ERR_SYNTAX_ERRNO - все остальные ошибки, +сообщение
 */
 int	is_cmd_exist(char *cmd)
 {
-	if (!access(cmd, X_OK))
+	int	err;
+
+	if (!access(cmd, F_OK))
 		return (ERR_OK);
+	err
 	else if (errno == ENOENT)
 		return (ERR_NOFILESFOUND);
 	err_prnt3n("minishell", cmd, strerror(errno), ERR_SYNTAX_ERRNO);
@@ -68,6 +74,8 @@ int	is_cmd_exist(char *cmd)
 
 /*
 инит для обхода 25 строк
+создание массива путей из переменной path,
+Добавление / к команде, подразумевается что комада без путей
 */
 static char	*findexecbypathinit(char *cmd, char	***a_path, char *vpath)
 {
@@ -101,7 +109,7 @@ char	*findexecbypathret(int err, char *cmd, char *ret)
 ищет команду в переменной окружения $PATH,
 команда не должна быть по абсолютному или относительному пути
 возвращает абсолютный путь к команде, если он существует
-или NULL если команда не найдена.
+или ee же, если команда не найдена.
 если ошибка или команда не найдена выводит сообщение
 */
 char	*findexecbypath(char *cmd, char *vpath)
