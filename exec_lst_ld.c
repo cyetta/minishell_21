@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 23:25:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/17 23:24:22 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static t_prgexec	*crt_exc_elmt(t_list *t, t_mshell *data)
 	ret->f_stdin = 0;
 	ret->f_stout = 1;
 	ret->is_pipe = 0;
+	ft_bzero(ret->pipe, sizeof(int) * 2);
 	data->hdoc_isnewcmd = 1;
 	return (ret);
 }

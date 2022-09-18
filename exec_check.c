@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/15 02:03:39 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 04:18:22 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	is_execmd(void *key, void *content)
 int	exec_checkcmd(t_mshell *data)
 {
 	ft_lstiter(data->exec_lst, exec_createpath);
-	if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
-		return (ERR_SYNTAX_ERRNO);
+	// if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
+	// 	return (ERR_SYNTAX_ERRNO);
 	return (ERR_OK);
 }

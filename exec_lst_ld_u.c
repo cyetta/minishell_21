@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/15 00:59:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 01:11:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	exec_rdrle_del(void *elm)
 
 /*
 Clear exec element, callback function for ft_lstclear
-element argv[] is pointer to string in tkn_lst thats will be cleared
-by del_tkn_elmnt
+element *argv[] is pointer to string in tkn_lst thats will be cleared
+by del_tkn_elmnt()
 */
 void	exc_elmt_del(void *elm)
 {

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 01:34:21 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/16 03:43:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 04:18:56 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,14 @@ int	setredir(t_prgexec *prevcmd, t_prgexec *cmd)
 {
 	int	err;
 
-	err = open_rdr(cmd);
-	if (err)
-		return (err);
 	if (cmd->is_pipe || (prevcmd && prevcmd->pipe))
-// here pipe
-		return (ERR_OK);
-	else
-// here not a pipe
-		return (ERR_OK);
+		pipe(cmd->pipe);
+	err = open_rdr(cmd);
 	return (ERR_OK);
 }
 
 /*
-обраная функция. разбирает пайп
+обратная функция. разбирает пайп
 */
 void	unsetredir(t_prgexec *prevcmd, t_prgexec *cmd)
 {
