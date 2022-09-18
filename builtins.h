@@ -3,22 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 21:09:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 21:17:53 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+# include "minishell.h"
+# include <stdio.h>
+# include <unistd.h>
 
-int		is_builtin(char *cmd);
-void	buitin_echo(void);
-void	buitin_cd(void);
-void	buitin_pwd(void);
-void	buitin_export(void);
-void	buitin_unset(void);
-void	buitin_env(void);
-void	buitin_exit(void);
+int		is_builtin(t_prgexec *cmd);
+void	builtin_echo(t_prgexec *cmd);
+int		buitin_cd(t_prgexec *cmd);
+void	builtin_pwd(void);
+int		buitin_export(t_prgexec *cmd);
+int		buitin_unset(t_prgexec *cmd);
+int		builtin_env(t_prgexec *cmd);
+void	builtin_exit(t_prgexec *cmd);
 #endif

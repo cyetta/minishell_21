@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:54:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 21:18:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_prgexec
 	t_mshell	*mdata;
 	int			f_stdin;
 	int			f_stout;
-	pid_t		cmd_pid;
+	//pid_t		cmd_pid;
 	int			pipe;
 }	t_prgexec;
 
