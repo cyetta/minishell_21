@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:17:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/16 03:32:26 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 16:49:43 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*get_path(char **env);
 int		is_cmd_exist(char *cmd);
 char	*getexecpath(char *cmd, char **env);
 char	*findexecbypath(char *cmd, char *vpath);
-char	*findexecbypathret(int err, char *cmd, char *ret);
 int		exec_start(t_mshell *data);
 int		setredir(t_prgexec *prevcmd, t_prgexec *cmd);
 void	unsetredir(t_prgexec *prevcmd, t_prgexec *cmd);

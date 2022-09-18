@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 15:31:16 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 19:43:06 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*getexecpath(char *cmd, char **env)
 {
 	char	*ret;
 	char	*path;
-	int		err;
 
 	if (!cmd)
 		return (NULL);

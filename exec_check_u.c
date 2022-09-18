@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 15:31:14 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 19:43:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,15 @@ char	*get_path(char **env)
 /*
 проверяет существует ли команда по заданному пути
 возвращает
-ERR_OK - команда существует
-ENOENT - команда не существует 
-или другие ошибки если команда сущетсввует
-
-ERR_NOFILESFOUND - команда не найдена, сообщений нет
-ERR_SYNTAX_ERRNO - все остальные ошибки, +сообщение
+ERR_OK - файл команды существует
+ENOENT - файл команды не существует 
+или другие ошибки errno если команда существует но доступ с ошибкой
 */
 int	is_cmd_exist(char *cmd)
 {
-	int	err;
-
 	if (!access(cmd, F_OK))
 		return (ERR_OK);
-	err
-	else if (errno == ENOENT)
-		return (ERR_NOFILESFOUND);
-	err_prnt3n("minishell", cmd, strerror(errno), ERR_SYNTAX_ERRNO);
-	return (ERR_SYNTAX_ERRNO);
+	return (errno);
 }
 
 /*
@@ -92,17 +83,18 @@ static char	*findexecbypathinit(char *cmd, char	***a_path, char *vpath)
 
 /*
 return для обхода 25 строк
-проверка ошибок существования команды
+Если все хорошо возвращает новый путь к команде по пути path
+иначе дубликат команды
 */
-char	*findexecbypathret(int err, char *cmd, char *ret)
+char	*findexecbypathret(int err, char *cmd, char **ret)
 {
-	if (err == ERR_NOFILESFOUND)
-		err_prnt3n("minishell", cmd, " command not found", ERR_NOFILESFOUND);
-	else if (err == ERR_OK)
-		return (ret);
-	else if (err == ERR_SYNTAX_ERRNO)
-		free(ret);
-	return (NULL);
+	if (err == ERR_OK)
+		return (*ret);
+	free(*ret);
+	*ret = ft_strdup(cmd);
+	if (!(*ret))
+		exit(ft_error(ERR_MALLOC));
+	return (*ret);
 }
 
 /*
@@ -128,7 +120,7 @@ char	*findexecbypath(char *cmd, char *vpath)
 		if (!ret)
 			exit(ft_error(ERR_MALLOC));
 		err = is_cmd_exist(ret);
-		if (err != ERR_NOFILESFOUND)
+		if (err != ENOENT)
 			break ;
 		free(ret);
 	}
@@ -137,5 +129,5 @@ char	*findexecbypath(char *cmd, char *vpath)
 	while (a_path[++i])
 		free(a_path[i]);
 	free(a_path);
-	return (findexecbypathret(err, cmd, ret));
+	return (findexecbypathret(err, cmd, &ret));
 }

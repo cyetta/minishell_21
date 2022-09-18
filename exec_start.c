@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 15:31:17 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 19:53:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef int	(*t_bldin_func)(t_prgexec *);
 */
 int	runbuildin(t_prgexec *cmd, int bnum)
 {
-	int					bnum;
 	const t_bldin_func	a_bldin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
 	builtin_export, builtin_unset, builtin_env, builtin_exit};
 
@@ -44,35 +43,45 @@ int	runexternal(t_prgexec *prevcmd, t_prgexec *cmd)
 	return (ERR_OK);
 }
 
-int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
+void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {
-
+	(void)prevcmd;
+	(void)cmd;
 }
 
-int	lunch_standalone(t_prgexec *cmd)
+void	stdaln_rdrsave(t_prgexec *cmd, int *stdin, int *stdout)
 {
-	int	err;
-	int	stdin;
-	int	stdout;
-	int	bnum;
-
-	err = open_rdr(cmd);
-	if (err)
-		return (err);
 	if (cmd->f_stdin > 2)
 	{
-		stdin = dup(0);
+		*stdin = dup(0);
 		dup2(cmd->f_stdin, 0);
 	}
 	if (cmd->f_stout > 2)
 	{
-		stdin = dup(1);
+		*stdout = dup(1);
 		dup2(cmd->f_stout, 1);
 	}
-	bnum = is_builtin(cmd);
-	if (bnum)
-		runbuildin(cmd, bnum);
-	else if (cmd->execmd)
+}
+
+void	stdaln_rdrrestore(t_prgexec *cmd, int *stdin, int *stdout)
+{
+	if (cmd->f_stdin > 2)
+	{
+		close(cmd->f_stdin);
+		cmd->f_stdin = 0;
+		dup2(*stdin, 0);
+	}
+	if (cmd->f_stout > 2)
+	{
+		close(cmd->f_stout);
+		cmd->f_stout = 0;
+		dup2(*stdout, 1);
+	}
+}
+
+void stdaln_runextr(t_prgexec *cmd)
+{
+	if (cmd->execmd)
 	{
 		cmd->cmd_pid = fork();
 		if (cmd->cmd_pid == -1)
@@ -80,12 +89,28 @@ int	lunch_standalone(t_prgexec *cmd)
 			strerror(errno), ERR_SYNTAX_ERRNO));
 		else if (cmd->cmd_pid)
 		{
-			err = execve();
-//екзек чек кмд надо переделать, если нет команд то НУЛЛ
-
-
+			execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
+			exit (err_prnt3n("minishell", cmd->execmd, \
+			strerror(errno), 127));
 		}
 	}
+}
+
+void	lunch_standalone(t_prgexec *cmd)
+{
+	int	stdin;
+	int	stdout;
+	int	bnum;
+
+	if (open_rdr(cmd))
+		return ;
+	stdaln_rdrsave(cmd, &stdin, &stdout);
+	bnum = is_builtin(cmd);
+	if (bnum)
+		cmd->mdata->errlvl = runbuildin(cmd, bnum);
+	else
+		stdaln_runextr(cmd);
+	stdaln_rdrrestore(cmd, &stdin, &stdout);
 }
 
 /*
@@ -129,7 +154,7 @@ int	exec_start(t_mshell *data)
 {
 	t_list	*cmd;
 	t_list	*prevcmd;
-	int		err;
+	int		status;
 
 	cmd = data->exec_lst;
 	prevcmd = NULL;
@@ -142,7 +167,11 @@ int	exec_start(t_mshell *data)
 		prevcmd = cmd;
 		cmd = cmd->next;
 	}
-	err++;
-	collect_cmd(data);
+	while (wait(&status) != -1)
+	{
+		if (WIFEXITED(status))
+			data->errlvl = WEXITSTATUS(status);
+	}
 	return (ERR_OK);
 }
+//	collect_cmd(data);

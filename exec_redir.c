@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 01:34:21 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 04:18:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 19:54:59 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	setredir(t_prgexec *prevcmd, t_prgexec *cmd)
 	if (cmd->is_pipe || (prevcmd && prevcmd->pipe))
 		pipe(cmd->pipe);
 	err = open_rdr(cmd);
-	return (ERR_OK);
+	return (err);
 }
 
 /*

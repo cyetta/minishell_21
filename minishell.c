@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 04:18:00 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/18 19:42:27 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ ft_lstiter(data->exec_lst, exc_elmt_prn);
 
 int	exec_cmd(t_mshell *data)
 {
-	int	err;
-
-	err = exec_checkcmd(data);
+	exec_checkcmd(data);
 	// if (err)
 	// 	return (is_syntax_err(ft_error(err)));
 ft_lstiter(data->exec_lst, exc_elmt_prn);
 printf("----\n");
-	err = exec_start(data);
+	exec_start(data);
 	return (ERR_OK);
 }
 
