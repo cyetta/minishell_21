@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/17 23:24:22 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/20 00:14:09 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,3 @@ int	ld_exec_lst(t_mshell *data)
 	exc_elmt_del((void *) exec_i);
 	return (err);
 }
-/* 	int	i = -1;
-	while ((data->a_env)[++i])
-		printf("a_env: %s\n", data->a_env[i]);
- */

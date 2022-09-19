@@ -6,17 +6,16 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 09:49:44 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 23:50:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 # include "minishell.h"
-# include <stdio.h>
-# include <unistd.h>
 
 int		is_builtin(t_prgexec *cmd);
+int		runbuiltin(t_prgexec *cmd, int bnum);
 int		builtin_echo(t_prgexec *cmd);
 int		builtin_cd(t_prgexec *cmd);
 int		builtin_pwd(t_prgexec *cmd);

@@ -6,14 +6,16 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 09:49:46 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 23:51:57 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "ft_util.h"
 #include "builtins.h"
 #include "ft_error.h"
-#include <stdlib.h>
 
 /*
 export with no options

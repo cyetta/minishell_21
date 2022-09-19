@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:17:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 16:49:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 23:48:10 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		open_rdr(t_prgexec *cmd);
 int		f_rdrin(char *fname, t_prgexec *p);
 int		f_rdrout(char *fname, t_prgexec *p);
 int		f_rdr2out(char *fname, t_prgexec *p);
-
+void	lunch_standalone(t_prgexec *cmd);
+void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd);
 #endif

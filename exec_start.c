@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 02:15:58 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 23:57:57 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,108 +21,15 @@
 #include "executor.h"
 #include "builtins.h"
 
-typedef int	(*t_bldin_func)(t_prgexec *);
-
-/*
-запускает билдин,
-возвращает 0 если это не билдин
-*/
-int	runbuildin(t_prgexec *cmd, int bnum)
-{
-	const t_bldin_func	a_bldin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
-	builtin_export, builtin_unset, builtin_env, builtin_exit};
-
-	return (a_bldin_f[bnum - 1](cmd));
-}
-
-/*
-запускает внешнюю команду в новом процессе
-*/
-int	runexternal(t_prgexec *prevcmd, t_prgexec *cmd)
-{
-	(void)prevcmd;
-	printf("Execute: %s\n", cmd->execmd);
-	return (ERR_OK);
-}
-
-void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
-{
-	(void)prevcmd;
-	(void)cmd;
-}
-
-void	stdaln_rdrsave(t_prgexec *cmd, int *stdin, int *stdout)
-{
-	if (cmd->f_stdin > 2)
-	{
-		*stdin = dup(0);
-		dup2(cmd->f_stdin, 0);
-	}
-	if (cmd->f_stout > 2)
-	{
-		*stdout = dup(1);
-		dup2(cmd->f_stout, 1);
-	}
-}
-
-void	stdaln_rdrrestore(t_prgexec *cmd, int *stdin, int *stdout)
-{
-	if (cmd->f_stdin > 2)
-	{
-		close(cmd->f_stdin);
-		cmd->f_stdin = 0;
-		dup2(*stdin, 0);
-	}
-	if (cmd->f_stout > 2)
-	{
-		close(cmd->f_stout);
-		cmd->f_stout = 0;
-		dup2(*stdout, 1);
-	}
-}
-
-void stdaln_runextr(t_prgexec *cmd)
-{
-	if (cmd->execmd)
-	{
-		cmd->cmd_pid = fork();
-		if (cmd->cmd_pid == -1)
-			exit (err_prnt3n("minishell standalon", cmd->execmd, \
-			strerror(errno), ERR_SYNTAX_ERRNO));
-		else if (!cmd->cmd_pid)
-		{
-			execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
-			exit (err_prnt3n("minishell", cmd->execmd, \
-			strerror(errno), 127));
-		}
-	}
-}
-
-void	lunch_standalone(t_prgexec *cmd)
-{
-	int	stdin;
-	int	stdout;
-	int	bnum;
-
-	if (open_rdr(cmd))
-		return ;
-	stdaln_rdrsave(cmd, &stdin, &stdout);
-	bnum = is_builtin(cmd);
-	if (bnum)
-		cmd->mdata->errlvl = runbuildin(cmd, bnum);
-	else
-		stdaln_runextr(cmd);
-	stdaln_rdrrestore(cmd, &stdin, &stdout);
-}
-
 /*
 Собирает выполненные дочки, устанавливает errorlevel по факту выполения
 разбирает пайпы.
-*/
+
 void	collect_cmd(t_mshell *data)
 {
 	(void)data;
 }
+*/
 
 /*
 Обертка, возвращает из листа списка контент - структуру prgexec.
@@ -144,7 +51,7 @@ int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {
 	if (cmd->is_pipe)
 		return (1);
-	else if (prevcmd && prevcmd->pipe)
+	else if (prevcmd && prevcmd->is_pipe)
 		return (2);
 	return (0);
 }
