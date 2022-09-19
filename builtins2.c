@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 09:26:53 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:49:46 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	builtin_env(t_prgexec *cmd)
 /*
  exit with no options
  */
-void	builtin_exit(t_prgexec *cmd)
+int	builtin_exit(t_prgexec *cmd)
 {
 	int	i;
 
@@ -84,4 +84,5 @@ void	builtin_exit(t_prgexec *cmd)
 		else
 			exit(ft_atoi(cmd->argv[1]) % 256);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 09:24:55 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:49:44 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <unistd.h>
 
 int		is_builtin(t_prgexec *cmd);
-void	builtin_echo(t_prgexec *cmd);
-int		buitin_cd(t_prgexec *cmd);
-void	builtin_pwd(void);
-int		buitin_export(t_prgexec *cmd);
-int		buitin_unset(t_prgexec *cmd);
+int		builtin_echo(t_prgexec *cmd);
+int		builtin_cd(t_prgexec *cmd);
+int		builtin_pwd(t_prgexec *cmd);
+int		builtin_export(t_prgexec *cmd);
+int		builtin_unset(t_prgexec *cmd);
 int		builtin_env(t_prgexec *cmd);
-void	builtin_exit(t_prgexec *cmd);
+int		builtin_exit(t_prgexec *cmd);
 #endif
