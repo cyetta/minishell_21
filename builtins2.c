@@ -6,12 +6,14 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/10 23:04:33 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:26:53 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_util.h"
 #include "builtins.h"
+#include "ft_error.h"
+#include <stdlib.h>
 
 /*
 export with no options
@@ -57,8 +59,29 @@ int	builtin_env(t_prgexec *cmd)
 /*
  exit with no options
  */
-int	builtin_exit(t_prgexec *cmd)
+void	builtin_exit(t_prgexec *cmd)
 {
-	printf("this is %s\n", cmd->execmd);
-	return (0);
+	int	i;
+
+	i = 0;
+	if (cmd->argv[1] && cmd->argv[2])
+		printf("exit\n");
+	if (cmd->argv[1] && cmd->argv[2])
+		err_msg("exit: too many arguments", 3);
+	if (cmd->argv[1])
+	{
+		while (ft_isdigit(cmd->argv[1][i]))
+			i++;
+		if ((size_t)i != ft_strlen(cmd->argv[1]))
+			err_msg("exit: numeric argument required", 3);
+	}
+	if (cmd->argv[1] && cmd->argv[2])
+	{
+		if (!cmd->argv[1])
+			exit(0);
+		else if ((size_t)i != ft_strlen(cmd->argv[1]))
+			exit(255);
+		else
+			exit(ft_atoi(cmd->argv[1]) % 256);
+	}
 }
