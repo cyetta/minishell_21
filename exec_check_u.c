@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check_u.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 19:43:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 01:48:16 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "builtins.h"
 
 /*
-Возвращает(malloc) значение $PATH или значение по умолчанию если 
+Возвращает(malloc) значение $PATH или значение по умолчанию если
 переменная не найдена или пустая
 */
 char	*get_path(char **env)
@@ -53,7 +53,7 @@ char	*get_path(char **env)
 проверяет существует ли команда по заданному пути
 возвращает
 ERR_OK - файл команды существует
-ENOENT - файл команды не существует 
+ENOENT - файл команды не существует
 или другие ошибки errno если команда существует но доступ с ошибкой
 */
 int	is_cmd_exist(char *cmd)
@@ -90,7 +90,8 @@ char	*findexecbypathret(int err, char *cmd, char **ret)
 {
 	if (err == ERR_OK)
 		return (*ret);
-	free(*ret);
+	if (err != ENOENT)
+		free(*ret);
 	*ret = ft_strdup(cmd);
 	if (!(*ret))
 		exit(ft_error(ERR_MALLOC));

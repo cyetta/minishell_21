@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 19:53:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/19 02:15:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "ft_error.h"
 #include "ft_util.h"
 #include "minishell.h"
@@ -87,7 +89,7 @@ void stdaln_runextr(t_prgexec *cmd)
 		if (cmd->cmd_pid == -1)
 			exit (err_prnt3n("minishell standalon", cmd->execmd, \
 			strerror(errno), ERR_SYNTAX_ERRNO));
-		else if (cmd->cmd_pid)
+		else if (!cmd->cmd_pid)
 		{
 			execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
 			exit (err_prnt3n("minishell", cmd->execmd, \
