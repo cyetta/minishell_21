@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 02:49:01 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:04:14 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,31 @@ int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 }
 
 /*
+собираем запущенные дочки и для последней запущенной забираем 
+errorlevel
+*/
+void	collect_cmd(t_mshell *data, int last_pid)
+{
+	int		status;
+	int		t_pid;
+
+	t_pid = wait(&status);
+	while (t_pid != -1)
+	{
+		if (WIFEXITED(status) && t_pid == last_pid)
+			data->errlvl = WEXITSTATUS(status);
+		t_pid = wait(&status);
+	}
+}
+
+/*
 Основной цикл запуска команд
 */
 int	exec_start(t_mshell *data)
 {
 	t_list	*cmd;
 	t_list	*prevcmd;
-	int		status;
+	int		last_pid;
 
 	ft_lstiter(data->exec_lst, exec_createpath);
 	cmd = data->exec_lst;
@@ -71,17 +89,12 @@ int	exec_start(t_mshell *data)
 	while (cmd)
 	{
 		if (cmd_in_pipe(get_execmd(prevcmd), get_execmd(cmd)))
-			lunch_pipe(get_execmd(prevcmd), get_execmd(cmd));
+			last_pid = lunch_pipe(get_execmd(prevcmd), get_execmd(cmd));
 		else
 			lunch_standalone(get_execmd(cmd));
 		prevcmd = cmd;
 		cmd = cmd->next;
 	}
-	while (wait(&status) != -1)
-	{
-		if (WIFEXITED(status))
-			data->errlvl = WEXITSTATUS(status);
-	}
+	collect_cmd(data, last_pid);
 	return (ERR_OK);
 }
-//	collect_cmd(data);
