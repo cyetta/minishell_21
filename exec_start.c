@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 18:00:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 21:56:20 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,6 @@
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
-
-/*
-Собирает выполненные дочки, устанавливает errorlevel по факту выполения
-разбирает пайпы.
-
-void	collect_cmd(t_mshell *data)
-{
-	(void)data;
-}
-*/
-
-/*
-Обертка, возвращает из листа списка контент - структуру prgexec.
-или NULL если указатель листа NULL
-*/
-t_prgexec	*get_execmd(t_list *cmd)
-{
-	if (!cmd)
-		return (NULL);
-	return ((t_prgexec *)cmd->content);
-}
 
 /*
 возвращает TRUE если cmd находится в пайпе, т.е. у текущей или предыдущей \
@@ -57,7 +36,7 @@ int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 }
 
 /*
-собираем запущенные дочки и для последней запущенной забираем 
+собирает запущенные дочки и для последней запущенной забирает 
 errorlevel
 */
 void	collect_cmd(t_mshell *data, pid_t last_pid)
@@ -75,6 +54,17 @@ void	collect_cmd(t_mshell *data, pid_t last_pid)
 }
 
 /*
+Обертка, возвращает из листа списка контент - структуру prgexec.
+или NULL если указатель листа NULL
+*/
+t_prgexec	*get_execmd(t_list *cmd)
+{
+	if (!cmd)
+		return (NULL);
+	return ((t_prgexec *)cmd->content);
+}
+
+/*
 Основной цикл запуска команд
 */
 int	exec_start(t_mshell *data)
@@ -86,6 +76,7 @@ int	exec_start(t_mshell *data)
 	ft_lstiter(data->exec_lst, exec_createpath);
 	cmd = data->exec_lst;
 	prevcmd = NULL;
+	last_pid = 0;
 	while (cmd)
 	{
 		if (cmd_in_pipe(get_execmd(prevcmd), get_execmd(cmd)))

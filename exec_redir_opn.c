@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_opn.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/17 00:08:18 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 19:34:48 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef int	(*t_rdr_func)(char *fname, t_prgexec *p);
 
 /*
 Open\close redirection files for exec element.
-return ERR_OK if no error open files
+return ERR_OK if no error open files or ERR_SYNTAX_ERRNO
  */
 int	open_rdr(t_prgexec *cmd)
 {
