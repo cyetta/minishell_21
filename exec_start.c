@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 17:15:39 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 18:00:30 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	exec_start(t_mshell *data)
 {
 	t_list	*cmd;
 	t_list	*prevcmd;
-	pid_t		last_pid;
+	pid_t	last_pid;
 
 	ft_lstiter(data->exec_lst, exec_createpath);
 	cmd = data->exec_lst;
