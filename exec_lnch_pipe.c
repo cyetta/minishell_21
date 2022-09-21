@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/20 02:08:31 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 02:30:12 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ cmd не может быть NULL.
 */
 void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {
+	int	bnum;
+
 	if (cmd->is_pipe)
 		pipe(cmd->pipe);
 	cmd->cmd_pid = fork();
@@ -38,7 +40,7 @@ void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 	{
 		if (cmd->is_pipe)
 			close(cmd->pipe[1]);
-		if (prevcmd)
+		if (prevcmd && prevcmd->is_pipe)
 			close(prevcmd->pipe[0]);
 		return ;
 	}
@@ -50,35 +52,31 @@ void	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 			close(cmd->f_stdin);
 		if (cmd->is_pipe)
 			close(cmd->pipe[1]);
-		if (prevcmd)
+		if (prevcmd && prevcmd->is_pipe)
 			close(prevcmd->pipe[0]);
 		exit (1);
 	}
-	if (cmd->f_stdin)
-	{
-		if (prevcmd)
-			close(prevcmd->pipe[0]);
+	if (cmd->f_stdin > 2)
 		dup2(cmd->f_stdin, 0);
-	}
-	else
+	else if (prevcmd && prevcmd->is_pipe)
 		dup2(prevcmd->pipe[0], 0);
-	if (cmd->f_stout)
-	{
-		if (cmd->is_pipe)
-			close(cmd->pipe[1]);
+	if (cmd->f_stout > 2)
 		dup2(cmd->f_stout, 1);
-	}
-	else
+	else if (cmd->is_pipe)
 		dup2(cmd->pipe[1], 1);
-	execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
+	if (prevcmd && prevcmd->is_pipe)
+		close(prevcmd->pipe[0]);
+	if (cmd->is_pipe)
+		close(cmd->pipe[1]);
+	bnum = is_builtin(cmd);
+	if (bnum)
+		exit (runbuiltin(cmd, bnum));
+	else
+		execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
 	if (cmd->f_stdin > 2)
 		close(cmd->f_stdin);
 	if (cmd->f_stout > 2)
 		close(cmd->f_stdin);
-	if (cmd->is_pipe)
-		close(cmd->pipe[1]);
-	if (prevcmd)
-		close(prevcmd->pipe[0]);
 	exit (err_prnt3n("minishell", cmd->execmd, \
 	strerror(errno), 127));
 }

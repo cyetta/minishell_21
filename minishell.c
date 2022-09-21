@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 19:42:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 01:43:23 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,19 @@ int	parse_cmd(t_mshell *data, char *cmd)
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, tkn_elmnt_del);
 	else
 		add_history(cmd);
-ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-printf("----\n");
+// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+// printf("----\n");
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
-ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-printf("\n");
+// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+// printf("\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
-ft_lstiter(data->exec_lst, exc_elmt_prn);
+// ft_lstiter(data->exec_lst, exc_elmt_prn);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
-	return (ERR_OK);
-}
-
-int	exec_cmd(t_mshell *data)
-{
-	exec_checkcmd(data);
-	// if (err)
-	// 	return (is_syntax_err(ft_error(err)));
-ft_lstiter(data->exec_lst, exc_elmt_prn);
-printf("----\n");
-	exec_start(data);
 	return (ERR_OK);
 }
 
@@ -82,8 +71,8 @@ void	clear_data(t_mshell *shell_prm)
 	ft_lstclear(&shell_prm->exec_lst, exc_elmt_del);
 	ft_lstclear(&shell_prm->tkn_lst, tkn_elmnt_del);
 	a_env_free(shell_prm);
-//	unlink_hdoc(shell_prm);
 }
+//	unlink_hdoc(shell_prm);
 
 int	main(int argc, char **argv, char **argp)
 {
@@ -107,7 +96,7 @@ ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 		if (err != ERR_OK && err != ERR_SYNTAX && err != ERR_EMPTYCMD)
 			break ;
 		else if (err == ERR_OK)
-			err = exec_cmd(&shell_prm);
+			exec_start(&shell_prm);
 		clear_data(&shell_prm);
 	}
 	clear_data(&shell_prm);

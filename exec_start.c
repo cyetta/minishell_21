@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 23:57:57 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 02:49:01 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	exec_start(t_mshell *data)
 	t_list	*prevcmd;
 	int		status;
 
+	ft_lstiter(data->exec_lst, exec_createpath);
 	cmd = data->exec_lst;
 	prevcmd = NULL;
 	while (cmd)

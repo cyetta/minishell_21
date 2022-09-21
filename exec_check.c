@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 01:53:21 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 01:34:01 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ char	*getexecpath(char *cmd, char **env)
 }
 
 /*
-Колбэк функция итератора обхода списка, формирует путь/команда для работы
-execve в t_prgexec.execmd
+Колбэк функция итератора обхода списка, формирует строку запуска команды
+для работы execve() в t_prgexec.execmd
+билтины и не найденные команды копируются как есть, если команд найдена
+в $PATH, формируется абсолюный путь из $PATH и команды,
+Если $PATH не найдена, используется дефолный путь ".:/usr/bin:/bin"
+Пример:
+	ft_lstiter(data->exec_lst, exec_createpath);
 */
 void	exec_createpath(void *content)
 {
@@ -67,9 +72,12 @@ void	exec_createpath(void *content)
 }
 
 /*
-проверяет равенство пути в content->execcmd и key в том числе и NULL
+Колбэк функция для поиска в списке элементов t_prgxec такого,
+что t_prgexec->execmd равен key, в том числе и NULL
 нужен для проверки есть ли неисполнимые команды
-если путь в команде равен ke
+Пример:
+if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
+ 	return (ERR_SYNTAX_ERRNO);
 */
 int	is_execmd(void *key, void *content)
 {
@@ -85,19 +93,4 @@ int	is_execmd(void *key, void *content)
 	else if (!cmdname && !cmd->execmd)
 		return (1);
 	return (0);
-}
-
-/*
-Проверяет доступность команд в списке к запуску, если команда не доступна
-в t_prgexec.execmd записывается NULL и выводится сообщение об ошибке
-или путь для запуска, абсолютный или относительный
-если найден хоть один NULL, возвращается ошибка ERR_SYNTAX_ERRNO
-билдины записываются без пути
-*/
-int	exec_checkcmd(t_mshell *data)
-{
-	ft_lstiter(data->exec_lst, exec_createpath);
-	// if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
-	// 	return (ERR_SYNTAX_ERRNO);
-	return (ERR_OK);
 }
