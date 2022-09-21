@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 15:19:33 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:19:21 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,19 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 		strerror(errno), ERR_SYNTAX_ERRNO));
 	else if (cmd->cmd_pid)
 	{
-		if (cmd->is_pipe)
-			close(cmd->pipe[1]);
 		if (prevcmd && prevcmd->is_pipe)
 			close(prevcmd->pipe[0]);
+		if (cmd->is_pipe)
+			close(cmd->pipe[1]);
 		return (cmd->cmd_pid);
 	}
 	if (open_rdr(cmd))
 	{
 		if (prevcmd && prevcmd->is_pipe)
-			close(prevcmd->pipe[0]);
+			close(prevcmd->pipe[1]);
 		if (cmd->is_pipe)
-			close(cmd->pipe[1]);
+			close(cmd->pipe[0]);
+
 		if (cmd->f_stdin > 2)
 		{
 			close(cmd->f_stdin);
@@ -68,10 +69,14 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 		dup2(cmd->f_stdin, 0);
 	else if (prevcmd && prevcmd->is_pipe)
 		dup2(prevcmd->pipe[0], 0);
+
+	if (cmd->is_pipe)
+		close(cmd->pipe[0]);
 	if (cmd->f_stout > 2)
 		dup2(cmd->f_stout, 1);
 	else if (cmd->is_pipe)
 		dup2(cmd->pipe[1], 1);
+
 	if (prevcmd && prevcmd->is_pipe)
 		close(prevcmd->pipe[0]);
 	if (cmd->is_pipe)

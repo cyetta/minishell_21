@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 15:04:14 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:15:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 собираем запущенные дочки и для последней запущенной забираем 
 errorlevel
 */
-void	collect_cmd(t_mshell *data, int last_pid)
+void	collect_cmd(t_mshell *data, pid_t last_pid)
 {
 	int		status;
 	int		t_pid;
@@ -81,7 +81,7 @@ int	exec_start(t_mshell *data)
 {
 	t_list	*cmd;
 	t_list	*prevcmd;
-	int		last_pid;
+	pid_t		last_pid;
 
 	ft_lstiter(data->exec_lst, exec_createpath);
 	cmd = data->exec_lst;
