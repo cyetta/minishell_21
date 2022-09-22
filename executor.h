@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:17:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 14:55:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/22 21:17:23 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int		open_rdr(t_prgexec *cmd);
 int		f_rdrin(char *fname, t_prgexec *p);
 int		f_rdrout(char *fname, t_prgexec *p);
 int		f_rdr2out(char *fname, t_prgexec *p);
-void	lunch_standalone(t_prgexec *cmd);
+int		lunch_standalone(t_prgexec *cmd);
 int		lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd);
 #endif

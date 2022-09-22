@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lnch_standalone.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 23:59:39 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/22 21:43:31 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,39 +60,47 @@ void	stdaln_rdrrestore(t_prgexec *cmd, int *stdin, int *stdout)
 /*
 Запуск одной внешней, не в пайпе, программы
 */
-void	stdaln_runextr(t_prgexec *cmd)
+pid_t	stdaln_runextr(t_prgexec *cmd)
 {
 	if (cmd->execmd)
 	{
 		cmd->cmd_pid = fork();
 		if (cmd->cmd_pid == -1)
-			exit (err_prnt3n("minishell standalon", cmd->execmd, \
+			exit(err_prnt3n("minishell standalon", cmd->execmd, \
 			strerror(errno), ERR_SYNTAX_ERRNO));
 		else if (!cmd->cmd_pid)
 		{
+			if (ft_strrchr(cmd->execmd, '/') == NULL)
+				exit(err_prnt3n("minishell", cmd->execmd, \
+			"command not found", 127));
 			execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
-			exit (err_prnt3n("minishell", cmd->execmd, \
+			exit(err_prnt3n("minishell", cmd->execmd, \
 			strerror(errno), 127));
 		}
 	}
+	return (cmd->cmd_pid);
 }
 
 /*
-Исполняет одну команду, не в пайпе.
+Исполняет одну команду, не в пайпе, возвращает PID запущенной дочки
+или 0 для билдина
 */
-void	lunch_standalone(t_prgexec *cmd)
+int	lunch_standalone(t_prgexec *cmd)
 {
-	int	stdin;
-	int	stdout;
-	int	bnum;
+	int		stdin;
+	int		stdout;
+	int		bnum;
+	pid_t	pid;
 
+	pid = 0;
 	if (open_rdr(cmd))
-		return ;
+		return (pid);
 	stdaln_rdrsave(cmd, &stdin, &stdout);
 	bnum = is_builtin(cmd);
 	if (bnum)
 		cmd->mdata->errlvl = runbuiltin(cmd, bnum);
 	else
-		stdaln_runextr(cmd);
+		pid = stdaln_runextr(cmd);
 	stdaln_rdrrestore(cmd, &stdin, &stdout);
+	return (pid);
 }

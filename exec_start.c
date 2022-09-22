@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 21:56:20 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/22 19:52:49 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	exec_start(t_mshell *data)
 		if (cmd_in_pipe(get_execmd(prevcmd), get_execmd(cmd)))
 			last_pid = lunch_pipe(get_execmd(prevcmd), get_execmd(cmd));
 		else
-			lunch_standalone(get_execmd(cmd));
+			last_pid = lunch_standalone(get_execmd(cmd));
 		prevcmd = cmd;
 		cmd = cmd->next;
 	}

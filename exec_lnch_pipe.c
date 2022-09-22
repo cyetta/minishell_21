@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 22:23:51 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/22 21:55:32 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,14 @@ int	exec_pipe(t_prgexec *cmd)
 	bnum = is_builtin(cmd);
 	if (bnum)
 		err = runbuiltin(cmd, bnum);
+	else if (ft_strrchr(cmd->execmd, '/') == NULL)
+		err_prnt3n("minishell", cmd->execmd, \
+			"command not found", 127);
 	else
 	{
 		execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
 		err_prnt3n("minishell", cmd->execmd, \
-	strerror(errno), err);
+			strerror(errno), 127);
 	}
 	close(0);
 	close(1);
