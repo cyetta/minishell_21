@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/22 21:43:31 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 17:30:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
+#include "ft_signal.h"
 
 /*
 Сохраняем стандартные потоки и устанавливаем редиректы, не в пайпе
@@ -70,6 +71,7 @@ pid_t	stdaln_runextr(t_prgexec *cmd)
 			strerror(errno), ERR_SYNTAX_ERRNO));
 		else if (!cmd->cmd_pid)
 		{
+			set_sigdflt();
 			if (ft_strrchr(cmd->execmd, '/') == NULL)
 				exit(err_prnt3n("minishell", cmd->execmd, \
 			"command not found", 127));

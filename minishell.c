@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 01:43:23 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 22:24:09 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "executor.h"
+#include "ft_signal.h"
 
 int	parse_cmd(t_mshell *data, char *cmd)
 {
@@ -88,6 +89,7 @@ int	main(int argc, char **argv, char **argp)
 ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 	while (1)
 	{
+		set_sighndlr();
 		s = readline("minishell$ ");
 		if (!s)
 			break ;

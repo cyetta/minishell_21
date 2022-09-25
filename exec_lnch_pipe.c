@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/22 21:55:32 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 17:27:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
+#include "ft_signal.h"
 
 int	close_pipe(t_prgexec *prevcmd, t_prgexec *cmd, int err)
 {
@@ -103,6 +104,7 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 			close(cmd->pipe[1]);
 		return (cmd->cmd_pid);
 	}
+	set_sigdflt();
 	if (open_rdr(cmd))
 		exit (close_pipe(prevcmd, cmd, 1));
 	redir_pipe(prevcmd, cmd);

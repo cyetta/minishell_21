@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_rdhdoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/16 02:58:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 22:25:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	write_hdoc(int fd, char *hdoc)
 	int		cnt;
 
 	cnt = 0;
-	s = readline(">");
+	s = readline("> ");
 	while (s && ft_strcmp(s, hdoc))
 	{
 		cnt = write(fd, s, ft_strlen(s));
@@ -94,10 +94,11 @@ int	write_hdoc(int fd, char *hdoc)
 		if (cnt == -1)
 			break ;
 		free(s);
-		s = readline(">");
+		s = readline("> ");
 	}
-	if (s)
-		free(s);
+	if (!s)
+		return(ERR_CTRLD_QUIT);
+	free(s);
 	if (cnt == -1)
 		return (err_prnt3n("minishell", "", strerror(errno), ERR_SYNTAX_ERRNO));
 	return (ERR_OK);
@@ -148,7 +149,7 @@ int	exec_hdoc_add(t_list **t, t_prgexec *p)
 	ft_lstadd_back(&p->rdr_lst, rd_tkn_le);
 	err = write_hdoc(fd, ((t_token *)(*t)->next->content)->value);
 	if (err)
-		return (ERR_SYNTAX_ERRNO);
+		return (err);
 	close(fd);
 	*t = (*t)->next;
 	return (ERR_OK);

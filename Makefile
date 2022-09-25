@@ -24,7 +24,7 @@ SRC_N 	= ft_util.c minishell.c builtins1.c builtins2.c ft_error.c ld_env2lst.c \
 		parser_expstr.c parser_util.c parser.c parser_tkn1.c parser_tkn2.c \
 		exec_lst_ld.c exec_lst_ld_u.c exec_lst_rdhdoc.c \
 		exec_lst_rdhdoc_u.c exec_check.c exec_check_u.c exec_start.c exec_redir.c \
-		exec_redir_opn.c exec_lnch_standalone.c exec_lnch_pipe.c signal.c
+		exec_redir_opn.c exec_lnch_standalone.c exec_lnch_pipe.c ft_signal.c
 
 SRC_B 	=
 

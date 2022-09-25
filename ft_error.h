@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:23 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/24 21:08:37 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 22:25:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define ERR_TMPFILEACCCESERR 16
 # define ERR_SYNTAX_ERRNO 17
 # define ERR_EMPTYCMD 18
+# define ERR_CTRLD_QUIT 19
 # define ERR_LASTERR ERR_EMPTYCMD
 
 int	err_prnt3n(const char *msg1, const char *msg2, const char *msg3, int err);

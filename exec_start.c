@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/22 19:52:49 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 22:24:08 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "minishell.h"
 #include "executor.h"
 #include "builtins.h"
+#include "ft_signal.h"
 
 /*
 возвращает TRUE если cmd находится в пайпе, т.е. у текущей или предыдущей \

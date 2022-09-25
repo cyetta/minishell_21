@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/24 20:26:30 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/25 22:24:05 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	ft_error(int errnum)
 	"Syntax error, unexpected token \'>>\'.", \
 	"Syntax error, unexpected token \'<<\'.", \
 	"No file or directory found.", "Temporary file access error.", \
-	"", "No commands. Empty line."};
+	"", "No commands. Empty line.", "Ctrl+D pressed"};
 
 	if (errnum == ERR_USAGE)
 		return (err_prnt3n(msg[errnum], NULL, NULL, errnum));
-	else if (errnum == ERR_SYNTAX_ERRNO)
+	else if (errnum == ERR_SYNTAX_ERRNO || ERR_CTRLD_QUIT)
 		return (errnum);
 	else if (errnum > ERR_USAGE && errnum <= ERR_LASTERR)
 		return (err_msg(msg[errnum], errnum));
