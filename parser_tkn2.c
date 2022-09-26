@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tkn2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:56:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 05:01:52 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,30 @@ int	f_tkn_redir(t_list **tknlst_hd, t_mshell *data)
 	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == HERE_DOC)
 		return (ERR_SYNTAX_RDR_HDOC);
 	return (ERR_OK);
+}
+
+// collect string to from src to dest
+int	token_collected(t_token *src, t_token *dest)
+{
+}
+
+int	f_tkn_hdoc(t_list **tknlst_hd, t_mshell *data)
+{
+	t_list	*tl;
+	t_token	*t_tkn;
+	int		err;
+
+	err = f_tkn_redir(tknlst_hd, data);
+	if (err)
+		return (err);
+	*tknlst_hd = (*tknlst_hd)->next;
+	t_tkn = (t_token *)(*tknlst_hd)->content;
+	if (t_tkn->e_lxm == DOLLAR)
+		t_tkn->value = ft_strdup("$");
+	t_tkn->e_lxm = STRINGLN;
+	tl = (*tknlst_hd)->next;
+	while (tl && token_collected((t_token *)tl->content, t_tkn))
+	{
+		t_tkn = (t_token *)tl->content;
+	}
 }
