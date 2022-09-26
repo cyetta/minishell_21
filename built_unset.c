@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:58:49 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/26 14:14:47 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/26 16:35:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_option(char *argv)
 */
 int	throw_error_usage(char *cmd, char *argv)
 {
-	ft_putstr_fd("blackhole-shell: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	write(STDERR_FILENO, argv, 2);
@@ -47,7 +47,7 @@ int	throw_error_usage(char *cmd, char *argv)
 
 int	throw_error_env(char *cmd, char *argv)
 {
-	ft_putstr_fd("blackhole-shell: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd("`", STDERR_FILENO);
