@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 23:51:57 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 14:13:16 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,30 @@ Each variable or function specified by name shall be unset.
  */
 int	builtin_unset(t_prgexec *cmd)
 {
-	printf("this is %s\n", cmd->execmd);
-	return (0);
+	//t_ktable	*target;
+	int			exit_code;
+
+	exit_code = EXIT_SUCCESS;
+	if (!*(cmd->argv + 1))
+		return (exit_code);
+	cmd->argv++;
+	while (*cmd->argv)
+	{
+		if (check_option(*cmd->argv) == EXIT_FAILURE)
+			exit_code = throw_error_usage("unset", *cmd->argv) + 1;
+		else if (ft_strchr(*cmd->argv, '='))
+			exit_code = throw_error_env("unset", *cmd->argv);
+		else if (valid_env_name(*cmd->argv) == EXIT_FAILURE)
+			exit_code = throw_error_env("unset", *cmd->argv);
+		/*else
+		{
+			target = get_env(*cmd->argv);//get_env в процессе, думаю похожая функция есть в одном из файлом
+			if (target)
+				remove_env(target);// если таргет получился перемещаем на 1 и чистим
+		}*/
+		cmd->argv++;
+	}
+	return (exit_code);
 }
 
 /*

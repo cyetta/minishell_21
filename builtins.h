@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/19 23:50:40 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:05 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,9 @@ int		builtin_export(t_prgexec *cmd);
 int		builtin_unset(t_prgexec *cmd);
 int		builtin_env(t_prgexec *cmd);
 int		builtin_exit(t_prgexec *cmd);
+char	*get_env_var(t_prgexec *cmd, char *var);
+int		check_option(char *argv);
+int		throw_error_usage(char *cmd, char *argv);
+int		throw_error_env(char *cmd, char *argv);
+int		valid_env_name(char *identifier);
 #endif
