@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:30:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/13 19:04:47 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 21:22:16 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 #include "ft_error.h"
 
 /*
-compare ktable->key struct with key and
+compare (t_ktable *)ktbl->key with (char *)key and
 return true if its equal
+callback function for ft_lstsearch
 */
 int	env_cmp(void *key, void *ktbl)
 {
@@ -46,7 +47,7 @@ char	*get_envvalue(const char *str, t_list *env)
 	t_ktable	*env_v;
 	char		*subs;
 
-	env_v = (t_ktable *)ft_lstsearch(env, (void *)str, env_cmp);
+	env_v = (t_ktable *)(ft_lstsearch(env, (void *)str, env_cmp)->content);
 	if (env_v)
 		subs = ft_strdup(env_v->value);
 	else

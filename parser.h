@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:06 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 03:43:19 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 19:38:53 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_util.h"
 
 int		tknlst_expander(t_mshell *data);
+int		env_cmp(void *key, void *ktbl);
 char	*get_envvalue(const char *str, t_list *env);
 char	*get_envvar(char *str, t_mshell *data, int *pos);
 char	*expnd_str(char *str, t_mshell *data);

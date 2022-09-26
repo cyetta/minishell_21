@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 14:19:39 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/26 21:29:12 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,13 @@ cd with only a relative or absolute path
  */
 int	builtin_cd(t_prgexec *cmd)
 {
-	/*char	*home_path;
+	printf("this is %s\n", cmd->execmd);
+	return (0);
+}
+/* 	char	*home_path;
 
-	home_path = get_env_var(cmd, "HOME");*/
-	/*if (!cmd->argv[0])
+	home_path = get_env_var(cmd, "HOME");
+	if (!cmd->argv[0])
 	{
 		change_dir(home_path, 0);
 		return (1);
@@ -117,10 +120,8 @@ int	builtin_cd(t_prgexec *cmd)
 			return (1);
 		}
 		change_dir(cmd->argv[0], 0);
-	}*/
-	printf("this is %s\n", cmd->execmd);
-	return (0);
-}
+	}
+*/	
 
 /*
 pwd with no options

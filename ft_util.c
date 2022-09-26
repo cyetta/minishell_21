@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 18:58:24 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/29 20:43:12 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 21:21:26 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ int	ft_strcmp(const char *s1, const char *s2)
 /*
 Apply the cmp(key, lst->content) function to the contents of the list
 until it returns true
-returns a pointer to the content on the first equality
+returns a pointer to the list element on the first equality
 or NULL, if nothing finded
 int(*cmp)(void *key, void *content)
 */
-void	*ft_lstsearch(t_list *lst, void *key, int (*cmp)(void *, void *))
+t_list	*ft_lstsearch(t_list *lst, void *key, int (*cmp)(void *, void *))
 {
 	while (lst)
 	{
 		if ((*cmp)(key, lst->content))
-			return (lst->content);
+			return (lst);
 		lst = lst->next;
 	}
-	return (NULL);
+	return (lst);
 }
 
 /*

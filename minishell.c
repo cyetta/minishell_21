@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 02:31:10 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 21:32:05 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	parse_cmd(t_mshell *data, char *cmd)
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, tkn_elmnt_del);
 	else
 		add_history(cmd);
-ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-printf("----\n");
+// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+// printf("----\n");
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
-ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-printf("\n");
+// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
+// printf("\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
-ft_lstiter(data->exec_lst, exc_elmt_prn);
+// ft_lstiter(data->exec_lst, exc_elmt_prn);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
