@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tkn2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:56:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:37:50 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,56 @@ int	f_tkn_redir(t_list **tknlst_hd, t_mshell *data)
 	else if (((t_token *)(*tknlst_hd)->next->content)->e_lxm == HERE_DOC)
 		return (ERR_SYNTAX_RDR_HDOC);
 	return (ERR_OK);
+}
+
+// collect string to from src to dest
+int	token_collect(t_token *src, t_token *dest)
+{
+	char	*t;
+
+	if (!src && !dest)
+		return (err_prnt3n("minishell", "token_collect", "NULL pointer", \
+	ERR_CTRLD_QUIT));
+	if (dest)
+		dest->e_lxm = STRINGLN;
+	else
+		return (err_prnt3n("minishell", "token_collect", "NULL destination pinter", \
+		ERR_INIT_4));
+	if (!src)
+		return (ERR_OK);
+	t = ft_strjoin(dest->value, src->value);
+	if (!t)
+		return (ERR_MALLOC);
+	free (dest->value);
+	dest->value = t;
+	return (ERR_OK);
+}
+
+int	is_collected(t_token *t)
+{
+	return (t->e_lxm == QUOTES || t->e_lxm == DQUOTES \
+	|| t->e_lxm == DOLLAR || t->e_lxm == STRINGLN);
+}
+
+int	f_tkn_hdoc(t_list **tknlst_hd, t_mshell *data)
+{
+	t_list	*tl;
+	t_token	*t_tkn;
+	int		err;
+
+	err = f_tkn_redir(tknlst_hd, data);
+	if (err)
+		return (err);
+	*tknlst_hd = (*tknlst_hd)->next;
+	t_tkn = (t_token *)(*tknlst_hd)->content;
+	tl = (*tknlst_hd)->next;
+	err = 0;
+	while (tl && !err && is_collected((t_token *)tl->content))
+	{
+		err = token_collect((t_token *)tl->content, t_tkn);
+		ft_lstdelnode(tknlst_hd, tl, tkn_elmnt_del);
+		tl = (*tknlst_hd)->next;
+	}
+	(*tknlst_hd) = tl;
+	return (err);
 }

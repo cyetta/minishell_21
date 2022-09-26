@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:39:59 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 23:04:40 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:15:25 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ pos - position, that point to current char in parsing string
 int	add_tkn_dollar(t_list **tkn_lst, char *str, int *pos)
 {
 	t_list	*tkn;
+	char	*s;
 
 	(void)str;
 	(void)pos;
-	if (new_tkn_elmnt(&tkn, DOLLAR, NULL))
+	s = ft_strdup("$");
+	if (!s)
+		return (ERR_MALLOC);
+	if (new_tkn_elmnt(&tkn, DOLLAR, s))
 		return (ERR_MALLOC);
 	ft_lstadd_back(tkn_lst, tkn);
 	return (ERR_OK);

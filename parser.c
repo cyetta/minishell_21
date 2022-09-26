@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:57:07 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/26 03:43:25 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	tknlst_expander(t_mshell *data)
 	int					err;
 	const t_tkn_func	a_tkn_f[] = {f_tkn_space, f_tkn_quotes, \
 	f_tkn_dquotes, f_tkn_dollar, f_tkn_pipe, f_tkn_redir, f_tkn_redir, \
-	f_tkn_redir, f_tkn_redir, f_tkn_str};
+	f_tkn_redir, f_tkn_hdoc, f_tkn_str};
 
 	tknlst_hd = data->tkn_lst;
 	prev = NULL;
