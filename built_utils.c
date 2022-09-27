@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:37:11 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/26 21:28:35 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/28 00:10:02 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "ft_error.h"
 
 /*
-возвращает структуру переменной окружения по найденной переменной или 
+возвращает структуру переменной окружения по найденной переменной или
 NULL если переменная не найдена.
 */
 t_ktable	*search_env_var(t_list *envlst, char *var)
@@ -26,6 +26,9 @@ t_ktable	*search_env_var(t_list *envlst, char *var)
 	return ((t_ktable *)(ft_lstsearch(envlst, (void *)var, env_cmp))->content);
 }
 
+/*
+Добавляет переменную в список окружения без проверок
+*/
 int	add_env_var(t_list **envlst, char *var, char *value)
 {
 	t_ktable	*v_env;
@@ -68,7 +71,7 @@ int	replace_env_var(t_list **envlst, char *var, char *value)
 }
 
 /*
-удаляет переменную в списке переменных оружения 
+удаляет переменную в списке переменных оружения
 */
 int	del_env_var(t_list **envlst, char *var)
 {

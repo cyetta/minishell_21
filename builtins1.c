@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 21:29:12 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/28 02:40:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ft_util.h"
 #include "builtins.h"
 #include "minishell.h"
+#include "ft_error.h"
 
 /*
 Check command for builtin
@@ -94,7 +95,22 @@ cd with only a relative or absolute path
  */
 int	builtin_cd(t_prgexec *cmd)
 {
-	printf("this is %s\n", cmd->execmd);
+	char		*pwd;
+	char		*oldpwd;
+	t_ktable	*t;
+
+	if (cmd->argv[2])
+		return (err_prnt3n("minishell", "cd", "too many arguments", 1));
+	else if (!cmd->argv[1] || (cmd->argv[1] && *(cmd->argv[1]) == '\0'))
+		return (0);
+	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == '\0')
+	{
+		t = search_env_var(cmd->mdata->env_lst, "OLDPWD");
+		if (!t)
+			return (err_prnt3n("minishell", "cd", "OLDPWD variable not set", 1));
+		// free(cmd->argv[1]);
+		// cmd->argv[1] =
+	}
 	return (0);
 }
 /* 	char	*home_path;
@@ -121,7 +137,7 @@ int	builtin_cd(t_prgexec *cmd)
 		}
 		change_dir(cmd->argv[0], 0);
 	}
-*/	
+*/
 
 /*
 pwd with no options
