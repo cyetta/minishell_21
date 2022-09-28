@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/28 02:40:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/28 09:42:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ cd with only a relative or absolute path
 int	builtin_cd(t_prgexec *cmd)
 {
 	char		*pwd;
-	char		*oldpwd;
-	t_ktable	*t;
+	t_ktable	*oldpwd;
 
 	if (cmd->argv[2])
 		return (err_prnt3n("minishell", "cd", "too many arguments", 1));
@@ -105,11 +104,14 @@ int	builtin_cd(t_prgexec *cmd)
 		return (0);
 	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == '\0')
 	{
-		t = search_env_var(cmd->mdata->env_lst, "OLDPWD");
-		if (!t)
+		oldpwd = search_env_var(cmd->mdata->env_lst, "OLDPWD");
+		if (!oldpwd || (oldpwd && !oldpwd->value))
 			return (err_prnt3n("minishell", "cd", "OLDPWD variable not set", 1));
-		// free(cmd->argv[1]);
-		// cmd->argv[1] =
+		free(cmd->argv[1]);
+		cmd->argv[1] = t->value;
+		free(t->value);
+		t->value = getcwd(NULL, 0);
+		cmd->argv[1] = 1;
 	}
 	return (0);
 }
