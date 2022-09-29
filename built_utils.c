@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:37:11 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/28 00:10:02 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 13:03:50 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,38 @@ NULL если переменная не найдена.
 */
 t_ktable	*search_env_var(t_list *envlst, char *var)
 {
-	return ((t_ktable *)(ft_lstsearch(envlst, (void *)var, env_cmp))->content);
+	t_list	*t;
+
+	t = ft_lstsearch(envlst, (void *)var, env_cmp);
+	if (!t)
+		return (NULL);
+	return (t->content);
 }
 
 /*
-Добавляет переменную в список окружения без проверок
+Добавляет переменную в список окружения без проверок на существование в списке
+если var NULL не добавляет ничего,
+если если value NULL добавляется var c value NULL
+в случае ошибки выделения памяти, падает с ошибкой
 */
 int	add_env_var(t_list **envlst, char *var, char *value)
 {
 	t_ktable	*v_env;
 	t_list		*tl;
 
+	if (!var)
+		return (ERR_OK);
 	v_env = (t_ktable *)malloc(sizeof(t_ktable));
 	if (!v_env)
 		exit(ft_error(ERR_MALLOC));
 	v_env->key = ft_strdup(var);
-	v_env->value = ft_strdup(value);
-	if (!v_env->key || !v_env->value)
+	if (!v_env->key)
+		exit(ft_error(ERR_MALLOC));
+	if (value)
+		v_env->value = ft_strdup(value);
+	else
+		v_env->value = NULL;
+	if (value && !v_env->value)
 		exit(ft_error(ERR_MALLOC));
 	tl = ft_lstnew(v_env);
 	if (!tl)

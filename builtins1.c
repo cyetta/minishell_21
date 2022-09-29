@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/28 09:42:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:58:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include "ft_util.h"
 #include "builtins.h"
 #include "minishell.h"
+#include "parser.h"
 #include "ft_error.h"
 
 /*
 Check command for builtin
-Return builtin number, count from 1. If no builtin found, return 0
+Returns builtin number, count from 1. If no builtin found, return 0
 */
 int	is_builtin(t_prgexec *cmd)
 {
@@ -90,29 +91,51 @@ int	builtin_echo(t_prgexec *cmd)
 	return (0);
 }
 
+int	cd_exec(char *path, t_ktable *pwd, t_ktable *oldpwd, t_list **env)
+{
+	char	*t_path;
+
+	t_path = getcwd(NULL, 0);
+	if (chdir(path))
+	{
+		free (t_path);
+		return (err_prnt3n("minishell: cd", path, strerror(errno), 1));
+	}
+	if (!(pwd))
+		add_env_var(env, "PWD", NULL);
+	else if (pwd->value)
+		free(pwd->value);
+	pwd->value = getcwd(NULL, 0);
+	if (!(oldpwd))
+		add_env_var(env, "OLDPWD", NULL);
+	else if (oldpwd->value)
+		free(oldpwd->value);
+	oldpwd->value = t_path;
+	return (0);
+}
+
 /*
 cd with only a relative or absolute path
  */
 int	builtin_cd(t_prgexec *cmd)
 {
-	char		*pwd;
+	t_ktable	*pwd;
 	t_ktable	*oldpwd;
 
+	oldpwd = search_env_var(cmd->mdata->env_lst, "OLDPWD");
+	pwd = search_env_var(cmd->mdata->env_lst, "PWD");
 	if (cmd->argv[2])
 		return (err_prnt3n("minishell", "cd", "too many arguments", 1));
 	else if (!cmd->argv[1] || (cmd->argv[1] && *(cmd->argv[1]) == '\0'))
 		return (0);
 	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == '\0')
 	{
-		oldpwd = search_env_var(cmd->mdata->env_lst, "OLDPWD");
 		if (!oldpwd || (oldpwd && !oldpwd->value))
-			return (err_prnt3n("minishell", "cd", "OLDPWD variable not set", 1));
-		free(cmd->argv[1]);
-		cmd->argv[1] = t->value;
-		free(t->value);
-		t->value = getcwd(NULL, 0);
-		cmd->argv[1] = 1;
+			return (err_prnt3n("minishell", "cd", \
+		"OLDPWD variable not set", 1));
+		return (cd_exec(oldpwd->value, pwd, oldpwd, &cmd->mdata->env_lst));
 	}
+	cd_exec(cmd->argv[1], pwd, oldpwd, &cmd->mdata->env_lst);
 	return (0);
 }
 /* 	char	*home_path;

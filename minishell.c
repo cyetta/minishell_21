@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 21:32:05 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:40:59 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "ft_error.h"
@@ -19,6 +20,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "executor.h"
+#include "builtins.h"
 #include "ft_signal.h"
 
 int	parse_cmd(t_mshell *data, char *cmd)
@@ -56,6 +58,8 @@ load enviroment variable in list
 */
 int	init_data(t_mshell *shell_prm, char **argp)
 {
+	char	*t_pwd;
+
 	shell_prm->env_lst = NULL;
 	if (ld_env2lst(&shell_prm->env_lst, argp))
 		return (ERR_INIT_4);
@@ -64,6 +68,10 @@ int	init_data(t_mshell *shell_prm, char **argp)
 	shell_prm->a_env = NULL;
 	shell_prm->hdoc_cnt = 0;
 	shell_prm->exec_lst = NULL;
+	t_pwd = getcwd(NULL, 0);
+	replace_env_var(&shell_prm->env_lst, "PWD", t_pwd);
+	free (t_pwd);
+	replace_env_var(&shell_prm->env_lst, "OLDPWD", NULL);
 	return (0);
 }
 
@@ -86,7 +94,6 @@ int	main(int argc, char **argv, char **argp)
 		return (ft_error(ERR_USAGE));
 	else if (init_data(&shell_prm, argp))
 		return (ft_error(ERR_INIT_4));
-ft_lstiter(shell_prm.env_lst, ktblitm_prn); // test print env variable list
 	while (1)
 	{
 		set_sighndlr();

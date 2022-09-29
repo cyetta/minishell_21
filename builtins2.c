@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 14:13:16 by macbook          ###   ########.fr       */
+/*   Updated: 2022/09/29 14:37:08 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,13 @@ variables are set before the utility is executed.
  */
 int	builtin_env(t_prgexec *cmd)
 {
-	printf("this is %s\n", cmd->execmd);
+	int	i;
+
+	if (cmd->argv[1])
+		return (err_prnt3n("minishell", "env", "too many arguments", 1));
+	i = 0;
+	while (cmd->mdata->a_env[++i])
+		printf("%s\n", cmd->mdata->a_env[i]);
 	return (0);
 }
 

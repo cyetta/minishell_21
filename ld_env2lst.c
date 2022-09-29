@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_env2lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 20:53:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/08/25 16:37:11 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:49:51 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,41 +42,13 @@ void	ktblitm_prn(void *elm)
 	t_ktable	*itm;
 
 	itm = (t_ktable *)elm;
-	printf("%s : %s\n", itm->key, itm ->value);
-}
-
-/*
-Create new element of environment list
-return pointer to struct t_ktable (key, value)
-*/
-t_ktable	*get_envitm(char *str)
-{
-	t_ktable		*envitm;
-	unsigned int	pos_eq;
-
-	envitm = (t_ktable *)malloc(sizeof(t_ktable));
-	if (!envitm)
-		return (envitm);
-	pos_eq = ft_strchr(str, '=') - str;
-	envitm->key = ft_substr(str, 0, pos_eq);
-	if (!envitm->key)
-	{
-		free (envitm);
-		return (NULL);
-	}
-	envitm->value = ft_substr(str, pos_eq + 1, ft_strlen(str) - pos_eq + 1);
-	if (!envitm->value)
-	{
-		free(envitm->key);
-		free(envitm);
-		return (NULL);
-	}
-	return (envitm);
+	printf("%s=%s\n", itm->key, itm ->value);
 }
 
 /*
 converts struct t_ktabe to string(malloc)
 key=value
+if value == NULL return key
 */
 char	*ktable2str(t_ktable *itm)
 {
@@ -86,6 +58,8 @@ char	*ktable2str(t_ktable *itm)
 	str = ft_strdup(itm->key);
 	if (!str)
 		exit(ft_error(ERR_MALLOC));
+	if (!itm->value)
+		return (str);
 	tmp = ft_strjoin(str, "=");
 	free(str);
 	if (!tmp)
@@ -109,7 +83,7 @@ int	ld_env2lst(t_list **lst, char **argp)
 	i = -1;
 	while (argp[++i])
 	{
-		itm = get_envitm(argp[i]);
+		itm = parse_envstr(argp[i]);
 		if (!itm)
 			break ;
 		t = ft_lstnew(itm);

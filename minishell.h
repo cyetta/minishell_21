@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 16:30:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 13:53:31 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_prgexec
 	int		len;
 }	t_child;
  */
-t_ktable	*get_envitm(char *str);
+t_ktable	*parse_envstr(char *str);
 char		*ktable2str(t_ktable *itm);
 void		ktblitm_del(void *elm);
 void		ktblitm_prn(void *elm);

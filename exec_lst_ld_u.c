@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/18 01:11:48 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:27:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	a_env_init(t_mshell *data)
 	i = data->env_lst;
 	while (i)
 	{
-		data->a_env[j++] = ktable2str((t_ktable *)i->content);
+		if (((t_ktable *)i->content)->value)
+			data->a_env[j++] = ktable2str((t_ktable *)i->content);
 		i = i->next;
 	}
 	data->a_env[j] = NULL;
