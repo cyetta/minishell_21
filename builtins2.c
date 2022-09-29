@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 21:04:35 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 22:38:14 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "ft_util.h"
 #include "builtins.h"
 #include "ft_error.h"
+#include "parser.h"
+#include "lexer.h"
 
 /*
 export with no options
@@ -40,30 +42,17 @@ Each variable or function specified by name shall be unset.
  */
 int	builtin_unset(t_prgexec *cmd)
 {
-	//t_ktable	*target;
-	int			exit_code;
+	t_list	*tl;
+	int		i;
 
-	exit_code = EXIT_SUCCESS;
-	if (!*(cmd->argv + 1))
-		return (exit_code);
-	cmd->argv++;
-	while (*cmd->argv)
+	i = 0;
+	while (cmd->argv[++i])
 	{
-		if (check_option(*cmd->argv) == EXIT_FAILURE)
-			exit_code = throw_error_usage("unset", *cmd->argv) + 1;
-		else if (ft_strchr(*cmd->argv, '='))
-			exit_code = throw_error_env("unset", *cmd->argv);
-		else if (valid_env_name(*cmd->argv) == EXIT_FAILURE)
-			exit_code = throw_error_env("unset", *cmd->argv);
-		/*else
-		{
-			target = get_env(*cmd->argv);//get_env в процессе, думаю похожая функция есть в одном из файлом
-			if (target)
-				remove_env(target);// если таргет получился перемещаем на 1 и чистим
-		}*/
-		cmd->argv++;
+		tl = ft_lstsearch(cmd->mdata->env_lst, (void *)cmd->argv[i], env_cmp);
+		if (tl)
+			ft_lstdelnode(&cmd->mdata->env_lst, tl, tkn_elmnt_del);
 	}
-	return (exit_code);
+	return (ERR_OK);
 }
 
 /*

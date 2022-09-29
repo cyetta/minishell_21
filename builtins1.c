@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 14:58:58 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 21:52:17 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,6 @@ int	runbuiltin(t_prgexec *cmd, int bnum)
 	return (a_bldin_f[bnum - 1](cmd));
 }
 
-/* 	if (!ft_strncmp(cmd->argv[0], "exit", ft_strlen(cmd->argv[0])))
-		builtin_exit(cmd);
-	else if (!ft_strncmp(cmd->argv[0], "echo", ft_strlen(cmd->argv[0])))
-		builtin_echo(cmd);
-	else if (!ft_strncmp(cmd->argv[0], "pwd", ft_strlen(cmd->argv[0])))
-	{
-		builtin_pwd();
-		printf("11234213412341234123412341234123412341234123\n");
-	}
-	else if (!ft_strncmp(cmd->argv[0], "env", ft_strlen(cmd->argv[0])))
-		builtin_env(cmd);
-	return (0); */
-
 /*
 echo with option -n
 */
@@ -91,6 +78,9 @@ int	builtin_echo(t_prgexec *cmd)
 	return (0);
 }
 
+/*
+change directory and set PWD OLDPWD
+*/
 int	cd_exec(char *path, t_ktable *pwd, t_ktable *oldpwd, t_list **env)
 {
 	char	*t_path;
