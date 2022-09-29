@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:37:11 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/29 13:03:50 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:45:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,13 @@ int	replace_env_var(t_list **envlst, char *var, char *value)
 		add_env_var(envlst, var, value);
 	else
 	{
-		free(v_env->value);
-		v_env->value = ft_strdup(value);
-		if (!v_env->value)
+		if (v_env->value)
+			free(v_env->value);
+		if (value)
+			v_env->value = ft_strdup(value);
+		else
+			v_env->value = NULL;
+		if (value && !v_env->value)
 			exit(ft_error(ERR_MALLOC));
 	}
 	return (ERR_OK);
