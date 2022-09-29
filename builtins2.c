@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 14:37:08 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/29 21:04:35 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,17 @@ int	builtin_exit(t_prgexec *cmd)
 {
 	int	i;
 
+	if (cmd->argv[1] && cmd->argv[2])
+		return (err_prnt3n("minishell", "exit", "too many arguments", 1));
+	if (!cmd->argv[1])
+		exit(err_prnt3n("exit\n", NULL, NULL, 0));
 	i = 0;
-	if (cmd->argv[1] && cmd->argv[2])
-		printf("exit\n");
-	if (cmd->argv[1] && cmd->argv[2])
-		err_msg("exit: too many arguments", 3);
-	if (cmd->argv[1])
-	{
-		while (ft_isdigit(cmd->argv[1][i]))
-			i++;
-		if ((size_t)i != ft_strlen(cmd->argv[1]))
-			err_msg("exit: numeric argument required", 3);
-	}
-	if (cmd->argv[1] && cmd->argv[2])
-	{
-		if (!cmd->argv[1])
-			exit(0);
-		else if ((size_t)i != ft_strlen(cmd->argv[1]))
-			exit(255);
-		else
-			exit(ft_atoi(cmd->argv[1]) % 256);
-	}
-	return (0);
+	if (cmd->argv[1][0] == '-')
+		i = 1;
+	while (ft_isdigit(cmd->argv[1][i]))
+		i++;
+	if (cmd->argv[1][i] != '\0' || i > 18 || (cmd->argv[1][0] == '-' && i == 1))
+		exit (err_prnt3n("minishell: exit", cmd->argv[1], \
+	"numeric argument required", 255));
+	exit(err_prnt3n("exit\n", NULL, NULL, ft_atoi(cmd->argv[1]) % 256));
 }
