@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 13:53:31 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 15:19:37 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,6 @@ typedef struct s_prgexec
 	int			pipe[2];
 }	t_prgexec;
 
-/* typedef struct s_child
-{
-	int		current;
-	pid_t	pid;
-	int		pipe[2][2];
-	int		i;
-	int		len;
-}	t_child;
- */
 t_ktable	*parse_envstr(char *str);
 char		*ktable2str(t_ktable *itm);
 void		ktblitm_del(void *elm);
