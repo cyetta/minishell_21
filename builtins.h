@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 01:18:29 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:28:25 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,7 @@ int			check_option(char *argv);
 int			throw_error_usage(char *cmd, char *argv);
 int			throw_error_env(char *cmd, char *argv);
 int			valid_env_name(char *identifier);
+int			ktblitm_low(void *key, void *content);
+void		b_export_delsorted(void *content);
+void		b_export_print(void *content);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:30:44 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 21:22:16 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:57:40 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	env_cmp(void *key, void *ktbl)
 }
 
 /*
-creates(malloc) and returns a string in which the environment variable is 
+creates(malloc) and returns a string in which the environment variable is
 expanded to its value
 str - environment variable string, env - list of environment variable
 return:
@@ -44,12 +44,12 @@ NULL - if malloc error
 */
 char	*get_envvalue(const char *str, t_list *env)
 {
-	t_ktable	*env_v;
+	t_list		*tl;
 	char		*subs;
 
-	env_v = (t_ktable *)(ft_lstsearch(env, (void *)str, env_cmp)->content);
-	if (env_v)
-		subs = ft_strdup(env_v->value);
+	tl = ft_lstsearch(env, (void *)str, env_cmp);
+	if (tl && ((t_ktable *)(tl->content))->value)
+		subs = ft_strdup(((t_ktable *)(tl->content))->value);
 	else
 		subs = ft_strdup("");
 	return (subs);

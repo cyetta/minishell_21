@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 14:40:59 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:10:37 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,12 @@ int	parse_cmd(t_mshell *data, char *cmd)
 		ft_lstdelnode(&data->tkn_lst, data->tkn_lst, tkn_elmnt_del);
 	else
 		add_history(cmd);
-// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-// printf("----\n");
 	if (ft_lstsize(data->tkn_lst) == 0)
 		return (ERR_EMPTYCMD);
 	err = tknlst_expander(data);
-// ft_lstiter(data->tkn_lst, tkn_elmnt_prn);
-// printf("\n");
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	err = ld_exec_lst(data);
-// ft_lstiter(data->exec_lst, exc_elmt_prn);
 	if (err)
 		return (is_syntax_err(ft_error(err)));
 	return (ERR_OK);
@@ -56,13 +51,15 @@ int	parse_cmd(t_mshell *data, char *cmd)
 Initialize main data structure,
 load enviroment variable in list
 */
-int	init_data(t_mshell *shell_prm, char **argp)
+int	init_data(t_mshell *shell_prm, int argc, char **argp)
 {
 	char	*t_pwd;
 
+	if (argc > 1)
+		exit (ft_error(ERR_USAGE));
 	shell_prm->env_lst = NULL;
 	if (ld_env2lst(&shell_prm->env_lst, argp))
-		return (ERR_INIT_4);
+		exit (ERR_INIT_4);
 	shell_prm->tkn_lst = NULL;
 	shell_prm->errlvl = 0;
 	shell_prm->a_env = NULL;
@@ -81,7 +78,6 @@ void	clear_data(t_mshell *shell_prm)
 	ft_lstclear(&shell_prm->tkn_lst, tkn_elmnt_del);
 	a_env_free(shell_prm);
 }
-//	unlink_hdoc(shell_prm);
 
 int	main(int argc, char **argv, char **argp)
 {
@@ -90,10 +86,7 @@ int	main(int argc, char **argv, char **argp)
 	int			err;
 
 	(void) argv;
-	if (argc > 1)
-		return (ft_error(ERR_USAGE));
-	else if (init_data(&shell_prm, argp))
-		return (ft_error(ERR_INIT_4));
+	init_data(&shell_prm, argc, argp);
 	while (1)
 	{
 		set_sighndlr();
@@ -113,30 +106,3 @@ int	main(int argc, char **argv, char **argp)
 	rl_clear_history();
 	return (0);
 }
-
-/*
-void	pr_argvp(int argc, char **argv, char **argp)
-{
-	int		i;
-
-	i = -1;
-	while (argv[++i])
-		printf("%d [%d]%s\n", argc, i, argv[i]);
-	i = -1;
-	while (argp[++i])
-		printf("%s\n", argp[i]);
-}
-
- 	t_list		*lst;
-	t_ktable	*itm;
-	int			i;
-
-	i = -1;
-	lst = NULL;
-	while (argp[++i])
-	{
-		itm = get_envitm(argp[i]);
-		lst = ft_lstnew(itm);
-		ft_lstadd_back(shell_p
-rm->env, lst);
-	} */
