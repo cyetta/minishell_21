@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 22:25:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 19:35:32 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	write_hdoc(int fd, char *hdoc)
 		s = readline("> ");
 	}
 	if (!s)
-		return(ERR_CTRLD_QUIT);
+		return (ERR_CTRLD_QUIT);
 	free(s);
 	if (cnt == -1)
 		return (err_prnt3n("minishell", "", strerror(errno), ERR_SYNTAX_ERRNO));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tkn2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 15:37:50 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 20:42:05 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,19 @@ int	f_tkn_dollar(t_list **tknlst_hd, t_mshell *data)
 	i = -1;
 	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
 	== STRINGLN)
+	{	
+		free(((t_token *)(*tknlst_hd)->content)->value);
 		((t_token *)(*tknlst_hd)->content)->value = \
 	get_envvar(((t_token *)(*tknlst_hd)->next->content)->value, data, &i);
-	else
-		((t_token *)(*tknlst_hd)->content)->value = ft_strdup("$");
-	if (!((t_token *)(*tknlst_hd)->content)->value)
-		return (ERR_MALLOC);
+		if (!((t_token *)(*tknlst_hd)->content)->value)
+			return (ERR_MALLOC);
+	}
 	if ((*tknlst_hd)->next && ((t_token *)(*tknlst_hd)->next->content)->e_lxm \
 	== STRINGLN)
 		ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, tkn_elmnt_del);
 	((t_token *)(*tknlst_hd)->content)->e_lxm = STRINGLN;
 	return (ERR_OK);
 }
-	// if(*((t_token *)(*tknlst_hd)->content)->value == '\0')
-	// 	ft_lstdelnode(tknlst_hd, (*tknlst_hd)->next, del_tkn_elmnt);
 
 int	f_tkn_redir(t_list **tknlst_hd, t_mshell *data)
 {
@@ -71,8 +70,8 @@ int	token_collect(t_token *src, t_token *dest)
 	if (dest)
 		dest->e_lxm = STRINGLN;
 	else
-		return (err_prnt3n("minishell", "token_collect", "NULL destination pinter", \
-		ERR_INIT_4));
+		return (err_prnt3n("minishell", "token_collect", \
+		"NULL destination pinter", ERR_INIT_4));
 	if (!src)
 		return (ERR_OK);
 	t = ft_strjoin(dest->value, src->value);
@@ -83,7 +82,7 @@ int	token_collect(t_token *src, t_token *dest)
 	return (ERR_OK);
 }
 
-int	is_collected(t_token *t)
+static int	is_collectable(t_token *t)
 {
 	return (t->e_lxm == QUOTES || t->e_lxm == DQUOTES \
 	|| t->e_lxm == DOLLAR || t->e_lxm == STRINGLN);
@@ -102,7 +101,7 @@ int	f_tkn_hdoc(t_list **tknlst_hd, t_mshell *data)
 	t_tkn = (t_token *)(*tknlst_hd)->content;
 	tl = (*tknlst_hd)->next;
 	err = 0;
-	while (tl && !err && is_collected((t_token *)tl->content))
+	while (tl && !err && is_collectable((t_token *)tl->content))
 	{
 		err = token_collect((t_token *)tl->content, t_tkn);
 		ft_lstdelnode(tknlst_hd, tl, tkn_elmnt_del);

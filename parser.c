@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 03:43:25 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:51:10 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ content)->value);
 		((t_token *)t->content)->value = str;
 		ft_lstdelnode(&t, t->next, tkn_elmnt_del);
 	}
-	if (t->next && ((t_token *)t->next->content)->e_lxm == SPACESTR)
+	if (t && t->next && ((t_token *)t->next->content)->e_lxm == SPACESTR)
 		ft_lstdelnode(&t, t->next, tkn_elmnt_del);
 	return (err);
 }

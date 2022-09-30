@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lst_ld.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:42:46 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/20 00:14:09 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 19:22:14 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ int	ld_exec_lst(t_mshell *data)
 	t_prgexec	*exec_i;
 	int			err;
 
-	data->exec_lst = NULL;
 	a_env_init(data);
+	err = ERR_OK;
 	t = data->tkn_lst;
 	while (t)
 	{

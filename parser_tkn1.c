@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:09:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/01 20:57:01 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 20:38:32 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	f_tkn_space(t_list **tknlst_hd, t_mshell *data)
 	(void)tknlst_hd;
 	return (ERR_OK);
 }
-//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
 
 int	f_tkn_pipe(t_list **tknlst_hd, t_mshell *data)
 {
@@ -73,4 +72,3 @@ int	f_tkn_str(t_list **tknlst_hd, t_mshell *data)
 	(void)tknlst_hd;
 	return (ERR_OK);
 }
-//	ft_lstdelnode(tknlst_hd, *tknlst_hd, del_tkn_elmnt);
