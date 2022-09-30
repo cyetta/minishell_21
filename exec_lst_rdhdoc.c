@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:31:49 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 19:35:32 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:15:46 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,32 +103,6 @@ int	write_hdoc(int fd, char *hdoc)
 		return (err_prnt3n("minishell", "", strerror(errno), ERR_SYNTAX_ERRNO));
 	return (ERR_OK);
 }
-
-/*
-create heredoc redirection for execution element
-надо переделать под список
-
-int	f_rdrhdoc(t_list **t, t_prgexec *p, t_mshell *data)
-{
-	char	*hdocfname;
-	int		err;
-	int		fd;
-
-	fd = create_hdocfname(&hdocfname, data);
-	if (fd < 0)
-		return (ERR_SYNTAX_ERRNO);
-	err = write_hdoc(fd, ((t_token *)(*t)->next->content)->value);
-	if (err)
-		return (ERR_SYNTAX_ERRNO);
-	close(fd);
-	p->f_stdin = open(hdocfname, O_RDWR);
-	if (p->f_stdin == -1)
-		return (err_prnt3n("minishell", ((t_token *) \
-	(*t)->next->content)->value, strerror(errno), ERR_SYNTAX_ERRNO));
-	*t = (*t)->next;
-	return (ERR_OK);
-}
-*/
 
 /*
 create heredoc redirection for execution element

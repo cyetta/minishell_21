@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 17:27:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:22:54 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ int	exec_pipe(t_prgexec *cmd)
 }
 
 /*
-запускает трубу из предыдущей и текущей команды.
-prevcmd может быть NULL, что означает что комада первая.
-cmd не может быть NULL.
-возвращает PID запущенного процесса
+starts the pipe from the previous and current command.
+prevcmd can be NULL, which means it is the first command.
+cmd cannot be NULL.
+Returns the PID of the running process
 */
 int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {

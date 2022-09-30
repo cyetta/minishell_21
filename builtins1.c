@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 21:52:17 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:54:13 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ int	is_builtin(t_prgexec *cmd)
 	return (0);
 }
 
-typedef int	(*t_bldin_func)(t_prgexec *);
+typedef int	(*t_bltin_func)(t_prgexec *);
 
 /*
-запускает билдин с номером bnum, счет с 1,
-bnum результат работы is_bultin()
-возвращает результат работы билтина
+runs builtin with the number bnum, counting from 1,
+bnum is result of is_builtin()
+returns the result of builtin()
 */
 int	runbuiltin(t_prgexec *cmd, int bnum)
 {
-	const t_bldin_func	a_bldin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
+	const t_bltin_func	a_bltin_f[] = {builtin_echo, builtin_cd, builtin_pwd, \
 	builtin_export, builtin_unset, builtin_env, builtin_exit};
 
-	return (a_bldin_f[bnum - 1](cmd));
+	return (a_bltin_f[bnum - 1](cmd));
 }
 
 /*
@@ -126,43 +126,5 @@ int	builtin_cd(t_prgexec *cmd)
 		return (cd_exec(oldpwd->value, pwd, oldpwd, &cmd->mdata->env_lst));
 	}
 	cd_exec(cmd->argv[1], pwd, oldpwd, &cmd->mdata->env_lst);
-	return (0);
-}
-/* 	char	*home_path;
-
-	home_path = get_env_var(cmd, "HOME");
-	if (!cmd->argv[0])
-	{
-		change_dir(home_path, 0);
-		return (1);
-	}
-	if (has_two_args(cmd->argv))
-		return (1);
-	else
-	{
-		if (ft_strequ(cmd->argv[0], "--"))
-		{
-			change_dir(home_path, 0);
-			return (1);
-		}
-		else if (cmd->argv[0][0] == '-' && !cmd->argv[0][2])
-		{
-			change_dir(get_env_var("OLDPWD"), 1);
-			return (1);
-		}
-		change_dir(cmd->argv[0], 0);
-	}
-*/
-
-/*
-pwd with no options
- */
-int	builtin_pwd(t_prgexec *cmd)
-{
-	char	pwd[4096];
-
-	(void)cmd;
-	getcwd(pwd, 4097);
-	printf("%s\n", pwd);
 	return (0);
 }

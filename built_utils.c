@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:37:11 by macbook           #+#    #+#             */
-/*   Updated: 2022/09/30 01:23:54 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:52:11 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include "ft_error.h"
 
 /*
-возвращает структуру переменной окружения по найденной переменной или
-NULL если переменная не найдена.
+returns the structure of the environment variable according to the found variable
+or NULL if no variable is found.
 */
 t_ktable	*search_env_var(t_list *envlst, char *var)
 {
@@ -32,10 +32,10 @@ t_ktable	*search_env_var(t_list *envlst, char *var)
 }
 
 /*
-Добавляет переменную в список окружения без проверок на существование в списке
-если var NULL не добавляет ничего,
-если если value NULL добавляется var c value NULL
-в случае ошибки выделения памяти, падает с ошибкой
+Adds a variable to the environment list without checking for existence 
+in the list. If var is NULL adds nothing,
+If value is NULL, adds var c value NULL
+In case of a memory allocation error, crashes with an error
 */
 int	add_env_var(t_list **envlst, char *var, char *value)
 {
@@ -64,9 +64,9 @@ int	add_env_var(t_list **envlst, char *var, char *value)
 }
 
 /*
-Заменяет значение переменной окружения var на val
-или создает переменную если такой нет
-крашится если malloc не выделит память
+Replaces the value of the var environment variable with val
+or creates a variable if it does not exist
+crashes if malloc() does not allocate memory
 */
 int	replace_env_var(t_list **envlst, char *var, char *value)
 {
@@ -90,7 +90,7 @@ int	replace_env_var(t_list **envlst, char *var, char *value)
 }
 
 /*
-удаляет переменную в списке переменных оружения
+deletes the variable in the environment variable list
 */
 int	del_env_var(t_list **envlst, char *var)
 {

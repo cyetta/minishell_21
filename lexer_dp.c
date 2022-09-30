@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_dp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:39:59 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 15:15:25 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 20:55:26 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include "minishell.h"
 #include "lexer.h"
 #include "ft_error.h"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check_u.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 01:58:45 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:41:50 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #include "builtins.h"
 
 /*
-Возвращает(malloc) значение $PATH или значение по умолчанию
-".:/usr/bin:/bin" если переменная не найдена или пустая
+Returns (malloc) the value of $PATH or the default value
+".:/usr/bin:/bin" if no variable is found or empty
 */
 char	*get_path(char **env)
 {
@@ -50,11 +50,11 @@ char	*get_path(char **env)
 }
 
 /*
-проверяет существует ли команда по заданному пути
-возвращает
-ERR_OK - файл команды существует
-ENOENT - файл команды не существует
-или другие ошибки errno если команда существует но доступ с ошибкой
+checks if the command exists on the specified path
+returns
+ERR_OK - command file exists
+ENOENT - command file does not exist
+or other errno errors if the command exists but is accessed with an error
 */
 int	is_cmd_exist(char *cmd)
 {
@@ -64,9 +64,9 @@ int	is_cmd_exist(char *cmd)
 }
 
 /*
-инит для обхода 25 строк
-создание массива путей из переменной path,
-Добавление / к команде, подразумевается что комада без путей
+init for bypass 25 lines limit
+Creates an array of paths from the path variable,
+Adding / to the command, assuming the command has no paths
 */
 static char	*findexecbypathinit(char *cmd, char	***a_path, char *vpath)
 {
@@ -82,9 +82,9 @@ static char	*findexecbypathinit(char *cmd, char	***a_path, char *vpath)
 }
 
 /*
-return для обхода 25 строк
-Если все хорошо возвращает новый путь к команде по пути path
-иначе дубликат команды
+return to bypass the 25 lines limit
+If all goes well, it returns a new path to the command at path
+Otherwise duplicate command
 */
 char	*findexecbypathret(int err, char *cmd, char **ret)
 {
@@ -99,10 +99,10 @@ char	*findexecbypathret(int err, char *cmd, char **ret)
 }
 
 /*
-ищет команду в переменной окружения $PATH,
-команда не должна быть по абсолютному или относительному пути
-возвращает абсолютный путь к команде, если он существует
-или ee же, если команда не найдена.
+looks for a command in the $PATH environment variable,
+command does not have to be in absolute or relative path
+returns the absolute path to the command if it exists
+or the same if no command is found.
 */
 char	*findexecbypath(char *cmd, char *vpath)
 {

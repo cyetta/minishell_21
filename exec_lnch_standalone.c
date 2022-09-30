@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 17:30:38 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:22:02 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 #include "ft_signal.h"
 
 /*
-Сохраняем стандартные потоки и устанавливаем редиректы, не в пайпе
+Save the standard fd and set redirects
+not in the pipe
 */
 void	stdaln_rdrsave(t_prgexec *cmd, int *stdin, int *stdout)
 {
@@ -40,7 +41,8 @@ void	stdaln_rdrsave(t_prgexec *cmd, int *stdin, int *stdout)
 }
 
 /*
-Восстанавливаем стандартные потоки и закрываем редиректы, не в пайпе
+Restore the standard fd and close redirects
+not in the pipe
 */
 void	stdaln_rdrrestore(t_prgexec *cmd, int *stdin, int *stdout)
 {
@@ -59,7 +61,8 @@ void	stdaln_rdrrestore(t_prgexec *cmd, int *stdin, int *stdout)
 }
 
 /*
-Запуск одной внешней, не в пайпе, программы
+Running standalone external  program.
+not in a pipe
 */
 pid_t	stdaln_runextr(t_prgexec *cmd)
 {
@@ -84,8 +87,8 @@ pid_t	stdaln_runextr(t_prgexec *cmd)
 }
 
 /*
-Исполняет одну команду, не в пайпе, возвращает PID запущенной дочки
-или 0 для билдина
+Executes one command, returns the PID of the running child or 0 for a builtin.
+not in a pipe
 */
 int	lunch_standalone(t_prgexec *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 22:24:08 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:10:12 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 #include "ft_signal.h"
 
 /*
-возвращает TRUE если cmd находится в пайпе, т.е. у текущей или предыдущей \
-команды есть признак pipe, cmd - должна существовать!
-если предыдущая комада NULL, значит cmd первая команда.
+returns TRUE if cmd is in pipe, i.e. the current or previous
+command has pipe sign, cmd must exist!
+if the previous command is NULL, then cmd is the first command.
 */
 int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {
@@ -37,8 +37,8 @@ int	cmd_in_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 }
 
 /*
-собирает запущенные дочки и для последней запущенной забирает 
-errorlevel
+collects the running daughters and, for the last running one,
+picks up errorlevel
 */
 void	collect_cmd(t_mshell *data, pid_t last_pid)
 {
@@ -55,8 +55,8 @@ void	collect_cmd(t_mshell *data, pid_t last_pid)
 }
 
 /*
-Обертка, возвращает из листа списка контент - структуру prgexec.
-или NULL если указатель листа NULL
+Wrapper, returns content from list leaf, prgexec structure.
+or NULL if leaf pointer is NULL
 */
 t_prgexec	*get_execmd(t_list *cmd)
 {
@@ -66,7 +66,7 @@ t_prgexec	*get_execmd(t_list *cmd)
 }
 
 /*
-Основной цикл запуска команд
+command loop
 */
 int	exec_start(t_mshell *data)
 {

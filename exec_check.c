@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/21 01:34:01 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:36:19 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ char	*getexecpath(char *cmd, char **env)
 }
 
 /*
-Колбэк функция итератора обхода списка, формирует строку запуска команды
-для работы execve() в t_prgexec.execmd
-билтины и не найденные команды копируются как есть, если команд найдена
-в $PATH, формируется абсолюный путь из $PATH и команды,
-Если $PATH не найдена, используется дефолный путь ".:/usr/bin:/bin"
-Пример:
+Callback function of list iterator, generates a command line to run execve()
+in t_prgexec.exe. Builtin and not found commands are copied as is.
+if a command is found in $PATH, the absolute path to command from $PATH is
+generated. If $PATH is not found, the default path ".:/usr/bin:/bin" is used.
+Example:
 	ft_lstiter(data->exec_lst, exec_createpath);
 */
 void	exec_createpath(void *content)
@@ -69,28 +68,4 @@ void	exec_createpath(void *content)
 	}
 	else
 		cmd->execmd = getexecpath(cmd->argv[0], cmd->mdata->a_env);
-}
-
-/*
-Колбэк функция для поиска в списке элементов t_prgxec такого,
-что t_prgexec->execmd равен key, в том числе и NULL
-нужен для проверки есть ли неисполнимые команды
-Пример:
-if (ft_lstsearch(data->exec_lst, NULL, is_execmd))
- 	return (ERR_SYNTAX_ERRNO);
-*/
-int	is_execmd(void *key, void *content)
-{
-	t_prgexec	*cmd;
-	char		*cmdname;
-
-	cmd = (t_prgexec *)content;
-	cmdname = (char *)key;
-	if (cmd && cmdname && cmd->execmd && !ft_strcmp(cmdname, cmd->execmd))
-		return (1);
-	else if (!cmd)
-		return (0);
-	else if (!cmdname && !cmd->execmd)
-		return (1);
-	return (0);
 }

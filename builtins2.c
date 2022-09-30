@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 16:17:06 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:54:10 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,17 @@ int	builtin_exit(t_prgexec *cmd)
 		exit (err_prnt3n("minishell: exit", cmd->argv[1], \
 	"numeric argument required", 255));
 	exit(err_prnt3n("exit\n", NULL, NULL, ft_atoi(cmd->argv[1]) % 256));
+}
+
+/*
+pwd with no options
+ */
+int	builtin_pwd(t_prgexec *cmd)
+{
+	char	pwd[4096];
+
+	(void)cmd;
+	getcwd(pwd, 4097);
+	printf("%s\n", pwd);
+	return (0);
 }

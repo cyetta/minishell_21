@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_rdr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:44:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/14 23:13:04 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 20:54:33 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include "minishell.h"
 #include "lexer.h"
 #include "ft_error.h"
 
