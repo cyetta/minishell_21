@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 22:38:14 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 03:53:21 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,83 @@
 #include "parser.h"
 #include "lexer.h"
 
+int	ktblitm_low(void *key, void *content)
+{
+	t_ktable	*t_key;
+	t_ktable	*t_content;
+
+	t_key = (t_ktable *)key;
+	t_content = (t_ktable *)content;
+	if (ft_strcmp(t_key->key, t_content->key) >= 0)
+		return (0);
+	return (1);
+}
+
+void	b_export_delsorted(void *content)
+{
+	(void)content;
+}
+
+void	b_export_print(void *content)
+{
+	t_ktable	*t_content;
+
+	t_content = (t_ktable *)content;
+	if (t_content->value)
+		printf("declare -x %s=%s\n", t_content->key, t_content->value);
+	else
+		printf("declare -x %s\n", t_content->key);
+}
+
+int	b_export_prn(t_list *env_lst)
+{
+	t_list	*sorted;
+	t_list	*tl;
+	t_list	*newlst;
+
+	sorted = NULL;
+	while (env_lst)
+	{
+		newlst = ft_lstnew(env_lst->content);
+		if (!newlst)
+			exit (ft_error(ERR_MALLOC));
+		tl = ft_lstsearch(sorted, env_lst->content, ktblitm_low);
+		if (!tl)
+			ft_lstadd_back(&sorted, newlst);
+		else
+			ft_lstinsbeforenode(&sorted, tl, newlst);
+		env_lst = env_lst->next;
+	}
+	ft_lstiter(sorted, b_export_print);
+	ft_lstclear(&sorted, b_export_delsorted);
+	return (ERR_OK);
+}
+
+/*
+Checking the environment variable name for validity
+stops at '=' and '+='
+*/
+int	is_env_acceptable(char *s)
+{
+	int	i;
+
+	if (*s != '_' || !ft_isalpha(*s))
+		return (0);
+	i = 0;
+	while (s[++i])
+	{
+		if (s[i] == '+' && s[i + 1] == '\0')
+			return (0);
+		else if (s[i] == '+' && s[i + 1] == '=')
+			break ;
+		else if (s[i] == '=')
+			break ;
+		else if (s[i] != '_' && !ft_isalnum(s[i]))
+			return (0);
+	}
+	return (1);
+}
+
 /*
 export with no options
 set the export attribute for variables
@@ -30,8 +107,17 @@ value of that variable shall be set to word.
  */
 int	builtin_export(t_prgexec *cmd)
 {
-	printf("this is %s\n", cmd->execmd);
+	int	i;
+
+	if (!cmd->argv[1])
+		return (b_export_prn(cmd->mdata->env_lst));
 	return (0);
+	i = -1;
+	while (cmd->argv[++i])
+	{
+		if (!is_env_acceptable(cmd->argv[++i]))
+
+	}
 }
 
 /*
@@ -42,16 +128,11 @@ Each variable or function specified by name shall be unset.
  */
 int	builtin_unset(t_prgexec *cmd)
 {
-	t_list	*tl;
 	int		i;
 
 	i = 0;
 	while (cmd->argv[++i])
-	{
-		tl = ft_lstsearch(cmd->mdata->env_lst, (void *)cmd->argv[i], env_cmp);
-		if (tl)
-			ft_lstdelnode(&cmd->mdata->env_lst, tl, tkn_elmnt_del);
-	}
+		del_env_var(&cmd->mdata->env_lst, cmd->argv[i]);
 	return (ERR_OK);
 }
 

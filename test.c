@@ -9,4 +9,5 @@ int	main(int argc, char **argv, char **argp)
 	{
 		printf("%s\n", argv[i]);
 	}
+	return(argc - 1);
 }

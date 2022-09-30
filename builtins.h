@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:41:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/26 20:59:26 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/09/30 01:18:29 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char		*get_env_var(t_prgexec *cmd, char *var);
 t_ktable	*search_env_var(t_list *envlst, char *var);
 int			add_env_var(t_list **envlst, char *var, char *value);
 int			replace_env_var(t_list **envlst, char *var, char *value);
+int			del_env_var(t_list **envlst, char *var);
 int			check_option(char *argv);
 int			throw_error_usage(char *cmd, char *argv);
 int			throw_error_env(char *cmd, char *argv);
