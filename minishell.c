@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 20:26:44 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/01 04:45:58 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **argp)
 	init_data(&shell_prm, argc, argp);
 	while (1)
 	{
-		set_sighndlr();
+		set_signal(FT_SIG_HDL);
 		s = readline("minishell$ ");
 		if (!s)
 			break ;

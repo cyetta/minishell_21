@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lnch_standalone.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:22:02 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/01 04:46:24 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ pid_t	stdaln_runextr(t_prgexec *cmd)
 {
 	if (cmd->execmd)
 	{
+		set_sigfork(cmd->execmd);
 		cmd->cmd_pid = fork();
 		if (cmd->cmd_pid == -1)
 			exit(err_prnt3n("minishell standalon", cmd->execmd, \
 			strerror(errno), ERR_SYNTAX_ERRNO));
 		else if (!cmd->cmd_pid)
 		{
-			set_sigdflt();
+			set_signal(FT_SIG_DFL);
 			if (ft_strrchr(cmd->execmd, '/') == NULL)
 				exit(err_prnt3n("minishell", cmd->execmd, \
 			"command not found", 127));

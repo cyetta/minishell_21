@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:10:12 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/01 04:47:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	exec_start(t_mshell *data)
 	last_pid = 0;
 	while (cmd)
 	{
+		set_signal(FT_SIG_IGN);
 		if (cmd_in_pipe(get_execmd(prevcmd), get_execmd(cmd)))
 			last_pid = lunch_pipe(get_execmd(prevcmd), get_execmd(cmd));
 		else

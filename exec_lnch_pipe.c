@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lnch_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:22:54 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/01 04:47:43 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 {
 	if (cmd->is_pipe)
 		pipe(cmd->pipe);
+	set_sigfork(cmd->execmd);
 	cmd->cmd_pid = fork();
 	if (cmd->cmd_pid == -1)
 		exit (err_prnt3n("minishell pipe", cmd->execmd, \
@@ -104,7 +105,7 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 			close(cmd->pipe[1]);
 		return (cmd->cmd_pid);
 	}
-	set_sigdflt();
+	set_signal(FT_SIG_DFL);
 	if (open_rdr(cmd))
 		exit (close_pipe(prevcmd, cmd, 1));
 	redir_pipe(prevcmd, cmd);
