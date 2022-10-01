@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:05:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/01 04:45:01 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/01 05:01:42 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sig_fork(int sig)
 	if (sig == SIGINT)
 		write(2, "\n", 1);
 	if (sig == SIGQUIT)
-		write(2, "Quit: 3\n", 8);
+		write(2, "Quit:\n", 6);
 }
 
 int	set_sigfork(char *cmd)
