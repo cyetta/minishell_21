@@ -6,12 +6,12 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:05:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/01 05:01:42 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 01:54:34 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <readline/readline.h>
 #include <signal.h>
 #include "ft_util.h"

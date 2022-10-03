@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:39 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:54:13 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:05:50 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include "minishell.h"
 #include "ft_util.h"
 #include "builtins.h"
-#include "minishell.h"
 #include "parser.h"
 #include "ft_error.h"
 
@@ -51,56 +54,37 @@ int	runbuiltin(t_prgexec *cmd, int bnum)
 }
 
 /*
-echo with option -n
+set PWD OLDPWD
 */
-int	builtin_echo(t_prgexec *cmd)
+void	cd_setpwd(char *path, char *env_name, t_ktable *pwd, t_list **env)
 {
-	int	i;
-
-	i = 1;
-	if (!cmd->argv[1])
-	{
-		printf("\n");
-		return (0);
-	}
-	while (cmd->argv[i] && !ft_strncmp(cmd->argv[i], "-n",
-			ft_strlen(cmd->argv[i])))
-		i++;
-	while (cmd->argv[i])
-	{
-		printf("%s", cmd->argv[i]);
-		if (cmd->argv[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (ft_strncmp(cmd->argv[1], "-n", ft_strlen(cmd->argv[1])))
-		printf("\n");
-	return (0);
+	if (!pwd)
+		add_env_var(env, env_name, path);
+	else if (pwd->value)
+		free(pwd->value);
+	if (pwd)
+		pwd->value = path;
+	else if (path)
+		free(path);
 }
 
 /*
-change directory and set PWD OLDPWD
+change directory to path and set PWD OLDPWD
 */
 int	cd_exec(char *path, t_ktable *pwd, t_ktable *oldpwd, t_list **env)
 {
-	char	*t_path;
+	char	*old_path;
+	char	*new_path;
 
-	t_path = getcwd(NULL, 0);
+	old_path = getcwd(NULL, 0);
 	if (chdir(path))
 	{
-		free (t_path);
+		free (old_path);
 		return (err_prnt3n("minishell: cd", path, strerror(errno), 1));
 	}
-	if (!(pwd))
-		add_env_var(env, "PWD", NULL);
-	else if (pwd->value)
-		free(pwd->value);
-	pwd->value = getcwd(NULL, 0);
-	if (!(oldpwd))
-		add_env_var(env, "OLDPWD", NULL);
-	else if (oldpwd->value)
-		free(oldpwd->value);
-	oldpwd->value = t_path;
+	new_path = getcwd(NULL, 0);
+	cd_setpwd(new_path, "PWD", pwd, env);
+	cd_setpwd(old_path, "OLDPWD", oldpwd, env);
 	return (0);
 }
 
@@ -114,7 +98,7 @@ int	builtin_cd(t_prgexec *cmd)
 
 	oldpwd = search_env_var(cmd->mdata->env_lst, "OLDPWD");
 	pwd = search_env_var(cmd->mdata->env_lst, "PWD");
-	if (cmd->argv[2])
+	if (cmd->argv[1] && cmd->argv[2])
 		return (err_prnt3n("minishell", "cd", "too many arguments", 1));
 	else if (!cmd->argv[1] || (cmd->argv[1] && *(cmd->argv[1]) == '\0'))
 		return (0);

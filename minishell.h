@@ -6,24 +6,14 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:41:22 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 15:19:37 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:38:11 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <pthread.h>
-# include <stdio.h>
-# include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <dirent.h>
-# include <string.h>
 # include <sys/types.h>
-# include <sys/stat.h>
 # include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
 # include "ft_lib/libft.h"
 
 /*
@@ -93,4 +83,5 @@ char		*ktable2str(t_ktable *itm);
 void		ktblitm_del(void *elm);
 void		ktblitm_prn(void *elm);
 int			ld_env2lst(t_list **lst, char **argp);
+int			exit_clear(t_mshell *data, int errlvl);
 #endif

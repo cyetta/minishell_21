@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:36 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/25 22:24:05 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/02 01:54:30 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_lib/libft.h"
 
 /*
-writes error messages 1, 2, 3 to stderr with ':' 
+writes error messages 1, 2, 3 to stderr with ':'
 writes EOL if 3 messages are printed
 */
 int	err_prnt3n(const char *msg1, const char *msg2, const char *msg3, int err)
@@ -83,7 +83,7 @@ int	ft_error(int errnum)
 
 	if (errnum == ERR_USAGE)
 		return (err_prnt3n(msg[errnum], NULL, NULL, errnum));
-	else if (errnum == ERR_SYNTAX_ERRNO || ERR_CTRLD_QUIT)
+	else if (errnum == ERR_SYNTAX_ERRNO || errnum == ERR_CTRLD_QUIT)
 		return (errnum);
 	else if (errnum > ERR_USAGE && errnum <= ERR_LASTERR)
 		return (err_msg(msg[errnum], errnum));

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:54:10 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:34:15 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "minishell.h"
 #include "ft_util.h"
 #include "builtins.h"
 #include "ft_error.h"
@@ -47,7 +48,7 @@ int	builtin_env(t_prgexec *cmd)
 {
 	int	i;
 
-	if (cmd->argv[1])
+	if (cmd->argv[1] && !cmd->argv[1])
 		return (err_prnt3n("minishell", "env", "too many arguments", 1));
 	i = 0;
 	while (cmd->mdata->a_env[++i])
@@ -65,16 +66,17 @@ int	builtin_exit(t_prgexec *cmd)
 	if (cmd->argv[1] && cmd->argv[2])
 		return (err_prnt3n("minishell", "exit", "too many arguments", 1));
 	if (!cmd->argv[1])
-		exit(err_prnt3n("exit\n", NULL, NULL, 0));
+		exit (exit_clear(cmd->mdata, err_prnt3n("exit\n", NULL, NULL, 0)));
 	i = 0;
 	if (cmd->argv[1][0] == '-')
 		i = 1;
 	while (ft_isdigit(cmd->argv[1][i]))
 		i++;
 	if (cmd->argv[1][i] != '\0' || i > 18 || (cmd->argv[1][0] == '-' && i == 1))
-		exit (err_prnt3n("minishell: exit", cmd->argv[1], \
-	"numeric argument required", 255));
-	exit(err_prnt3n("exit\n", NULL, NULL, ft_atoi(cmd->argv[1]) % 256));
+		exit (exit_clear(cmd->mdata, err_prnt3n("minishell: exit", \
+		cmd->argv[1], "numeric argument required", 255)));
+	exit (exit_clear(cmd->mdata, err_prnt3n("exit\n", NULL, NULL, \
+	ft_atoi(cmd->argv[1]) % 256)));
 }
 
 /*
@@ -87,5 +89,33 @@ int	builtin_pwd(t_prgexec *cmd)
 	(void)cmd;
 	getcwd(pwd, 4097);
 	printf("%s\n", pwd);
+	return (0);
+}
+
+/*
+echo with option -n
+*/
+int	builtin_echo(t_prgexec *cmd)
+{
+	int	i;
+
+	i = 1;
+	if (!cmd->argv[1])
+	{
+		printf("\n");
+		return (0);
+	}
+	while (cmd->argv[i] && !ft_strncmp(cmd->argv[i], "-n",
+			ft_strlen(cmd->argv[i])))
+		i++;
+	while (cmd->argv[i])
+	{
+		printf("%s", cmd->argv[i]);
+		if (cmd->argv[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (ft_strncmp(cmd->argv[1], "-n", ft_strlen(cmd->argv[1])))
+		printf("\n");
 	return (0);
 }

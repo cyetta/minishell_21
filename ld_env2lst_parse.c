@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 20:53:28 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/29 14:49:27 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:06:51 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_ktable	*parse_envstr_u(t_ktable *envitm, char *str, char *pos_eq)
 	else
 	{
 		envitm->value = ft_substr(str, (unsigned int)(pos_eq - str + 1), \
-	strlen(pos_eq + 1));
+	ft_strlen(pos_eq + 1));
 		if (!envitm->value)
 		{
 			free(envitm->key);

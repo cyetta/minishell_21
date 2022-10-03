@@ -6,13 +6,14 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/01 04:47:43 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:52:08 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "ft_error.h"
@@ -95,8 +96,8 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 	set_sigfork(cmd->execmd);
 	cmd->cmd_pid = fork();
 	if (cmd->cmd_pid == -1)
-		exit (err_prnt3n("minishell pipe", cmd->execmd, \
-		strerror(errno), ERR_SYNTAX_ERRNO));
+		exit(exit_clear(cmd->mdata, err_prnt3n("minishell pipe", cmd->execmd, \
+		strerror(errno), ERR_SYNTAX_ERRNO)));
 	else if (cmd->cmd_pid)
 	{
 		if (prevcmd && prevcmd->is_pipe)
@@ -107,8 +108,8 @@ int	lunch_pipe(t_prgexec *prevcmd, t_prgexec *cmd)
 	}
 	set_signal(FT_SIG_DFL);
 	if (open_rdr(cmd))
-		exit (close_pipe(prevcmd, cmd, 1));
+		exit(exit_clear(cmd->mdata, close_pipe(prevcmd, cmd, 1)));
 	redir_pipe(prevcmd, cmd);
 	close_pipe(prevcmd, cmd, 1);
-	exit (exec_pipe(cmd));
+	exit(exit_clear(cmd->mdata, exec_pipe(cmd)));
 }

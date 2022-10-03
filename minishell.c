@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:50:30 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/01 04:45:58 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:26:49 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,22 @@ int	init_data(t_mshell *shell_prm, int argc, char **argp)
 	return (0);
 }
 
-void	clear_data(t_mshell *shell_prm)
+int	clear_data(t_mshell *shell_prm, int errlvl)
 {
 	ft_lstclear(&shell_prm->exec_lst, exc_elmt_del);
 	ft_lstclear(&shell_prm->tkn_lst, tkn_elmnt_del);
 	a_env_free(shell_prm);
+	return (errlvl);
+}
+
+int	exit_clear(t_mshell *data, int errlvl)
+{
+	int	err;
+
+	err = clear_data(data, errlvl);
+	ft_lstclear(&data->env_lst, ktblitm_del);
+	rl_clear_history();
+	return (err);
 }
 
 int	main(int argc, char **argv, char **argp)
@@ -99,10 +110,7 @@ int	main(int argc, char **argv, char **argp)
 			break ;
 		else if (err == ERR_OK)
 			exec_start(&shell_prm);
-		clear_data(&shell_prm);
+		clear_data(&shell_prm, 0);
 	}
-	clear_data(&shell_prm);
-	ft_lstclear(&shell_prm.env_lst, ktblitm_del);
-	rl_clear_history();
-	return (0);
+	return (exit_clear(&shell_prm, 0));
 }

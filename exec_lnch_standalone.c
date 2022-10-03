@@ -6,13 +6,14 @@
 /*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/01 04:46:24 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 02:50:17 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "ft_error.h"
@@ -71,17 +72,17 @@ pid_t	stdaln_runextr(t_prgexec *cmd)
 		set_sigfork(cmd->execmd);
 		cmd->cmd_pid = fork();
 		if (cmd->cmd_pid == -1)
-			exit(err_prnt3n("minishell standalon", cmd->execmd, \
-			strerror(errno), ERR_SYNTAX_ERRNO));
+			exit(exit_clear(cmd->mdata, err_prnt3n("minishell standalon", \
+			cmd->execmd, strerror(errno), ERR_SYNTAX_ERRNO)));
 		else if (!cmd->cmd_pid)
 		{
 			set_signal(FT_SIG_DFL);
 			if (ft_strrchr(cmd->execmd, '/') == NULL)
-				exit(err_prnt3n("minishell", cmd->execmd, \
-			"command not found", 127));
+				exit(exit_clear(cmd->mdata, err_prnt3n("minishell", \
+			cmd->execmd, "command not found", 127)));
 			execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
-			exit(err_prnt3n("minishell", cmd->execmd, \
-			strerror(errno), 127));
+			exit(exit_clear(cmd->mdata, err_prnt3n("minishell", cmd->execmd, \
+			strerror(errno), 127)));
 		}
 	}
 	return (cmd->cmd_pid);
