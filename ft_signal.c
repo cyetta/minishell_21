@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:05:13 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/03 14:21:56 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 15:58:51 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,22 @@ int	set_sigfork(char *cmd)
 {
 	char	*s;
 
-	s = ft_strrchr(cmd, '/');
-	if ((s && !ft_strcmp(s, "/minishell")) || \
-						(!s && !ft_strcmp(cmd, "minishell")))
-		set_signal(FT_SIG_IGN);
-	else
+	if (!cmd)
 	{
 		signal(SIGINT, sig_fork);
 		signal(SIGQUIT, sig_fork);
+	}
+	else
+	{
+		s = ft_strrchr(cmd, '/');
+		if ((s && !ft_strcmp(s, "/minishell")) || \
+						(!s && !ft_strcmp(cmd, "minishell")))
+			set_signal(FT_SIG_IGN);
+		else
+		{
+			signal(SIGINT, sig_fork);
+			signal(SIGQUIT, sig_fork);
+		}
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_lnch_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 23:13:20 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/03 02:52:08 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:12:38 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,17 @@ int	exec_pipe(t_prgexec *cmd)
 	bnum = is_builtin(cmd);
 	if (bnum)
 		err = runbuiltin(cmd, bnum);
-	else if (ft_strrchr(cmd->execmd, '/') == NULL)
+	else if (cmd->execmd && ft_strrchr(cmd->execmd, '/') == NULL)
 		err_prnt3n("minishell", cmd->execmd, \
 			"command not found", 127);
-	else
+	else if (cmd->execmd)
 	{
 		execve(cmd->execmd, cmd->argv, cmd->mdata->a_env);
 		err_prnt3n("minishell", cmd->execmd, \
 			strerror(errno), 127);
 	}
+	else
+		err = 0;
 	close(0);
 	close(1);
 	return (err);

@@ -6,7 +6,7 @@
 /*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 20:10:42 by cyetta            #+#    #+#             */
-/*   Updated: 2022/09/30 21:41:50 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:34:39 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ char	*get_path(char **env)
 		if (!ft_strncmp(env[i], "PATH", 4))
 			break ;
 	if (!env[i])
-		path = ft_strdup(".:/usr/bin:/bin");
+		path = ft_strdup(".");
 	else
 	{
 		p = ft_strchr(env[i], '=');
 		if (!p || !*(p + 1))
-			path = ft_strdup(".:/usr/bin:/bin");
+			path = ft_strdup(".");
 		else
 			path = ft_strdup(++p);
 	}
