@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyetta <cyetta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: cyetta <cyetta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:21:09 by cyetta            #+#    #+#             */
-/*   Updated: 2022/10/03 02:34:15 by cyetta           ###   ########.fr       */
+/*   Updated: 2022/10/03 15:28:14 by cyetta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	builtin_exit(t_prgexec *cmd)
 	if (cmd->argv[1] && cmd->argv[2])
 		return (err_prnt3n("minishell", "exit", "too many arguments", 1));
 	if (!cmd->argv[1])
-		exit (exit_clear(cmd->mdata, err_prnt3n("exit\n", NULL, NULL, 0)));
+		exit (exit_clear(cmd->mdata, err_prnt3n("exit\n", NULL, NULL, \
+		cmd->mdata->errlvl)));
 	i = 0;
 	if (cmd->argv[1][0] == '-')
 		i = 1;
